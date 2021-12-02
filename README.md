@@ -1,0 +1,2 @@
+# Advent of Code 2021
+This repository contains the code that I have written to solve Advent of Code 2021 problems. Depending on the problem, I may choose different languages to solve, and I may possibly solve a single problem in multiple languages to strengthen my skills across languages, but I have no plans to solve all problems in all languages.
