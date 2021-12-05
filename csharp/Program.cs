@@ -1,6 +1,7 @@
 try
 {
-    Day01.Execute();
+    //Day01.Execute();
+    Day02.Execute();
 }
 catch (Exception ex)
 {

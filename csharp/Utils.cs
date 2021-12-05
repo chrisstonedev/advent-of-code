@@ -1,6 +1,6 @@
 ﻿internal static class Utils
 {
-    private static string[] ReadAllLines(string fileName)
+    internal static string[] ReadAllLines(string fileName)
     {
         return File.ReadAllLines($"{fileName}.txt");
     }
