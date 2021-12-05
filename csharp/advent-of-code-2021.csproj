@@ -12,7 +12,7 @@
       <None Update="Day01.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Day01_sample.txt">
+      <None Update="Day01_test.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
