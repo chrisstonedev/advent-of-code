@@ -1,25 +1,19 @@
-﻿internal static class Day01
+﻿internal class Day01 : IDay
 {
-    internal static void Execute()
+    public int DayNumber => 1;
+    public int PartOneTestAnswer => 7;
+    public int PartTwoTestAnswer => 5;
+
+    public int ExecutePartOne(string[] input)
     {
-        var testInput = Utils.ReadAllLinesAsInts("Day01_test");
-        var input = Utils.ReadAllLinesAsInts("Day01");
-
-        Utils.AssertTestAnswer(Part1(testInput), 7);
-        Console.WriteLine("Part 1: " + Part1(input));
-
-        Utils.AssertTestAnswer(Part2(testInput), 5);
-        Console.WriteLine("Part 2: " + Part2(input));
+        var inputAsIntegers = input.Select(int.Parse).ToArray();
+        return WindowList(inputAsIntegers, 2).Count(x => x.First() < x.Last());
     }
 
-    static int Part1(IReadOnlyList<int> input)
+    public int ExecutePartTwo(string[] input)
     {
-        return WindowList(input, 2).Count(x => x.First() < x.Last());
-    }
-
-    static int Part2(IReadOnlyList<int> input)
-    {
-        return WindowOfWindowList(WindowList(input, 3)).Count(x => x.First().Sum() < x.Last().Sum());
+        var inputAsIntegers = input.Select(int.Parse).ToArray();
+        return WindowOfWindowList(WindowList(inputAsIntegers, 3)).Count(x => x.First().Sum() < x.Last().Sum());
     }
 
     static IEnumerable<int[]> WindowList(IReadOnlyList<int> list, int windowSize)

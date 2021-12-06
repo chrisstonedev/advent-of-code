@@ -1,18 +1,10 @@
-﻿internal static class Day03
+﻿internal class Day03 : IDay
 {
-    internal static void Execute()
-    {
-        var testInput = Utils.ReadAllLines("Day03_test");
-        var input = Utils.ReadAllLines("Day03");
+    public int DayNumber => 3;
+    public int PartOneTestAnswer => 198;
+    public int PartTwoTestAnswer => 230;
 
-        Utils.AssertTestAnswer(Part1(testInput), 198);
-        Console.WriteLine("Part 1: " + Part1(input));
-
-        Utils.AssertTestAnswer(Part2(testInput), 230);
-        Console.WriteLine("Part 2: " + Part2(input));
-    }
-
-    static int Part1(string[] input)
+    public int ExecutePartOne(string[] input)
     {
         var gammaRateString = GetGammaRateString(input);
         var epsilonRateString = GetEpsilonRateString(gammaRateString);
@@ -24,7 +16,7 @@
         return powerConsumption;
     }
 
-    static int Part2(string[] input)
+    public int ExecutePartTwo(string[] input)
     {
         var oxygenGeneratorRatingString = GetOxygenGeneratorRatingString(input);
         var carbonDioxideScrubberRatingString = GetCarbonDioxideScrubberRatingString(input);
@@ -44,7 +36,7 @@
         {
             gammaRateChars[i] = input.Select(x => x[i]).GroupBy(x => x).OrderByDescending(x => x.Count()).First().Key;
         }
-        return new string (gammaRateChars);
+        return new string(gammaRateChars);
     }
 
     private static string GetEpsilonRateString(string gammaRateString)
