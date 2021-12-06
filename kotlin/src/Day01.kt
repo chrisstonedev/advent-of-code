@@ -9,14 +9,12 @@ fun main() {
         }
     }
 
-    val sampleInput = readInputAsInts("Day01_sample")
+    val testInput = readInputAsInts("Day01_test")
     val input = readInputAsInts("Day01")
 
-    println(part1(sampleInput))
-    check(part1(sampleInput) == 7)
+    check(part1(testInput) == 7)
     println(part1(input))
 
-    println(part2(sampleInput))
-    check(part2(sampleInput) == 5)
+    check(part2(testInput) == 5)
     println(part2(input))
 }
