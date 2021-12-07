@@ -2,7 +2,8 @@
 {
     internal static string[] ReadAllLines(string fileName)
     {
-        return File.ReadAllLines($"../../../../data/{fileName}.txt");
+        var file = Path.Join(AppDomain.CurrentDomain.BaseDirectory, $"../../../../data/{fileName}.txt");
+        return File.ReadAllLines(file);
     }
 
     internal static int[] ReadAllLinesAsInts(string fileName)

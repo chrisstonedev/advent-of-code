@@ -1,8 +1,10 @@
 try
 {
-    //IDay day = new Day01();
-    //IDay day = new Day02();
-    IDay day = new Day03();
+    IDay day;
+    //day = new Day01();
+    //day = new Day02();
+    //day = new Day03();
+    day = new Day05();
 
     var testInput = Utils.ReadAllLines($"Day{day.DayNumber:00}_test");
     var input = Utils.ReadAllLines($"Day{day.DayNumber:00}");
