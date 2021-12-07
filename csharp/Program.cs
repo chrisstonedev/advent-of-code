@@ -1,10 +1,6 @@
 try
 {
-    IDay day;
-    //day = new Day01();
-    //day = new Day02();
-    //day = new Day03();
-    day = new Day05();
+    IDay day = GetDay(7);
 
     var testInput = Utils.ReadAllLines($"Day{day.DayNumber:00}_test");
     var input = Utils.ReadAllLines($"Day{day.DayNumber:00}");
@@ -18,4 +14,18 @@ try
 catch (Exception ex)
 {
     Console.WriteLine(ex.Message);
+}
+
+static IDay GetDay(int day)
+{
+    return day switch
+    {
+        1 => new Day01(),
+        2 => new Day02(),
+        3 => new Day03(),
+        5 => new Day05(),
+        6 => new Day06(),
+        7 => new Day07(),
+        _ => throw new ArgumentOutOfRangeException(nameof(day)),
+    };
 }
