@@ -14,7 +14,11 @@
     private static long LanternfishSimulatorCount(string[] input, int numberOfDays)
     {
         var getTotalCountFromLanternfishSpawnedOnThisDay = new Dictionary<int, long>();
-        for (var initialDay = numberOfDays; initialDay >= -8; initialDay--)
+
+        var firstDaysForInitialLanternfish = input.First().Split(',').Select(x => int.Parse(x) - 8);
+        int earliestDayALanternfishSpawned = firstDaysForInitialLanternfish.OrderBy(x => x).First();
+
+        for (var initialDay = numberOfDays; initialDay >= earliestDayALanternfishSpawned; initialDay--)
         {
             var totalCountForThisInitialDay = 1L;
             for (var day = initialDay + 9; day <= numberOfDays; day += 7)
@@ -23,6 +27,6 @@
             }
             getTotalCountFromLanternfishSpawnedOnThisDay[initialDay] = totalCountForThisInitialDay;
         }
-        return input.First().Split(',').Select(x => getTotalCountFromLanternfishSpawnedOnThisDay[int.Parse(x) - 8]).Sum();
+        return firstDaysForInitialLanternfish.Sum(x => getTotalCountFromLanternfishSpawnedOnThisDay[x]);
     }
 }

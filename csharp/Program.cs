@@ -20,7 +20,7 @@ try
 }
 catch (Exception ex)
 {
-    Console.WriteLine(ex.Message);
+    Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
 }
 
 static IDay GetDay(int day)
@@ -33,6 +33,7 @@ static IDay GetDay(int day)
         5 => new Day05(),
         6 => new Day06(),
         7 => new Day07(),
+        8 => new Day08(),
         _ => throw new ArgumentOutOfRangeException(nameof(day)),
     };
 }
