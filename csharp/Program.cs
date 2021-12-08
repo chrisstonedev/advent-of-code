@@ -1,15 +1,22 @@
 try
 {
-    IDay day = GetDay(7);
+    IDay day = GetDay(6);
 
     var testInput = Utils.ReadAllLines($"Day{day.DayNumber:00}_test");
     var input = Utils.ReadAllLines($"Day{day.DayNumber:00}");
 
     Utils.AssertTestAnswer(day.ExecutePartOne(testInput), day.PartOneTestAnswer);
     Console.WriteLine("Part 1: " + day.ExecutePartOne(input));
-
-    Utils.AssertTestAnswer(day.ExecutePartTwo(testInput), day.PartTwoTestAnswer);
-    Console.WriteLine("Part 2: " + day.ExecutePartTwo(input));
+    if (day is ILongDay longDay)
+    {
+        Utils.AssertTestAnswer(longDay.ExecutePartTwoLong(testInput), longDay.PartTwoTestAnswerLong);
+        Console.WriteLine("Part 2: " + longDay.ExecutePartTwoLong(input));
+    }
+    else
+    {
+        Utils.AssertTestAnswer(day.ExecutePartTwo(testInput), day.PartTwoTestAnswer);
+        Console.WriteLine("Part 2: " + day.ExecutePartTwo(input));
+    }
 }
 catch (Exception ex)
 {

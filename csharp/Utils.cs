@@ -16,4 +16,10 @@
         if (actual != expected)
             throw new Exception($"Assertion failed; expected {expected} but received {actual}");
     }
+
+    internal static void AssertTestAnswer(long actual, long expected)
+    {
+        if (actual != expected)
+            throw new Exception($"Assertion failed; expected {expected} but received {actual}");
+    }
 }

@@ -1,38 +1,28 @@
-﻿internal class Day06 : IDay
+﻿internal class Day06 : ILongDay
 {
     public int DayNumber => 6;
     public int PartOneTestAnswer => 5934;
-    public int PartTwoTestAnswer => 0; //26984457539;
+    [Obsolete($"Use {nameof(PartTwoTestAnswerLong)} instead.")] public int PartTwoTestAnswer => throw new NotImplementedException();
+    public long PartTwoTestAnswerLong => 26984457539;
 
-    public int ExecutePartOne(string[] input)
-    {
-        return LanternfishSimulatorCount(input, 80);
-    }
+    public int ExecutePartOne(string[] input) => (int)LanternfishSimulatorCount(input, 80);
 
-    public int ExecutePartTwo(string[] input)
-    {
-        return LanternfishSimulatorCount(input, 256);
-    }
+    [Obsolete($"Use {nameof(ExecutePartTwoLong)} instead.")] public int ExecutePartTwo(string[] _) => throw new NotImplementedException();
 
-    private static int LanternfishSimulatorCount(string[] input, int numberOfDays)
+    public long ExecutePartTwoLong(string[] input) => LanternfishSimulatorCount(input, 256);
+
+    private static long LanternfishSimulatorCount(string[] input, int numberOfDays)
     {
-        var numbers = input.First().Split(',').Select(int.Parse).ToList();
-        for (var day = 1; day <= numberOfDays; day++)
+        var getTotalCountFromLanternfishSpawnedOnThisDay = new Dictionary<int, long>();
+        for (var initialDay = numberOfDays; initialDay >= -8; initialDay--)
         {
-            var currentCount = numbers.Count;
-            for (var i = 0; i < currentCount; i++)
+            var totalCountForThisInitialDay = 1L;
+            for (var day = initialDay + 9; day <= numberOfDays; day += 7)
             {
-                if (numbers[i] == 0)
-                {
-                    numbers[i] = 6;
-                    numbers.Add(8);
-                }
-                else
-                {
-                    numbers[i]--;
-                }
+                totalCountForThisInitialDay += getTotalCountFromLanternfishSpawnedOnThisDay[day];
             }
+            getTotalCountFromLanternfishSpawnedOnThisDay[initialDay] = totalCountForThisInitialDay;
         }
-        return numbers.Count;
+        return input.First().Split(',').Select(x => getTotalCountFromLanternfishSpawnedOnThisDay[int.Parse(x) - 8]).Sum();
     }
 }
