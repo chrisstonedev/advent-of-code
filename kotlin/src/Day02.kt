@@ -2,7 +2,7 @@ fun main() {
     data class Operation(val direction: String, val amount: Int)
 
     fun getSumOfValues(operations: List<Operation>, direction: String): Int {
-        return operations.filter { x -> x.direction == direction }.sumOf { x -> x.amount }
+        return operations.filter { it.direction == direction }.sumOf { it.amount }
     }
 
     fun part1(input: List<String>): Int {

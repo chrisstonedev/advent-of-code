@@ -4,9 +4,7 @@ fun main() {
     }
 
     fun part2(input: List<Int>): Int {
-        return input.windowed(3).windowed(2).count { (a, b) ->
-            a.sum() < b.sum()
-        }
+        return input.windowed(3).windowed(2).count { (a, b) -> a.sum() < b.sum() }
     }
 
     val testInput = readInputAsInts("Day01_test")
