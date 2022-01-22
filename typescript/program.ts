@@ -1,20 +1,12 @@
 import {Utils} from './utils';
+import {Day01} from './day01';
 import {Day02} from './day02';
 import {Day04} from './day04';
 
-function getDay(day: number): Day {
-    switch (day) {
-        case 2:
-            return new Day02();
-        case 4:
-            return new Day04();
-        default:
-            throw new Error('Requested day is not available');
-    }
-}
+let days: Day[] = [new Day01(), new Day02(), new Day04()];
 
 try {
-    let day = getDay(4);
+    let day = days.find(day => day.dayNumber === 1);
 
     let testInput = Utils.readInput(`Day0${day.dayNumber}_test`);
     let input = Utils.readInput(`Day0${day.dayNumber}`);
