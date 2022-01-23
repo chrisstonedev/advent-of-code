@@ -45,7 +45,7 @@ export class Day04 implements Day {
 
     private static setUpGameEnvironment(input: string[]) {
         let workingInput = Array.from(input);
-        let numbersToDraw = workingInput.shift().split(',').map(x => +x);
+        let numbersToDraw = workingInput.shift()!.split(',').map(x => +x);
 
         let gameBoards = [];
         for (let i = 0; i < Math.floor(workingInput.length / 6); i++) {
@@ -54,7 +54,7 @@ export class Day04 implements Day {
         return {gameBoards, numbersToDraw};
     }
 
-    private static createGameBoard(gameBoardLineStrings: string[]): number[] {
+    private static createGameBoard(gameBoardLineStrings: string[]): number[][] {
         let numberArrays = [];
         for (let i = 0; i < 5; i++) {
             let numbersInRowAsStrings = gameBoardLineStrings[i].trim().split(/[ ]+/);
@@ -64,7 +64,7 @@ export class Day04 implements Day {
         return numberArrays;
     }
 
-    private static didGameBoardWin(gameBoard: number[], numbersDrawn: number[]): boolean {
+    private static didGameBoardWin(gameBoard: number[][], numbersDrawn: number[]): boolean {
         for (let row = 0; row < 5; row++) {
             let rowHasBingo = true;
             for (let col = 0; col < 5; col++) {
@@ -92,7 +92,7 @@ export class Day04 implements Day {
         return false;
     }
 
-    private static getUncalledNumbersSum(gameBoard: number[], numbersDrawn: number[]): number {
+    private static getUncalledNumbersSum(gameBoard: number[][], numbersDrawn: number[]): number {
         let uncalledNumbers = [];
         for (let row = 0; row < 5; row++) {
             for (let col = 0; col < 5; col++) {

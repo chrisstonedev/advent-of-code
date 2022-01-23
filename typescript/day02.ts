@@ -54,7 +54,7 @@ export class Day02 implements Day {
     }
 }
 
-class Operation {
+interface Operation {
     direction: string;
     amount: number
 }

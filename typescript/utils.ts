@@ -4,7 +4,8 @@ export class Utils {
         return fs.readFileSync(`../data/${fileName}.txt`).toString().split(/\r?\n/);
     }
 
-    static assertTestAnswer(actual: number, expected: number) {
+    static assertTestAnswer(actual: number, expected: number): boolean {
         console.assert(actual === expected, `expected ${expected} but received ${actual}`);
+        return actual === expected;
     }
 }
