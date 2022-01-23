@@ -8,14 +8,13 @@ export class Day09 implements Day {
 
     executePartOne(input: string[]): number {
         let heightMap = new HeightMap(input);
-
         let lowPoints = [];
-        for (let row = 0; row < heightMap.rows; row++) {
-            for (let column = 0; column < heightMap.columns; column++) {
+        for (let row = 0; row < heightMap.rowCount; row++) {
+            for (let column = 0; column < heightMap.columnCount; column++) {
                 if ((row === 0 || heightMap.getValue(row, column) < heightMap.getValue(row - 1, column))
                     && (column === 0 || heightMap.getValue(row, column) < heightMap.getValue(row, column - 1))
-                    && (row === heightMap.rows - 1 || heightMap.getValue(row, column) < heightMap.getValue(row + 1, column))
-                    && (column === heightMap.columns - 1 || heightMap.getValue(row, column) < heightMap.getValue(row, column + 1))) {
+                    && (row === heightMap.rowCount - 1 || heightMap.getValue(row, column) < heightMap.getValue(row + 1, column))
+                    && (column === heightMap.columnCount - 1 || heightMap.getValue(row, column) < heightMap.getValue(row, column + 1))) {
                     lowPoints.push(heightMap.getValue(row, column));
                 }
             }
@@ -28,78 +27,83 @@ export class Day09 implements Day {
     executePartTwo(input: string[]): number {
         let heightMap = new HeightMap(input);
         let basins: Basin[] = [];
-        for (let row = 0; row < heightMap.rows; row++) {
-            for (let column = 0; column < heightMap.columns; column++) {
-                if (heightMap.getValue(row, column) !== 9 && !Day09.itemExistsInCollection(basins.map(x => x.items).flat(), row, column)) {
-                    let itemsInThisBasin = Day09.lookForAdjacentItems(heightMap, row, column, []);
+        for (let row = 0; row < heightMap.rowCount; row++) {
+            for (let column = 0; column < heightMap.columnCount; column++) {
+                if (heightMap.getValue(row, column) !== 9 && basins.find(x => x.containsItem(row, column)) === undefined) {
+                    let itemsInThisBasin = Day09.addLocationAndAdjacentLocationsToArray(heightMap, row, column, []);
                     basins.push(new Basin(itemsInThisBasin));
                 }
             }
         }
 
-        return basins.map(x => x.items.length).sort((a, b) => b - a).slice(0, 3).reduce((a, b) => a * b);
+        return basins.map(x => x.size).sort((a, b) => b - a).slice(0, 3).reduce((a, b) => a * b);
     }
 
-    private static lookForAdjacentItems(heightMap: HeightMap, row: number, column: number, workingArray: BasinItem[]): BasinItem[] {
-        if (Day09.itemExistsInCollection(workingArray, row, column)) {
-            return workingArray;
-        }
-        workingArray.push({row: row, column: column, value: heightMap.getValue(row, column)});
+    private static addLocationAndAdjacentLocationsToArray(
+        heightMap: HeightMap,
+        row: number,
+        column: number,
+        workingArray: Location[]
+    ): Location[] {
 
-        if (row !== 0 && heightMap.getValue(row - 1, column) !== 9) {
-            Day09.lookForAdjacentItems(heightMap, row - 1, column, workingArray);
+        workingArray.push({row: row, column: column});
+
+        function checkLocationAndAddIfAppropriate(row: number, column: number,) {
+            heightMap.getValue(row, column) !== 9
+            && !locationExistsInArray(workingArray, row, column)
+            && Day09.addLocationAndAdjacentLocationsToArray(heightMap, row, column, workingArray);
         }
-        if (column !== 0 && heightMap.getValue(row, column - 1) !== 9) {
-            Day09.lookForAdjacentItems(heightMap, row, column - 1, workingArray);
-        }
-        if (row !== heightMap.rows - 1 && heightMap.getValue(row + 1, column) !== 9) {
-            Day09.lookForAdjacentItems(heightMap, row + 1, column, workingArray);
-        }
-        if (column !== heightMap.columns - 1 && heightMap.getValue(row, column + 1) !== 9) {
-            Day09.lookForAdjacentItems(heightMap, row, column + 1, workingArray);
-        }
+
+        row > 0 && checkLocationAndAddIfAppropriate(row - 1, column);
+        column > 0 && checkLocationAndAddIfAppropriate(row, column - 1);
+        row < heightMap.rowCount - 1 && checkLocationAndAddIfAppropriate(row + 1, column);
+        column < heightMap.columnCount - 1 && checkLocationAndAddIfAppropriate(row, column + 1);
+
         return workingArray;
-    }
-
-    private static itemExistsInCollection(basinItemArray: BasinItem[], row: number, column: number) {
-        return basinItemArray.find(x => x.row === row && x.column === column) !== undefined;
     }
 }
 
+function locationExistsInArray(basinItemArray: Location[], row: number, column: number) {
+    return basinItemArray.find(x => x.row === row && x.column === column) !== undefined;
+}
+
 class HeightMap {
-    private readonly board: number[][];
+    private readonly values: number[][];
 
-    constructor(thing: string[]) {
-        this.board = thing.map(x => x.split('').map(y => +y));
+    constructor(fileContents: string[]) {
+        this.values = fileContents.map(x => x.split('').map(y => +y));
     }
 
-    get rows(): number {
-        return this.board.length;
+    get rowCount(): number {
+        return this.values.length;
     }
 
-    get columns(): number {
-        return this.board[0].length;
+    get columnCount(): number {
+        return this.values[0].length;
     }
 
     getValue(row: number, column: number): number {
-        return this.board[row][column];
+        return this.values[row][column];
     }
 }
 
 class Basin {
-    private readonly itemCollection: BasinItem[] = [];
+    private readonly locations: Location[] = [];
 
-    constructor(items: BasinItem[]) {
-        this.itemCollection = items;
+    constructor(items: Location[]) {
+        this.locations = items;
     }
 
-    get items(): BasinItem[] {
-        return this.itemCollection;
+    get size(): number {
+        return this.locations.length;
+    }
+
+    containsItem(row: number, column: number): boolean {
+        return locationExistsInArray(this.locations, row, column);
     }
 }
 
-interface BasinItem {
+interface Location {
     row: number;
     column: number;
-    value: number;
 }
