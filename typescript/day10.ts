@@ -16,38 +16,22 @@ export class Day10 implements Day {
       let openSymbols = [];
 
       for (let character of line.split('')) {
-        if (character === '(') {
+        if (character === '(' || character === '[' || character === '{' || character === '<') {
           openSymbols.push(character);
-        } else if (character === '[') {
-          openSymbols.push(character);
-        } else if (character === '{') {
-          openSymbols.push(character);
-        } else if (character === '<') {
-          openSymbols.push(character);
-        } else if (character === ')') {
-          if (openSymbols[openSymbols.length - 1] !== '(') {
+        } else if (character === ')' || character === ']' || character === '}' || character === '>') {
+          if (character === ')' && openSymbols.pop() !== '(') {
             numberOfBadCloseParentheses++;
             break;
-          }
-          openSymbols.pop();
-        } else if (character === ']') {
-          if (openSymbols[openSymbols.length - 1] !== '[') {
+          } else if (character === ']' && openSymbols.pop() !== '[') {
             numberOfBadCloseSquareBrackets++;
             break;
-          }
-          openSymbols.pop();
-        } else if (character === '}') {
-          if (openSymbols[openSymbols.length - 1] !== '{') {
+          } else if (character === '}' && openSymbols.pop() !== '{') {
             numberOfBadCloseBraces++;
             break;
-          }
-          openSymbols.pop();
-        } else if (character === '>') {
-          if (openSymbols[openSymbols.length - 1] !== '<') {
+          } else if (character === '>' && openSymbols.pop() !== '<') {
             numberOfBadCloseAngleBrackets++;
             break;
           }
-          openSymbols.pop();
         }
       }
     }
@@ -59,100 +43,44 @@ export class Day10 implements Day {
   }
 
   executePartTwo(input: string[]): number {
-    let goodLines = [];
+    let completionStrings = [];
 
     for (let line of input) {
       let openSymbols = [];
       let corruptedLine = false;
 
       for (let character of line.split('')) {
-        if (character === '(') {
+        if (character === '(' || character === '[' || character === '{' || character === '<') {
           openSymbols.push(character);
-        } else if (character === '[') {
-          openSymbols.push(character);
-        } else if (character === '{') {
-          openSymbols.push(character);
-        } else if (character === '<') {
-          openSymbols.push(character);
-        } else if (character === ')') {
-          if (openSymbols[openSymbols.length - 1] !== '(') {
+        } else if (character === ')' || character === ']' || character === '}' || character === '>') {
+          if (character === ')' && openSymbols.pop() !== '('
+            || character === ']' && openSymbols.pop() !== '['
+            || character === '}' && openSymbols.pop() !== '{'
+            || character === '>' && openSymbols.pop() !== '<') {
             corruptedLine = true;
             break;
           }
-          openSymbols.pop();
-        } else if (character === ']') {
-          if (openSymbols[openSymbols.length - 1] !== '[') {
-            corruptedLine = true;
-            break;
-          }
-          openSymbols.pop();
-        } else if (character === '}') {
-          if (openSymbols[openSymbols.length - 1] !== '{') {
-            corruptedLine = true;
-            break;
-          }
-          openSymbols.pop();
-        } else if (character === '>') {
-          if (openSymbols[openSymbols.length - 1] !== '<') {
-            corruptedLine = true;
-            break;
-          }
-          openSymbols.pop();
         }
       }
 
       if (!corruptedLine) {
-        goodLines.push(line);
+        completionStrings.push(openSymbols);
       }
     }
 
-    let completionStrings = [];
-
-    for (let line of goodLines) {
-      let openSymbols = [];
-
-      for (let character of line.split('')) {
-        if (character === '(') {
-          openSymbols.push(character);
-        } else if (character === '[') {
-          openSymbols.push(character);
-        } else if (character === '{') {
-          openSymbols.push(character);
-        } else if (character === '<') {
-          openSymbols.push(character);
-        } else if (character === ')') {
-          openSymbols.pop();
-        } else if (character === ']') {
-          openSymbols.pop();
-        } else if (character === '}') {
-          openSymbols.pop();
-        } else if (character === '>') {
-          openSymbols.pop();
-        }
-      }
-
-      completionStrings.push(openSymbols);
-    }
-
-    let scores = completionStrings.map(x => {
+    let scores = completionStrings.map(charactersToClose => {
       let score = 0;
-      while (x.length > 0) {
-        let y = x.pop();
-        let characterValue = 0;
-        if (y === '(') {
-          characterValue = 1;
-        } else if (y === '[') {
-          characterValue = 2;
-        } else if (y === '{') {
-          characterValue = 3;
-        } else if (y === '<') {
-          characterValue = 4;
-        }
+      while (charactersToClose.length > 0) {
+        let nextCharacterToClose = charactersToClose.pop()!;
+        let characterValue = nextCharacterToClose === '(' ? 1 :
+          nextCharacterToClose === '[' ? 2 :
+            nextCharacterToClose === '{' ? 3 :
+              nextCharacterToClose === '<' ? 4 : 0;
         score = score * 5 + characterValue;
       }
       return score;
-    });
-    let orderedScores = scores.sort((a, b) => a - b);
-    return orderedScores[((orderedScores.length + 1) / 2) - 1];
+    }).sort((a, b) => a - b);
+
+    return scores[((scores.length + 1) / 2) - 1];
   }
 }
