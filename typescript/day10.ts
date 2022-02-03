@@ -6,6 +6,9 @@ export class Day10 implements Day {
   partOneTestAnswer = 26397;
   partTwoTestAnswer = 288957;
 
+  allOpenSymbols = ['(', '[', '{', '<'];
+  allCloseSymbols = [')', ']', '}', '>'];
+
   executePartOne(input: string[]): number {
     let numberOfBadCloseParentheses = 0;
     let numberOfBadCloseSquareBrackets = 0;
@@ -16,9 +19,9 @@ export class Day10 implements Day {
       let openSymbols = [];
 
       for (let character of line.split('')) {
-        if (character === '(' || character === '[' || character === '{' || character === '<') {
+        if (this.allOpenSymbols.includes(character)) {
           openSymbols.push(character);
-        } else if (character === ')' || character === ']' || character === '}' || character === '>') {
+        } else if (this.allCloseSymbols.includes(character)) {
           if (character === ')' && openSymbols.pop() !== '(') {
             numberOfBadCloseParentheses++;
             break;
@@ -50,9 +53,9 @@ export class Day10 implements Day {
       let corruptedLine = false;
 
       for (let character of line.split('')) {
-        if (character === '(' || character === '[' || character === '{' || character === '<') {
+        if (this.allOpenSymbols.includes(character)) {
           openSymbols.push(character);
-        } else if (character === ')' || character === ']' || character === '}' || character === '>') {
+        } else if (this.allCloseSymbols.includes(character)) {
           if (character === ')' && openSymbols.pop() !== '('
             || character === ']' && openSymbols.pop() !== '['
             || character === '}' && openSymbols.pop() !== '{'
