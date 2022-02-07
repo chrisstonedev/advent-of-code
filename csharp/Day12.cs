@@ -8,97 +8,103 @@ internal class Day12 : IDay
 
     public int ExecutePartOne(string[] input)
     {
-        var paths = GetAllDistinctPaths(input, false);
+        var solver = new Solver(false);
+        var paths = solver.GetAllDistinctPaths(input);
         return paths.Length;
     }
 
     public int ExecutePartTwo(string[] input)
     {
-        var paths = GetAllDistinctPaths(input, true);
+        var solver = new Solver(true);
+        var paths = solver.GetAllDistinctPaths(input);
         return paths.Length;
     }
 
-    public static string[] GetAllDistinctPaths(IEnumerable<string> input, bool smallCavesCanBeEnteredTwice)
+    public class Solver
     {
-        var connections = input.Select(x =>
+        private readonly bool _oneSmallCaveCanBeEnteredTwice;
+
+        public Solver(bool oneSmallCaveCanBeEnteredTwice)
         {
-            var pathPieces = x.Split('-');
-            return new Connection(pathPieces[0], pathPieces[1]);
-        }).ToArray();
-        var allPaths = new List<List<string>>();
-        var initialPath = new List<string> {"start"};
-        allPaths.Add(initialPath);
+            _oneSmallCaveCanBeEnteredTwice = oneSmallCaveCanBeEnteredTwice;
+        }
 
-        FindAllPathsToEnd(initialPath, connections, allPaths, smallCavesCanBeEnteredTwice);
-
-        return allPaths.Select(x => string.Join(',', x.ToArray())).ToArray();
-    }
-
-    private static void FindAllPathsToEnd(List<string> currentPath, Connection[] connections,
-        ICollection<List<string>> allPaths, bool smallCavesCanBeEnteredTwice)
-    {
-        while (currentPath.Last() != "end")
+        public string[] GetAllDistinctPaths(IEnumerable<string> input)
         {
-            var last = currentPath.Last();
-            var nextCaves = connections
-                .Where(connection =>
+            var connections = input.Select(x => new Connection(x.Split('-'))).ToArray();
+            var allPaths = new List<List<string>>();
+            var initialPath = new List<string> {"start"};
+            allPaths.Add(initialPath);
+
+            FindAllPathsToEnd(initialPath, connections, allPaths);
+
+            return allPaths.Select(x => string.Join(',', x.ToArray())).ToArray();
+        }
+
+        private void FindAllPathsToEnd(List<string> currentPath, Connection[] connections,
+            ICollection<List<string>> allPaths)
+        {
+            while (currentPath.Last() != "end")
+            {
+                var nextCaves = connections
+                    .Where(connection => IsValidConnectionForPath(connection, currentPath))
+                    .Select(connection => connection.GetOtherLocation(currentPath.Last())!)
+                    .ToArray();
+                var currentPathArray = currentPath.ToArray();
+                if (nextCaves.Length == 0)
                 {
-                    if (!connection.HasLocation(last))
-                    {
-                        return false;
-                    }
+                    allPaths.Remove(currentPath);
+                    return;
+                }
 
-                    var otherLocation = connection.GetOtherLocation(last);
-                    if (otherLocation.All(char.IsUpper))
-                    {
-                        return true;
-                    }
+                currentPath.Add(nextCaves.First());
+                if (nextCaves.Length == 1)
+                {
+                    continue;
+                }
 
-                    if (otherLocation == "start")
-                    {
-                        return false;
-                    }
+                foreach (var cave in nextCaves.Skip(1))
+                {
+                    var newList = currentPathArray.Concat(new[] {cave}).ToList();
+                    allPaths.Add(newList);
+                    FindAllPathsToEnd(newList, connections, allPaths);
+                }
+            }
+        }
 
-                    if (!smallCavesCanBeEnteredTwice)
-                    {
-                        return !currentPath.Contains(otherLocation);
-                    }
-
-                    var alreadyDuplicated = currentPath.Where(x => char.IsLower(x.First())).GroupBy(x => x).Any(x => x.Count() > 1);
-                    if (alreadyDuplicated)
-                    {
-                        return !currentPath.Contains(otherLocation);
-                    }
-
-                    return currentPath.Count(previousLocation => previousLocation == otherLocation) <= 1;
-                })
-                .Select(x => x.GetOtherLocation(last))
-                .ToArray();
-            var currentPathArray = currentPath.ToArray();
-            if (nextCaves.Length == 0)
+        private bool IsValidConnectionForPath(Connection connection, ICollection<string> currentPath)
+        {
+            var otherLocation = connection.GetOtherLocation(currentPath.Last());
+            if (otherLocation is null)
             {
-                allPaths.Remove(currentPath);
-                return;
+                return false;
             }
 
-            currentPath.Add(nextCaves.First());
-            if (nextCaves.Length == 1)
+            if (otherLocation.All(char.IsUpper))
             {
-                continue;
+                return true;
             }
 
-            foreach (var cave in nextCaves.Skip(1))
+            if (otherLocation == "start")
             {
-                var newList = currentPathArray.Concat(new[] {cave}).ToList();
-                allPaths.Add(newList);
-                FindAllPathsToEnd(newList, connections, allPaths, smallCavesCanBeEnteredTwice);
+                return false;
             }
+
+            if (!_oneSmallCaveCanBeEnteredTwice || currentPath
+                    .Where(x => char.IsLower(x.First()))
+                    .GroupBy(x => x)
+                    .Any(x => x.Count() > 1))
+            {
+                return !currentPath.Contains(otherLocation);
+            }
+
+            return currentPath.Count(previousLocation => previousLocation == otherLocation) <= 1;
         }
     }
 
-    private readonly record struct Connection(string Location1, string Location2)
+    private readonly record struct Connection(string[] Locations)
     {
-        public bool HasLocation(string location) => location == Location1 || location == Location2;
-        public string GetOtherLocation(string initialLocation) => initialLocation == Location1 ? Location2 : Location1;
+        public string? GetOtherLocation(string initialLocation) =>
+            initialLocation == Locations[0] ? Locations[1] : initialLocation == Locations[1] ? Locations[0] : null;
     }
 }

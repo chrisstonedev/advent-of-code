@@ -16,7 +16,8 @@ public class Day12Tests
         {
             "start,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input, false);
+        var solver = new Day12.Solver(false);
+        var answer = solver.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(1));
         Assert.That(answer, Is.EqualTo(expected));
     }
@@ -33,7 +34,8 @@ public class Day12Tests
         {
             "start,A,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input, false);
+        var solver = new Day12.Solver(false);
+        var answer = solver.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(1));
         Assert.That(answer, Is.EqualTo(expected));
     }
@@ -56,7 +58,8 @@ public class Day12Tests
             "start,b,c,end",
             "start,c,b,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input, false);
+        var solver = new Day12.Solver(false);
+        var answer = solver.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(4));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -80,7 +83,8 @@ public class Day12Tests
             "start,b,c,end",
             "start,c,b,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input, false);
+        var solver = new Day12.Solver(false);
+        var answer = solver.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(4));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -99,7 +103,8 @@ public class Day12Tests
             "start,E,end",
             "start,E,f,E,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input, false);
+        var solver = new Day12.Solver(false);
+        var answer = solver.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(2));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -122,7 +127,8 @@ public class Day12Tests
             "start,h,end",
             "start,i,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input, false);
+        var solver = new Day12.Solver(false);
+        var answer = solver.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(3));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -153,7 +159,8 @@ public class Day12Tests
             "start,b,A,end",
             "start,b,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input, false);
+        var solver = new Day12.Solver(false);
+        var answer = solver.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(10));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -196,7 +203,8 @@ public class Day12Tests
             "start,kj,dc,HN,end",
             "start,kj,dc,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input, false);
+        var solver = new Day12.Solver(false);
+        var answer = solver.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(19));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -254,7 +262,8 @@ public class Day12Tests
             "start,b,d,b,end",
             "start,b,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input, true);
+        var solver = new Day12.Solver(true);
+        var answer = solver.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(36));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -275,7 +284,8 @@ public class Day12Tests
             "kj-HN",
             "kj-dc"
         };
-        var answer = Day12.GetAllDistinctPaths(input, true);
+        var solver = new Day12.Solver(true);
+        var answer = solver.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(103));
     }
 }
