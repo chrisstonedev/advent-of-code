@@ -1,4 +1,4 @@
-﻿namespace advent_of_code_2021;
+﻿namespace AdventOfCode._2021.Console;
 
 internal class Day07 : IDay
 {

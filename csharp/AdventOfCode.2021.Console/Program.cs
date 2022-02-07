@@ -1,4 +1,4 @@
-using advent_of_code_2021;
+﻿using AdventOfCode._2021.Console;
 
 try
 {
