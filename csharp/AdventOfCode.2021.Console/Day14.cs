@@ -47,16 +47,20 @@ public class Day14 : IDay
 
         public string Polymerize(string polymerTemplate)
         {
-            var iterations = polymerTemplate.Length - 1;
-            for (var i = 0; i < iterations; i++)
+            IEnumerable<char> SecretPolymerization(string polymer)
             {
-                var insertionIndex = i * 2 + 1;
-                var lookupValue = polymerTemplate.Substring(i * 2, 2);
-                var valueToAdd = _pairInsertionRules[lookupValue];
-                polymerTemplate = polymerTemplate.Insert(insertionIndex, valueToAdd);
-            }
+                for (var i = 0; i < polymer.Length - 1; i++)
+                {
+                    var lookupValue = polymer.Substring(i, 2);
+                    var valueToAdd = _pairInsertionRules[lookupValue];
+                    yield return polymer[i];
+                    yield return Convert.ToChar(valueToAdd);
+                }
 
-            return polymerTemplate;
+                yield return polymer.Last();
+            }
+            
+            return new string(SecretPolymerization(polymerTemplate).ToArray());
         }
     }
 }
