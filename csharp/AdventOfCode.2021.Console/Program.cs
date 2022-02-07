@@ -2,7 +2,7 @@
 
 try
 {
-    var day = GetDay(13);
+    var day = GetDay(14);
 
     var testInput = Utils.ReadAllLines($"Day{day.DayNumber:00}_test");
     var input = Utils.ReadAllLines($"Day{day.DayNumber:00}");
@@ -43,6 +43,7 @@ static IDay GetDay(int day)
         8 => new Day08(),
         12 => new Day12(),
         13 => new Day13(),
+        14 => new Day14(),
         _ => throw new ArgumentOutOfRangeException(nameof(day)),
     };
 }
