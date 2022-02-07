@@ -40,7 +40,16 @@ internal class Day12 : IDay
         {
             var last = currentPath.Last();
             var nextCaves = connections
-                .Where(x => x.HasLocation(last) && !currentPath.Contains(x.GetOtherLocation(last)))
+                .Where(x =>
+                {
+                    if (!x.HasLocation(last))
+                    {
+                        return false;
+                    }
+
+                    var otherLocation = x.GetOtherLocation(last);
+                    return otherLocation.All(char.IsUpper) || !currentPath.Contains(otherLocation);
+                })
                 .Select(x => x.GetOtherLocation(last))
                 .ToArray();
             var currentPathArray = currentPath.ToArray();
@@ -51,7 +60,6 @@ internal class Day12 : IDay
             }
 
             currentPath.Add(nextCaves.First());
-
             if (nextCaves.Length == 1)
             {
                 continue;

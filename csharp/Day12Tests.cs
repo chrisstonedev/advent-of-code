@@ -54,7 +54,7 @@ public class Day12Tests
             "start,b,end",
             "start,c,end",
             "start,b,c,end",
-            "start,c,b,end",
+            "start,c,b,end"
         };
         var answer = Day12.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(4));
@@ -78,10 +78,29 @@ public class Day12Tests
             "start,b,end",
             "start,c,end",
             "start,b,c,end",
-            "start,c,b,end",
+            "start,c,b,end"
         };
         var answer = Day12.GetAllDistinctPaths(input);
         Assert.That(answer.Length, Is.EqualTo(4));
+        Assert.That(answer, Is.EquivalentTo(expected));
+    }
+
+    [Test]
+    public void RevisitLargeCaves()
+    {
+        var input = new[]
+        {
+            "start-E",
+            "E-f",
+            "E-end"
+        };
+        var expected = new[]
+        {
+            "start,E,end",
+            "start,E,f,E,end"
+        };
+        var answer = Day12.GetAllDistinctPaths(input);
+        Assert.That(answer.Length, Is.EqualTo(2));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
 
