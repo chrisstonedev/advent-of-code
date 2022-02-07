@@ -44,10 +44,19 @@ internal class Day12 : IDay
                 .Select(x => x.GetOtherLocation(last))
                 .ToArray();
             var currentPathArray = currentPath.ToArray();
+            if (nextCaves.Length == 0)
+            {
+                allPaths.Remove(currentPath);
+                return;
+            }
+
             currentPath.Add(nextCaves.First());
 
-            if (nextCaves.Length == 1) continue;
-            
+            if (nextCaves.Length == 1)
+            {
+                continue;
+            }
+
             var newList = currentPathArray.Concat(new[] {nextCaves.Last()}).ToList();
             allPaths.Add(newList);
             FindAllPathsToEnd(newList, connections, allPaths);

@@ -62,6 +62,30 @@ public class Day12Tests
     }
 
     [Test]
+    public void IgnoreSmallDeadEndCave()
+    {
+        var input = new[]
+        {
+            "start-b",
+            "start-c",
+            "b-c",
+            "c-d",
+            "b-end",
+            "c-end"
+        };
+        var expected = new[]
+        {
+            "start,b,end",
+            "start,c,end",
+            "start,b,c,end",
+            "start,c,b,end",
+        };
+        var answer = Day12.GetAllDistinctPaths(input);
+        Assert.That(answer.Length, Is.EqualTo(4));
+        Assert.That(answer, Is.EquivalentTo(expected));
+    }
+
+    [Test]
     [Ignore("Not yet ready to implement")]
     public void SimpleExample()
     {
