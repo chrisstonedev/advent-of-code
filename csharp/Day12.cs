@@ -24,19 +24,34 @@ internal class Day12 : IDay
             var pathPieces = x.Split('-');
             return new Connection(pathPieces[0], pathPieces[1]);
         }).ToArray();
-        var oneGoodPath = new List<string> {"start"};
-        while (oneGoodPath.Last() != "end")
-        {
-            var last = oneGoodPath.Last();
-            var nextCave = connections
-                .First(x => x.HasLocation(last) && !oneGoodPath.Contains(x.GetOtherLocation(last)))
-                .GetOtherLocation(last);
-            oneGoodPath.Add(nextCave);
-        }
+        var allPaths = new List<List<string>>();
+        var initialPath = new List<string> {"start"};
+        allPaths.Add(initialPath);
 
-        var goodArray = oneGoodPath.ToArray();
-        var goodPathString = string.Join(',', goodArray);
-        return new[] {goodPathString};
+        FindAllPathsToEnd(initialPath, connections, allPaths);
+
+        return allPaths.Select(x => string.Join(',', x.ToArray())).ToArray();
+    }
+
+    private static void FindAllPathsToEnd(List<string> currentPath, Connection[] connections,
+        ICollection<List<string>> allPaths)
+    {
+        while (currentPath.Last() != "end")
+        {
+            var last = currentPath.Last();
+            var nextCaves = connections
+                .Where(x => x.HasLocation(last) && !currentPath.Contains(x.GetOtherLocation(last)))
+                .Select(x => x.GetOtherLocation(last))
+                .ToArray();
+            var currentPathArray = currentPath.ToArray();
+            currentPath.Add(nextCaves.First());
+
+            if (nextCaves.Length == 1) continue;
+            
+            var newList = currentPathArray.Concat(new[] {nextCaves.Last()}).ToList();
+            allPaths.Add(newList);
+            FindAllPathsToEnd(newList, connections, allPaths);
+        }
     }
 
     private readonly record struct Connection(string Location1, string Location2)
