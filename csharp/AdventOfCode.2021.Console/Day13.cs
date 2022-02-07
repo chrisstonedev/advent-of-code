@@ -9,8 +9,9 @@ public class Day13 : IDay
     public int ExecutePartOne(string[] input)
     {
         var result = FormatInputData(input);
+        var finalPoints = FoldPaper(result.Points, result.Folds.First());
 
-        return result.Points.Length;
+        return finalPoints.Length;
     }
 
     public static InputData FormatInputData(string[] input)
@@ -28,6 +29,29 @@ public class Day13 : IDay
         }).ToArray();
         var result = new InputData(firstPartOfFile, secondPart);
         return result;
+    }
+
+    public static Point[] FoldPaper(Point[] resultPoints, Fold fold)
+    {
+        int CalculateFoldNumber(int initialValue)
+        {
+            return 2 * fold.LineNumber - initialValue;
+        }
+
+        for (var i = 0; i < resultPoints.Length; i++)
+        {
+            switch (fold.Orientation)
+            {
+                case "x" when resultPoints[i].X > fold.LineNumber:
+                    resultPoints[i].X = CalculateFoldNumber(resultPoints[i].X);
+                    break;
+                case "y" when resultPoints[i].Y > fold.LineNumber:
+                    resultPoints[i].Y = CalculateFoldNumber(resultPoints[i].Y);
+                    break;
+            }
+        }
+
+        return resultPoints.Distinct().ToArray();
     }
 
     public int ExecutePartTwo(string[] input)
