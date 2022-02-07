@@ -9,15 +9,20 @@ try
 
     Utils.AssertTestAnswer(day.ExecutePartOne(testInput), day.PartOneTestAnswer);
     Console.WriteLine("Part 1: " + day.ExecutePartOne(input));
-    if (day is ILongDay longDay)
+    switch (day)
     {
-        Utils.AssertTestAnswer(longDay.ExecutePartTwoLong(testInput), longDay.PartTwoTestAnswerLong);
-        Console.WriteLine("Part 2: " + longDay.ExecutePartTwoLong(input));
-    }
-    else
-    {
-        Utils.AssertTestAnswer(day.ExecutePartTwo(testInput), day.PartTwoTestAnswer);
-        Console.WriteLine("Part 2: " + day.ExecutePartTwo(input));
+        case ILongDay longDay:
+            Utils.AssertTestAnswer(longDay.ExecutePartTwoLong(testInput), longDay.PartTwoTestAnswerLong);
+            Console.WriteLine("Part 2: " + longDay.ExecutePartTwoLong(input));
+            break;
+        case IStringDay stringDay:
+            Utils.AssertTestAnswer(stringDay.ExecutePartTwoString(testInput), stringDay.PartTwoTestAnswerString);
+            Console.WriteLine("Part 2: " + stringDay.ExecutePartTwoString(input));
+            break;
+        default:
+            Utils.AssertTestAnswer(day.ExecutePartTwo(testInput), day.PartTwoTestAnswer);
+            Console.WriteLine("Part 2: " + day.ExecutePartTwo(input));
+            break;
     }
 }
 catch (Exception ex)

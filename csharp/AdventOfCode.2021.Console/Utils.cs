@@ -24,4 +24,10 @@ internal static class Utils
         if (actual != expected)
             throw new Exception($"Assertion failed; expected {expected} but received {actual}");
     }
+
+    internal static void AssertTestAnswer(string actual, string expected)
+    {
+        if (actual != expected)
+            throw new Exception($"Assertion failed; expected {expected} but received {actual}");
+    }
 }
