@@ -1,6 +1,8 @@
+using advent_of_code_2021;
+
 try
 {
-    IDay day = GetDay(6);
+    var day = GetDay(12);
 
     var testInput = Utils.ReadAllLines($"Day{day.DayNumber:00}_test");
     var input = Utils.ReadAllLines($"Day{day.DayNumber:00}");
@@ -34,6 +36,7 @@ static IDay GetDay(int day)
         6 => new Day06(),
         7 => new Day07(),
         8 => new Day08(),
+        12 => new Day12(),
         _ => throw new ArgumentOutOfRangeException(nameof(day)),
     };
 }
