@@ -4,10 +4,6 @@ public class Day13 : IStringDay
 {
     public int DayNumber => 13;
     public int PartOneTestAnswer => 17;
-
-    [Obsolete($"Use {nameof(PartTwoTestAnswerString)} instead.")]
-    public int PartTwoTestAnswer => throw new NotImplementedException();
-
     public string PartTwoTestAnswerString => ".";
 
     public int ExecutePartOne(string[] input)

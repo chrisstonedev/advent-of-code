@@ -1,18 +1,32 @@
 namespace AdventOfCode._2021.Console;
 
-public class Day14 : IDay
+public class Day14 : ILongDay
 {
     public int DayNumber => 14;
     public int PartOneTestAnswer => 1588;
-    public int PartTwoTestAnswer => -1;
+    public long PartTwoTestAnswerLong => 2188189693529;
 
     public int ExecutePartOne(string[] input)
+    {
+        return (int) SolveProblem(input, 10);
+    }
+
+    public long ExecutePartTwoLong(string[] input)
+    {
+        return SolveProblem(input, 40);
+    }
+
+    private static long SolveProblem(string[] input, int steps)
     {
         var (polymer, pairInsertionRules) = FormatInputData(input);
         // ReSharper disable once IdentifierTypo
         var polymerizer = new Polymerizer(pairInsertionRules);
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < steps; i++)
         {
+            // if (i % 10 == 0)
+            // {
+                System.Console.WriteLine("Step " + i);
+            // }
             polymer = polymerizer.Polymerize(polymer);
         }
 
@@ -27,11 +41,6 @@ public class Day14 : IDay
         var pairInsertionRules = input.Skip(2).Select(x => x.Split(" -> "))
             .ToDictionary(key => key.First(), value => value.Last());
         return (polymerTemplate, pairInsertionRules);
-    }
-
-    public int ExecutePartTwo(string[] input)
-    {
-        return 0;
     }
 
     // ReSharper disable once IdentifierTypo
@@ -51,15 +60,15 @@ public class Day14 : IDay
             {
                 for (var i = 0; i < polymer.Length - 1; i++)
                 {
-                    var lookupValue = polymer.Substring(i, 2);
-                    var valueToAdd = _pairInsertionRules[lookupValue];
+                    var j = i + 2;
+                    var valueToAdd = _pairInsertionRules[polymer[i..j]];
                     yield return polymer[i];
                     yield return Convert.ToChar(valueToAdd);
                 }
 
                 yield return polymer.Last();
             }
-            
+
             return new string(SecretPolymerization(polymerTemplate).ToArray());
         }
     }

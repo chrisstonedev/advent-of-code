@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCode._2021.Console;
 
-internal class Day08 : IDay
+internal class Day08 : IIntDay
 {
     public int DayNumber => 8;
     public int PartOneTestAnswer => 26;

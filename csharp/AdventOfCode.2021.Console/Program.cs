@@ -19,9 +19,9 @@ try
             Utils.AssertTestAnswer(stringDay.ExecutePartTwoString(testInput), stringDay.PartTwoTestAnswerString);
             Console.WriteLine("Part 2: " + stringDay.ExecutePartTwoString(input));
             break;
-        default:
-            Utils.AssertTestAnswer(day.ExecutePartTwo(testInput), day.PartTwoTestAnswer);
-            Console.WriteLine("Part 2: " + day.ExecutePartTwo(input));
+        case IIntDay intDay:
+            Utils.AssertTestAnswer(intDay.ExecutePartTwo(testInput), intDay.PartTwoTestAnswer);
+            Console.WriteLine("Part 2: " + intDay.ExecutePartTwo(input));
             break;
     }
 }
