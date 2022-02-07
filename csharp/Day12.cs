@@ -4,20 +4,21 @@ internal class Day12 : IDay
 {
     public int DayNumber => 12;
     public int PartOneTestAnswer => 226;
-    public int PartTwoTestAnswer => -1;
+    public int PartTwoTestAnswer => 3509;
 
     public int ExecutePartOne(string[] input)
     {
-        var paths = GetAllDistinctPaths(input);
+        var paths = GetAllDistinctPaths(input, false);
         return paths.Length;
     }
 
     public int ExecutePartTwo(string[] input)
     {
-        return 0;
+        var paths = GetAllDistinctPaths(input, true);
+        return paths.Length;
     }
 
-    public static string[] GetAllDistinctPaths(string[] input)
+    public static string[] GetAllDistinctPaths(IEnumerable<string> input, bool smallCavesCanBeEnteredTwice)
     {
         var connections = input.Select(x =>
         {
@@ -28,27 +29,48 @@ internal class Day12 : IDay
         var initialPath = new List<string> {"start"};
         allPaths.Add(initialPath);
 
-        FindAllPathsToEnd(initialPath, connections, allPaths);
+        FindAllPathsToEnd(initialPath, connections, allPaths, smallCavesCanBeEnteredTwice);
 
         return allPaths.Select(x => string.Join(',', x.ToArray())).ToArray();
     }
 
     private static void FindAllPathsToEnd(List<string> currentPath, Connection[] connections,
-        ICollection<List<string>> allPaths)
+        ICollection<List<string>> allPaths, bool smallCavesCanBeEnteredTwice)
     {
         while (currentPath.Last() != "end")
         {
             var last = currentPath.Last();
             var nextCaves = connections
-                .Where(x =>
+                .Where(connection =>
                 {
-                    if (!x.HasLocation(last))
+                    if (!connection.HasLocation(last))
                     {
                         return false;
                     }
 
-                    var otherLocation = x.GetOtherLocation(last);
-                    return otherLocation.All(char.IsUpper) || !currentPath.Contains(otherLocation);
+                    var otherLocation = connection.GetOtherLocation(last);
+                    if (otherLocation.All(char.IsUpper))
+                    {
+                        return true;
+                    }
+
+                    if (otherLocation == "start")
+                    {
+                        return false;
+                    }
+
+                    if (!smallCavesCanBeEnteredTwice)
+                    {
+                        return !currentPath.Contains(otherLocation);
+                    }
+
+                    var alreadyDuplicated = currentPath.Where(x => char.IsLower(x.First())).GroupBy(x => x).Any(x => x.Count() > 1);
+                    if (alreadyDuplicated)
+                    {
+                        return !currentPath.Contains(otherLocation);
+                    }
+
+                    return currentPath.Count(previousLocation => previousLocation == otherLocation) <= 1;
                 })
                 .Select(x => x.GetOtherLocation(last))
                 .ToArray();
@@ -69,7 +91,7 @@ internal class Day12 : IDay
             {
                 var newList = currentPathArray.Concat(new[] {cave}).ToList();
                 allPaths.Add(newList);
-                FindAllPathsToEnd(newList, connections, allPaths);
+                FindAllPathsToEnd(newList, connections, allPaths, smallCavesCanBeEnteredTwice);
             }
         }
     }

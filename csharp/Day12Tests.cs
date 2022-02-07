@@ -16,7 +16,7 @@ public class Day12Tests
         {
             "start,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input);
+        var answer = Day12.GetAllDistinctPaths(input, false);
         Assert.That(answer.Length, Is.EqualTo(1));
         Assert.That(answer, Is.EqualTo(expected));
     }
@@ -33,7 +33,7 @@ public class Day12Tests
         {
             "start,A,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input);
+        var answer = Day12.GetAllDistinctPaths(input, false);
         Assert.That(answer.Length, Is.EqualTo(1));
         Assert.That(answer, Is.EqualTo(expected));
     }
@@ -56,7 +56,7 @@ public class Day12Tests
             "start,b,c,end",
             "start,c,b,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input);
+        var answer = Day12.GetAllDistinctPaths(input, false);
         Assert.That(answer.Length, Is.EqualTo(4));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -80,7 +80,7 @@ public class Day12Tests
             "start,b,c,end",
             "start,c,b,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input);
+        var answer = Day12.GetAllDistinctPaths(input, false);
         Assert.That(answer.Length, Is.EqualTo(4));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -99,7 +99,7 @@ public class Day12Tests
             "start,E,end",
             "start,E,f,E,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input);
+        var answer = Day12.GetAllDistinctPaths(input, false);
         Assert.That(answer.Length, Is.EqualTo(2));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -122,7 +122,7 @@ public class Day12Tests
             "start,h,end",
             "start,i,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input);
+        var answer = Day12.GetAllDistinctPaths(input, false);
         Assert.That(answer.Length, Is.EqualTo(3));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -153,7 +153,7 @@ public class Day12Tests
             "start,b,A,end",
             "start,b,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input);
+        var answer = Day12.GetAllDistinctPaths(input, false);
         Assert.That(answer.Length, Is.EqualTo(10));
         Assert.That(answer, Is.EquivalentTo(expected));
     }
@@ -196,8 +196,86 @@ public class Day12Tests
             "start,kj,dc,HN,end",
             "start,kj,dc,end"
         };
-        var answer = Day12.GetAllDistinctPaths(input);
+        var answer = Day12.GetAllDistinctPaths(input, false);
         Assert.That(answer.Length, Is.EqualTo(19));
         Assert.That(answer, Is.EquivalentTo(expected));
+    }
+
+
+    [Test]
+    public void SimpleExampleWhereSmallCavesCanBeRevisited()
+    {
+        var input = new[]
+        {
+            "start-A",
+            "start-b",
+            "A-c",
+            "A-b",
+            "b-d",
+            "A-end",
+            "b-end"
+        };
+        var expected = new[]
+        {
+            "start,A,b,A,b,A,c,A,end",
+            "start,A,b,A,b,A,end",
+            "start,A,b,A,b,end",
+            "start,A,b,A,c,A,b,A,end",
+            "start,A,b,A,c,A,b,end",
+            "start,A,b,A,c,A,c,A,end",
+            "start,A,b,A,c,A,end",
+            "start,A,b,A,end",
+            "start,A,b,d,b,A,c,A,end",
+            "start,A,b,d,b,A,end",
+            "start,A,b,d,b,end",
+            "start,A,b,end",
+            "start,A,c,A,b,A,b,A,end",
+            "start,A,c,A,b,A,b,end",
+            "start,A,c,A,b,A,c,A,end",
+            "start,A,c,A,b,A,end",
+            "start,A,c,A,b,d,b,A,end",
+            "start,A,c,A,b,d,b,end",
+            "start,A,c,A,b,end",
+            "start,A,c,A,c,A,b,A,end",
+            "start,A,c,A,c,A,b,end",
+            "start,A,c,A,c,A,end",
+            "start,A,c,A,end",
+            "start,A,end",
+            "start,b,A,b,A,c,A,end",
+            "start,b,A,b,A,end",
+            "start,b,A,b,end",
+            "start,b,A,c,A,b,A,end",
+            "start,b,A,c,A,b,end",
+            "start,b,A,c,A,c,A,end",
+            "start,b,A,c,A,end",
+            "start,b,A,end",
+            "start,b,d,b,A,c,A,end",
+            "start,b,d,b,A,end",
+            "start,b,d,b,end",
+            "start,b,end"
+        };
+        var answer = Day12.GetAllDistinctPaths(input, true);
+        Assert.That(answer.Length, Is.EqualTo(36));
+        Assert.That(answer, Is.EquivalentTo(expected));
+    }
+
+    [Test]
+    public void SlightlyLargerExampleWhereSmallCavesCanBeRevisited()
+    {
+        var input = new[]
+        {
+            "dc-end",
+            "HN-start",
+            "start-kj",
+            "dc-start",
+            "dc-HN",
+            "LN-dc",
+            "HN-end",
+            "kj-sa",
+            "kj-HN",
+            "kj-dc"
+        };
+        var answer = Day12.GetAllDistinctPaths(input, true);
+        Assert.That(answer.Length, Is.EqualTo(103));
     }
 }
