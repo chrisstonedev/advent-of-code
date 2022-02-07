@@ -1,4 +1,6 @@
-﻿internal interface IDay
+﻿namespace advent_of_code_2021;
+
+internal interface IDay
 {
     int DayNumber { get; }
     int PartOneTestAnswer { get; }

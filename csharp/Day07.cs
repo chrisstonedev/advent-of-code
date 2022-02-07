@@ -1,4 +1,6 @@
-﻿internal class Day07 : IDay
+﻿namespace advent_of_code_2021;
+
+internal class Day07 : IDay
 {
     public int DayNumber => 7;
     public int PartOneTestAnswer => 37;

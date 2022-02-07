@@ -1,4 +1,6 @@
-﻿internal static class Utils
+﻿namespace advent_of_code_2021;
+
+internal static class Utils
 {
     internal static string[] ReadAllLines(string fileName)
     {

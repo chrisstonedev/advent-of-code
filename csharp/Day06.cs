@@ -1,4 +1,6 @@
-﻿internal class Day06 : ILongDay
+﻿namespace advent_of_code_2021;
+
+internal class Day06 : ILongDay
 {
     public int DayNumber => 6;
     public int PartOneTestAnswer => 5934;
