@@ -105,7 +105,29 @@ public class Day12Tests
     }
 
     [Test]
-    [Ignore("Not yet ready to implement")]
+    public void VisitThreeBranchedPath()
+    {
+        var input = new[]
+        {
+            "start-g",
+            "start-h",
+            "start-i",
+            "g-end",
+            "h-end",
+            "i-end"
+        };
+        var expected = new[]
+        {
+            "start,g,end",
+            "start,h,end",
+            "start,i,end"
+        };
+        var answer = Day12.GetAllDistinctPaths(input);
+        Assert.That(answer.Length, Is.EqualTo(3));
+        Assert.That(answer, Is.EquivalentTo(expected));
+    }
+
+    [Test]
     public void SimpleExample()
     {
         var input = new[]
@@ -137,7 +159,6 @@ public class Day12Tests
     }
 
     [Test]
-    [Ignore("Not yet ready to implement")]
     public void SlightlyLargerExample()
     {
         var input = new[]

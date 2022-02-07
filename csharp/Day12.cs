@@ -65,9 +65,12 @@ internal class Day12 : IDay
                 continue;
             }
 
-            var newList = currentPathArray.Concat(new[] {nextCaves.Last()}).ToList();
-            allPaths.Add(newList);
-            FindAllPathsToEnd(newList, connections, allPaths);
+            foreach (var cave in nextCaves.Skip(1))
+            {
+                var newList = currentPathArray.Concat(new[] {cave}).ToList();
+                allPaths.Add(newList);
+                FindAllPathsToEnd(newList, connections, allPaths);
+            }
         }
     }
 
