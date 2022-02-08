@@ -28,11 +28,6 @@ public class Day14 : ILongDay
             var currentPolymer = polymer.Substring(o, 2);
             for (var i = 0; i < steps; i++)
             {
-                if (i % 5 == 0)
-                {
-                    System.Console.WriteLine($"Step {i} for {o + 1}/{polymer.Length - 1}");
-                }
-
                 currentPolymer = polymerizer.Polymerize(currentPolymer);
             }
 
@@ -54,32 +49,21 @@ public class Day14 : ILongDay
         var polymerizer = new Polymerizer(pairInsertionRules);
         var allCounts = new Dictionary<char, ulong>();
 
-
         for (var i = 0; i < 15; i++)
         {
-            if (i % 5 == 0)
-            {
-                System.Console.WriteLine($"Step {i}");
-            }
-
             polymer = polymerizer.Polymerize(polymer);
         }
 
         var subPolymers = new Dictionary<string, IGrouping<char, char>[]>();
-        for (var o = 0; o < polymer.Length - 1; o++)
+        for (var pairIndex = 0; pairIndex < polymer.Length - 1; pairIndex++)
         {
-            var currentPolymer = polymer.Substring(o, 2);
+            var currentPolymer = polymer.Substring(pairIndex, 2);
             var dictionaryKey = currentPolymer;
             if (!subPolymers.TryGetValue(dictionaryKey, out _))
             {
-                System.Console.WriteLine("couldn't find " + dictionaryKey);
+                System.Console.WriteLine($"{pairIndex + 1}/{polymer.Length - 1}");
                 for (var i = 0; i < 25; i++)
                 {
-                    if (i % 5 == 0)
-                    {
-                        System.Console.WriteLine($"Step {i + 15} for {o + 1}/{polymer.Length - 1}");
-                    }
-
                     currentPolymer = polymerizer.Polymerize(currentPolymer);
                 }
 
@@ -89,7 +73,8 @@ public class Day14 : ILongDay
 
             foreach (var thing in subPolymers[dictionaryKey])
             {
-                allCounts[thing.Key] = (allCounts.ContainsKey(thing.Key) ? allCounts[thing.Key] : 0) + (ulong) thing.Count();
+                allCounts[thing.Key] = (allCounts.ContainsKey(thing.Key) ? allCounts[thing.Key] : 0) +
+                                       (ulong) thing.Count();
             }
         }
 
