@@ -2,49 +2,51 @@
 
 namespace test2022;
 
-use aoc2022\Day01;
+use aoc2022\Day01 as Day;
 use PHPUnit\Framework\TestCase;
 
 class Day01Test extends TestCase
 {
+    const DAY_NUMBER = 'Day01';
+
     /**
-     * @dataProvider day1Part1Provider
+     * @dataProvider part1Provider
      */
-    public function testDay1Part1(string $filename, int $expected)
+    public function testPart1(string $filename, int $expected)
     {
         $testInput = Utils::ReadAllLines($filename);
-        $this->assertSame($expected, Day01::ExecutePartOne($testInput));
+        $this->assertSame($expected, Day::ExecutePartOne($testInput));
     }
 
     /**
-     * @dataProvider day1Part2Provider
+     * @dataProvider part2Provider
      */
-    public function testDay1Part2(string $filename, int $expected)
+    public function testPart2(string $filename, int $expected)
     {
         $input = Utils::ReadAllLines($filename);
-        $this->assertSame($expected, Day01::ExecutePartTwo($input));
+        $this->assertSame($expected, Day::ExecutePartTwo($input));
     }
 
-    public function day1Part1Provider(): array
+    public function part1Provider(): array
     {
         return [
-            ['Day01_test', 24000],
-            ['Day01', 69281],
+            [self::DAY_NUMBER . '_test', 24000],
+            [self::DAY_NUMBER, 69281],
         ];
     }
 
-    public function day1Part2Provider(): array
+    public function part2Provider(): array
     {
         return [
-            ['Day01_test', 45000],
-            ['Day01', 201524],
+            [self::DAY_NUMBER . '_test', 45000],
+            [self::DAY_NUMBER, 201524],
         ];
     }
 
-    public function testDay1MethodReturnsTheExpectedOutputForTestData()
+    public function testMethodReturnsTheExpectedOutputForTestData()
     {
         $input = Utils::ReadAllLines('Day01_test');
-        $result = Day01::getCaloriesCarriedByEachElfInDescendingOrder($input);
+        $result = Day::getCaloriesCarriedByEachElfInDescendingOrder($input);
         $this->assertSame([24000, 11000, 10000, 6000, 4000], $result);
     }
 }
