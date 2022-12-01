@@ -22,11 +22,11 @@ class Day01
     {
         $caloriesForCurrentElf = 0;
         $caloriesForEachElf = [];
-        for ($i = 0; $i < count($input); $i++) {
-            if ($input[$i] !== '') {
-                $caloriesForCurrentElf += intval($input[$i]);
+        foreach ($input as $index => $calories) {
+            if ($calories !== '') {
+                $caloriesForCurrentElf += intval($calories);
             }
-            if ($input[$i] === '' || $i === count($input) - 1) {
+            if ($calories === '' || $index === count($input) - 1) {
                 $caloriesForEachElf[] = $caloriesForCurrentElf;
                 $caloriesForCurrentElf = 0;
             }
