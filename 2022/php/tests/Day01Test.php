@@ -29,7 +29,7 @@ class Day01Test extends TestCase
     {
         return [
             ['Day01_test', 24000],
-            ['Day01', 69281]
+            ['Day01', 69281],
         ];
     }
 
@@ -37,7 +37,14 @@ class Day01Test extends TestCase
     {
         return [
             ['Day01_test', 45000],
-            ['Day01', 201524]
+            ['Day01', 201524],
         ];
+    }
+
+    public function testDay1MethodReturnsTheExpectedOutputForTestData()
+    {
+        $input = Utils::ReadAllLines('Day01_test');
+        $result = Day01::getCaloriesCarriedByEachElfInDescendingOrder($input);
+        $this->assertSame([24000, 11000, 10000, 6000, 4000], $result);
     }
 }

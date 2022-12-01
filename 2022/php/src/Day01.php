@@ -6,8 +6,6 @@ namespace aoc2022;
 
 class Day01
 {
-    const INTEGER_MAP = 'intval';
-
     public static function ExecutePartOne(array $input): int
     {
         $caloriesCarriedByEachElf = self::getCaloriesCarriedByEachElfInDescendingOrder($input);
@@ -22,20 +20,19 @@ class Day01
 
     public static function getCaloriesCarriedByEachElfInDescendingOrder(array $input): array
     {
-        $inputAsIntegers = array_map(self::INTEGER_MAP, $input);
-        $calorieList = [];
-        $sums = [];
-        for ($i = 0; $i < count($inputAsIntegers); $i++) {
-            if ($inputAsIntegers[$i] > 0) {
-                $calorieList[] = $inputAsIntegers[$i];
-            } else {
-                $sums[] = array_sum($calorieList);
-                $calorieList = [];
+        $caloriesForCurrentElf = 0;
+        $caloriesForEachElf = [];
+        for ($i = 0; $i < count($input); $i++) {
+            if ($input[$i] !== '') {
+                $caloriesForCurrentElf += intval($input[$i]);
+            }
+            if ($input[$i] === '' || $i === count($input) - 1) {
+                $caloriesForEachElf[] = $caloriesForCurrentElf;
+                $caloriesForCurrentElf = 0;
             }
         }
-        $sums[] = array_sum($calorieList);
 
-        rsort($sums);
-        return $sums;
+        rsort($caloriesForEachElf);
+        return $caloriesForEachElf;
     }
 }
