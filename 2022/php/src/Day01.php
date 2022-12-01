@@ -10,52 +10,32 @@ class Day01
 
     public static function ExecutePartOne(array $input): int
     {
-        $inputAsIntegers = array_map(self::INTEGER_MAP, $input);
-        $eachArray = [];
-        $thisArray = [];
-        for ($i = 0; $i < count($inputAsIntegers); $i++) {
-            $thisElement = $inputAsIntegers[$i];
-            if ($thisElement === 0) {
-                $eachArray[] = $thisArray;
-                $thisArray = [];
-            } else {
-                $thisArray[] = $thisElement;
-            }
-        }
-        $eachArray[] = $thisArray;
-
-        $biggestSum = 0;
-        for ($i = 0; $i < count($eachArray); $i++) {
-            $thisArray = $eachArray[$i];
-            $thisSum = array_sum($thisArray);
-            if ($thisSum > $biggestSum)
-                $biggestSum = $thisSum;
-        }
-        return $biggestSum;
+        $caloriesCarriedByEachElf = self::getCaloriesCarriedByEachElfInDescendingOrder($input);
+        return $caloriesCarriedByEachElf[0];
     }
 
     public static function ExecutePartTwo(array $input): int
     {
+        $caloriesCarriedByEachElf = self::getCaloriesCarriedByEachElfInDescendingOrder($input);
+        return $caloriesCarriedByEachElf[0] + $caloriesCarriedByEachElf[1] + $caloriesCarriedByEachElf[2];
+    }
+
+    public static function getCaloriesCarriedByEachElfInDescendingOrder(array $input): array
+    {
         $inputAsIntegers = array_map(self::INTEGER_MAP, $input);
-        $eachArray = [];
-        $thisArray = [];
+        $calorieList = [];
+        $sums = [];
         for ($i = 0; $i < count($inputAsIntegers); $i++) {
-            $thisElement = $inputAsIntegers[$i];
-            if ($thisElement === 0) {
-                $eachArray[] = $thisArray;
-                $thisArray = [];
+            if ($inputAsIntegers[$i] > 0) {
+                $calorieList[] = $inputAsIntegers[$i];
             } else {
-                $thisArray[] = $thisElement;
+                $sums[] = array_sum($calorieList);
+                $calorieList = [];
             }
         }
-        $eachArray[] = $thisArray;
+        $sums[] = array_sum($calorieList);
 
-        $sums = [];
-        for ($i = 0; $i < count($eachArray); $i++) {
-            $thisArray = $eachArray[$i];
-            $sums[] = array_sum($thisArray);
-        }
         rsort($sums);
-        return $sums[0] + $sums[1] + $sums[2];
+        return $sums;
     }
 }

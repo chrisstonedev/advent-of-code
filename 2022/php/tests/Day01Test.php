@@ -37,7 +37,7 @@ class Day01Test extends TestCase
     {
         return [
             ['Day01_test', 45000],
-            ['Day01', 0]
+            ['Day01', 201524]
         ];
     }
 }
