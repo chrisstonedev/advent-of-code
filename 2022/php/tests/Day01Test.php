@@ -27,11 +27,17 @@ class Day01Test extends TestCase
 
     public function day1Part1Provider(): array
     {
-        return [['Day01_test', 0], ['Day01', 0]];
+        return [
+            ['Day01_test', 24000],
+            ['Day01', 69281]
+        ];
     }
 
     public function day1Part2Provider(): array
     {
-        return [['Day01_test', 0], ['Day01', 0]];
+        return [
+            ['Day01_test', 45000],
+            ['Day01', 0]
+        ];
     }
 }
