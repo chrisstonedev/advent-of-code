@@ -12,46 +12,34 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+Implements ITestCaseSource
 
 Private Const INPUT_FILENAME As String = "Day01"
 
-Public Sub Day01_PartOne_TestInput()
-    Dim fileContents() As String
-    Dim Something As New AdventOfCode2022.clsDay01
-    Dim Actual As Long
-
-    fileContents = basUtils.ReadFile(INPUT_FILENAME + "_test")
-    Actual = Something.ExecutePartOne(fileContents)
-    Assert.That Actual, Iz.EqualTo(24000)
+Private Sub ITestCaseSource_GetTestCases(ByVal Test As SimplyVBComp.TestCaseCollector)
+    Select Case Test.MethodName
+        Case "Day01_Part1"
+            Test.Use(INPUT_FILENAME + "_test").Expect 24000
+            Test.Use(INPUT_FILENAME).Expect 69281
+        Case "Day01_Part2"
+            Test.Use(INPUT_FILENAME + "_test").Expect 45000
+            Test.Use(INPUT_FILENAME).Expect 201524
+    End Select
 End Sub
 
-Public Sub Day01_PartOne_RealInput()
-    Dim fileContents() As String
-    Dim Something As New AdventOfCode2022.clsDay01
-    Dim Actual As Long
+Public Function Day01_Part1(ByVal InputFilename As String) As Long
+    Dim FileContents() As String
+    Dim Day As New AdventOfCode2022.clsDay01
 
-    fileContents = basUtils.ReadFile(INPUT_FILENAME)
-    Actual = Something.ExecutePartOne(fileContents)
-    Assert.That Actual, Iz.EqualTo(69281)
-End Sub
+    FileContents = basUtils.ReadFile(InputFilename)
+    Day01_Part1 = Day.ExecutePartOne(FileContents)
+End Function
 
-Public Sub Day01_PartTwo_TestInput()
-    Dim fileContents() As String
-    Dim Something As New AdventOfCode2022.clsDay01
-    Dim Actual As Long
+Public Function Day01_Part2(ByVal InputFilename As String) As Long
+    Dim FileContents() As String
+    Dim Day As New AdventOfCode2022.clsDay01
 
-    fileContents = basUtils.ReadFile(INPUT_FILENAME + "_test")
-    Actual = Something.ExecutePartTwo(fileContents)
-    Assert.That Actual, Iz.EqualTo(45000)
-End Sub
-
-Public Sub Day01_PartTwo_RealInput()
-    Dim fileContents() As String
-    Dim Something As New AdventOfCode2022.clsDay01
-    Dim Actual As Long
-
-    fileContents = basUtils.ReadFile(INPUT_FILENAME)
-    Actual = Something.ExecutePartTwo(fileContents)
-    Assert.That Actual, Iz.EqualTo(201524)
-End Sub
+    FileContents = basUtils.ReadFile(InputFilename)
+    Day01_Part2 = Day.ExecutePartTwo(FileContents)
+End Function
 

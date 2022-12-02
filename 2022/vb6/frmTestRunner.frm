@@ -34,42 +34,12 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'
-' frmTestRunner
-'
-' ** NOTE **
-' Please set Tools->Options->General->Error_Trapping to 'Break on Unhandled Errors'
-'
 Option Explicit
-' Namespaces Available:
-'       Assert.*            ie. Assert.That Value, Iz.EqualTo(5)
-'
-' Public Functions Availabe:
-'       AddTest <TestObject>
-'       WriteText "Message"
-'       WriteLine "Message"
-'
-' Adding a test fixture:
-'   Use AddTest <object>
-'
-' Steps to create a TestCase:
-'
-'   1. Add a new class
-'   2. Name it as desired
-'   3. (Optionally) Add a Setup/Teardown method to be run before and after every test.
-'   4. (Optionally) Add a FixtureSetup/FixtureTeardown method to be run at the
-'      before the first test and after the last test.
-'   5. Add public Subs of the tests you want run.
-'
-'      Public Sub MyTest()
-'          Assert.That a, Iz.EqualTo(b)
-'      End Sub
-'
+
 Private Sub Form_Load()
     ' Add tests here
     AddTest New clsTestDay01
 End Sub
-
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 '   Form Initialization
