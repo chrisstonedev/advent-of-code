@@ -13,27 +13,28 @@ class Day02
             $lineData = explode(' ', $line);
             $opponentChoice = $lineData[0];
             $playerChoice = $lineData[1];
-            if ($playerChoice === 'X') {
-                $score += 1;
-                if ($opponentChoice === 'A') {
+            switch ($playerChoice) {
+                case 'X':
+                    $score += 1;
+                    break;
+                case 'Y':
+                    $score += 2;
+                    break;
+                case 'Z':
                     $score += 3;
-                } elseif ($opponentChoice === 'C') {
-                    $score += 6;
-                }
-            } elseif ($playerChoice === 'Y') {
-                $score += 2;
-                if ($opponentChoice === 'A') {
-                    $score += 6;
-                } elseif ($opponentChoice === 'B') {
+                    break;
+            }
+            switch ([$opponentChoice, $playerChoice]) {
+                case ['A', 'X']:
+                case ['B', 'Y']:
+                case ['C', 'Z']:
                     $score += 3;
-                }
-            } elseif ($playerChoice === 'Z') {
-                $score += 3;
-                if ($opponentChoice === 'B') {
+                    break;
+                case ['A', 'Y']:
+                case ['B', 'Z']:
+                case ['C', 'X']:
                     $score += 6;
-                } elseif ($opponentChoice === 'C') {
-                    $score += 3;
-                }
+                    break;
             }
         }
         return $score;
@@ -45,33 +46,32 @@ class Day02
         foreach ($input as $line) {
             $lineData = explode(' ', $line);
             $opponentChoice = $lineData[0];
-            $playerChoice = $lineData[1];
-            if ($playerChoice === 'X') {
-                if ($opponentChoice === 'A') {
+            $result = $lineData[1];
+
+            switch ($result) {
+                case 'Y':
                     $score += 3;
-                } elseif ($opponentChoice === 'B') {
+                    break;
+                case 'Z':
+                    $score += 6;
+                    break;
+            }
+            switch ([$opponentChoice, $result]) {
+                case ['A', 'Y']:
+                case ['B', 'X']:
+                case ['C', 'Z']:
                     $score += 1;
-                } elseif ($opponentChoice === 'C') {
+                    break;
+                case ['A', 'Z']:
+                case ['B', 'Y']:
+                case ['C', 'X']:
                     $score += 2;
-                }
-            } elseif ($playerChoice === 'Y') {
-                $score += 3;
-                if ($opponentChoice === 'A') {
-                    $score += 1;
-                } elseif ($opponentChoice === 'B') {
-                    $score += 2;
-                } elseif ($opponentChoice === 'C') {
+                    break;
+                case ['A', 'X']:
+                case ['B', 'Z']:
+                case ['C', 'Y']:
                     $score += 3;
-                }
-            } elseif ($playerChoice === 'Z') {
-                $score += 6;
-                if ($opponentChoice === 'A') {
-                    $score += 2;
-                } elseif ($opponentChoice === 'B') {
-                    $score += 3;
-                } elseif ($opponentChoice === 'C') {
-                    $score += 1;
-                }
+                    break;
             }
         }
         return $score;
