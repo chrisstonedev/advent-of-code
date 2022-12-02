@@ -15,8 +15,7 @@ class Day02
             $lineData = explode(' ', $line);
             $opponentChoice = $lineData[0];
             $playerChoice = $lineData[1];
-            $round = RoundOfPlay::createRoundOfPlayFromBothHands($opponentChoice, $playerChoice);
-            $score += $round->getScore();
+            $score += self::getScoreFromRoundBasedOnBothHands($opponentChoice, $playerChoice);
         }
         return $score;
     }
@@ -28,15 +27,11 @@ class Day02
             $lineData = explode(' ', $line);
             $opponentChoice = $lineData[0];
             $result = $lineData[1];
-            $round = RoundOfPlay::createRoundOfPlayFromOpponentChoiceAndResult($opponentChoice, $result);
-            $score += $round->getScore();
+            $score += self::getScoreBasedOnOpponentHandAndEndResult($opponentChoice, $result);
         }
         return $score;
     }
-}
 
-class RoundOfPlay
-{
     const HAND_ROCK = 'r';
     const HAND_PAPER = 'p';
     const HAND_SCISSORS = 's';
@@ -44,16 +39,7 @@ class RoundOfPlay
     const RESULT_DRAW = 'd';
     const RESULT_WIN = 'w';
 
-    private $playerChoice;
-    private $result;
-
-    public function __construct($playerChoice, $result)
-    {
-        $this->playerChoice = $playerChoice;
-        $this->result = $result;
-    }
-
-    public static function createRoundOfPlayFromBothHands(string $opponentChoice, string $playerChoice): RoundOfPlay
+    private static function getScoreFromRoundBasedOnBothHands(string $opponentChoice, string $playerChoice): int
     {
         $opponentHand = self::getOpponentHandFromChoiceCode($opponentChoice);
         switch ($playerChoice) {
@@ -87,10 +73,10 @@ class RoundOfPlay
                 $result = self::RESULT_LOSE;
                 break;
         }
-        return new RoundOfPlay($playerHand, $result);
+        return self::getScore($playerHand, $result);
     }
 
-    public static function createRoundOfPlayFromOpponentChoiceAndResult(string $opponentChoice, string $resultCode): RoundOfPlay
+    private static function getScoreBasedOnOpponentHandAndEndResult(string $opponentChoice, string $resultCode): int
     {
         $opponentHand = self::getOpponentHandFromChoiceCode($opponentChoice);
         switch ($resultCode) {
@@ -124,7 +110,7 @@ class RoundOfPlay
                 $playerHand = self::HAND_SCISSORS;
                 break;
         }
-        return new RoundOfPlay($playerHand, $result);
+        return self::getScore($playerHand, $result);
     }
 
     private static function getOpponentHandFromChoiceCode(string $opponentChoice): string
@@ -145,12 +131,12 @@ class RoundOfPlay
         return $opponentHand;
     }
 
-    public function getScore(): int
+    private static function getScore(string $playerChoice, string $result): int
     {
-        return $this->getScoreFromPlayerHand($this->playerChoice) + $this->getScoreFromResult($this->result);
+        return self::getScoreFromPlayerHand($playerChoice) + self::getScoreFromResult($result);
     }
 
-    private function getScoreFromPlayerHand(string $playerChoice): int
+    private static function getScoreFromPlayerHand(string $playerChoice): int
     {
         switch ($playerChoice) {
             case self::HAND_ROCK:
@@ -164,7 +150,7 @@ class RoundOfPlay
         }
     }
 
-    private function getScoreFromResult(string $result): int
+    private static function getScoreFromResult(string $result): int
     {
         switch ($result) {
             case self::RESULT_WIN:
