@@ -8,14 +8,22 @@ I will try to always solve each day's problem on my own without any outside help
 
 C# is my primary programming language and it is the one in which I am the most comfortable.
 
+🟢🟢🟢🔴🟢🟢🟢🟢🔴🔴🔴🟢🟢🟢🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+
 ## TypeScript
 
 TypeScript is a language I use often but I do not feel as strong in it as I do in C#, so I will try to also solve a few in TypeScript as well.
+
+🟢🟢🔴🟢🔴🔴🔴🔴🟢🟢🟢🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
 
 ## Kotlin
 
 I do not have very much experience with Kotlin and I look forward to using these activities as a way to refamiliarize myself with the language. I will try to solve some puzzles by myself, and I will occasionally refer to the [Advent of Code 2021 in Kotlin](https://www.youtube.com/playlist?list=PLlFc5cFwUnmy2hYx6k3TjjFLd7QXH2CjF) YouTube series by JetBrains to see how their proposed solutions compare and if there were additional language features that could have been used.
 
+🟢🟢🔴🔴🔴🔴🟢🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+
 ## PHP
 
 In 2022, I decided I would create a project using PHP. To prove to myself that it could be done, I made a test project for Day 1 of 2021 to prove that it can be done so that I would be ready to start solving.
+
+🟢🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
