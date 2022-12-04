@@ -28,4 +28,18 @@ class Day04AssignmentRange
     {
         return $this->lastAssignedSection;
     }
+
+    public function contains(Day04AssignmentRange $assignmentRange): bool
+    {
+        return $this->getFirstAssignedSection() <= $assignmentRange->getFirstAssignedSection()
+            && $this->getLastAssignedSection() >= $assignmentRange->getLastAssignedSection();
+    }
+
+    public function overlaps(Day04AssignmentRange $assignmentRange): bool
+    {
+        return $this->getFirstAssignedSection() <= $assignmentRange->getFirstAssignedSection()
+            ? $this->getLastAssignedSection() >= $assignmentRange->getFirstAssignedSection()
+            : $this->getFirstAssignedSection() <= $assignmentRange->getLastAssignedSection();
+    }
+
 }
