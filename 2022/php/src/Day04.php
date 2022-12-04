@@ -6,57 +6,82 @@ namespace aoc2022;
 
 class Day04
 {
-    public static function ExecutePartOne(array $input): int
+    public static function executePartOne(array $input): int
     {
         $count = 0;
         foreach ($input as $line) {
-            $elves = self::GetElfInformation($line);
-            // If the one of them starts at the same time or after the other and also ends at the same time or before.
-            if (self::EitherElfCompletelyOverlapsAnother($elves)) {
+            $sectionAssignmentRanges = self::parseSectionAssignmentRanges($line);
+            if (self::eitherAssignmentRangeFullyContainsTheOther($sectionAssignmentRanges)) {
                 $count++;
             }
         }
         return $count;
     }
 
-    public static function ExecutePartTwo(array $input): int
+    public static function executePartTwo(array $input): int
     {
         $count = 0;
         foreach ($input as $line) {
-            $elves = self::GetElfInformation($line);
-            // If the one of them starts at the same time or after the other and also ends at the same time or before.
-            if (self::EitherElfPartiallyOverlapsAnother($elves)) {
+            $sectionAssignmentRanges = self::parseSectionAssignmentRanges($line);
+            if (self::eitherAssignmentRangePartiallyContainsTheOther($sectionAssignmentRanges)) {
                 $count++;
             }
         }
         return $count;
     }
 
-    private static function GetElfInformation($line): array
+    private static function parseSectionAssignmentRanges(string $inputTextLine): array
     {
-        $elves = explode(',', $line);
-        $firstElf = array_map('intval', explode('-', $elves[0]));
-        $secondElf = array_map('intval', explode('-', $elves[1]));
-        return [$firstElf, $secondElf];
+        $assignments = explode(',', $inputTextLine);
+        $firstAssignmentRange = explode('-', $assignments[0]);
+        $secondAssignmentRange = explode('-', $assignments[1]);
+        return [
+            ['first' => intval($firstAssignmentRange[0]), 'last' => intval($firstAssignmentRange[1])],
+            ['first' => intval($secondAssignmentRange[0]), 'last' => intval($secondAssignmentRange[1])],
+        ];
     }
 
-    public static function EitherElfCompletelyOverlapsAnother($elves): bool
+    private static function eitherAssignmentRangeFullyContainsTheOther(array $assignmentRanges): bool
     {
-        $firstStarts = $elves[0][0];
-        $firstEnds = $elves[0][1];
-        $secondStarts = $elves[1][0];
-        $secondEnds = $elves[1][1];
-        return ($firstStarts >= $secondStarts && $firstEnds <= $secondEnds) ||
-            ($secondStarts >= $firstStarts && $secondEnds <= $firstEnds);
+        return (self::isAssignmentRangeFullyContainedInTheOther($assignmentRanges[0], $assignmentRanges[1]) ||
+            self::isAssignmentRangeFullyContainedInTheOther($assignmentRanges[1], $assignmentRanges[0]));
     }
 
-    public static function EitherElfPartiallyOverlapsAnother($elves): bool
+    private static function eitherAssignmentRangePartiallyContainsTheOther(array $assignmentRanges): bool
     {
-        $firstStarts = $elves[0][0];
-        $firstEnds = $elves[0][1];
-        $secondStarts = $elves[1][0];
-        $secondEnds = $elves[1][1];
-        return ($firstStarts <= $secondStarts && $firstEnds >= $secondStarts) ||
-            ($secondStarts <= $firstStarts && $secondEnds >= $firstStarts);
+        return self::isAssignmentRangePartiallyContainedInTheOther($assignmentRanges[0], $assignmentRanges[1]) ||
+            self::isAssignmentRangePartiallyContainedInTheOther($assignmentRanges[1], $assignmentRanges[0]);
+    }
+
+    private static function isAssignmentRangeFullyContainedInTheOther(array $assignmentRange, array $otherAssignmentRange): bool
+    {
+        return self::isFirstAssignedSectionTheSameOrAfterTheFirstAssignedSectionOfOtherRange($assignmentRange, $otherAssignmentRange)
+            && self::isLastAssignedSectionTheSameOrBeforeTheLastAssignedSectionOfOtherRange($assignmentRange, $otherAssignmentRange);
+    }
+
+    private static function isAssignmentRangePartiallyContainedInTheOther(array $assignmentRange, array $otherAssignmentRange): bool
+    {
+        return self::isFirstAssignedSectionTheSameOrBeforeTheFirstAssignedSectionOfOtherRange($assignmentRange, $otherAssignmentRange)
+            && self::isLastAssignedSectionTheSameOrAfterTheFirstAssignedSectionOfOtherRange($assignmentRange, $otherAssignmentRange);
+    }
+
+    private static function isFirstAssignedSectionTheSameOrAfterTheFirstAssignedSectionOfOtherRange(array $assignmentRange, array $otherAssignmentRange): bool
+    {
+        return $assignmentRange['first'] >= $otherAssignmentRange['first'];
+    }
+
+    private static function isLastAssignedSectionTheSameOrBeforeTheLastAssignedSectionOfOtherRange(array $assignmentRange, array $otherAssignmentRange): bool
+    {
+        return $assignmentRange['last'] <= $otherAssignmentRange['last'];
+    }
+
+    private static function isFirstAssignedSectionTheSameOrBeforeTheFirstAssignedSectionOfOtherRange(array $assignmentRange, array $otherAssignmentRange): bool
+    {
+        return $assignmentRange['first'] <= $otherAssignmentRange['first'];
+    }
+
+    private static function isLastAssignedSectionTheSameOrAfterTheFirstAssignedSectionOfOtherRange(array $assignmentRange, array $otherAssignmentRange): bool
+    {
+        return $assignmentRange['last'] >= $otherAssignmentRange['first'];
     }
 }

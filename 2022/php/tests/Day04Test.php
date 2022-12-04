@@ -15,7 +15,7 @@ class Day04Test extends TestCase
     public function testPart1(string $filename, int $expected)
     {
         $testInput = Utils::ReadAllLines($filename);
-        $this->assertSame($expected, Day::ExecutePartOne($testInput));
+        $this->assertSame($expected, Day::executePartOne($testInput));
     }
 
     public function part1Provider(): array
@@ -32,7 +32,7 @@ class Day04Test extends TestCase
     public function testPart2(string $filename, int $expected)
     {
         $input = Utils::ReadAllLines($filename);
-        $this->assertSame($expected, Day::ExecutePartTwo($input));
+        $this->assertSame($expected, Day::executePartTwo($input));
     }
 
     public function part2Provider(): array
