@@ -33,55 +33,58 @@ class Day04
     private static function parseSectionAssignmentRanges(string $inputTextLine): array
     {
         $assignments = explode(',', $inputTextLine);
-        $firstAssignmentRange = explode('-', $assignments[0]);
-        $secondAssignmentRange = explode('-', $assignments[1]);
-        return [
-            ['first' => intval($firstAssignmentRange[0]), 'last' => intval($firstAssignmentRange[1])],
-            ['first' => intval($secondAssignmentRange[0]), 'last' => intval($secondAssignmentRange[1])],
-        ];
+        $firstAssignmentRange = Day04AssignmentRange::createAssignmentRange($assignments[0]);
+        $secondAssignmentRange = Day04AssignmentRange::createAssignmentRange($assignments[1]);
+        return [$firstAssignmentRange, $secondAssignmentRange];
     }
 
     private static function eitherAssignmentRangeFullyContainsTheOther(array $assignmentRanges): bool
     {
-        return (self::isAssignmentRangeFullyContainedInTheOther($assignmentRanges[0], $assignmentRanges[1]) ||
-            self::isAssignmentRangeFullyContainedInTheOther($assignmentRanges[1], $assignmentRanges[0]));
+        return (self::isAssignmentRangeFullyContainedInTheOther($assignmentRanges[0], $assignmentRanges[1])
+            || self::isAssignmentRangeFullyContainedInTheOther($assignmentRanges[1], $assignmentRanges[0]));
     }
 
     private static function eitherAssignmentRangePartiallyContainsTheOther(array $assignmentRanges): bool
     {
-        return self::isAssignmentRangePartiallyContainedInTheOther($assignmentRanges[0], $assignmentRanges[1]) ||
-            self::isAssignmentRangePartiallyContainedInTheOther($assignmentRanges[1], $assignmentRanges[0]);
+        return self::isAssignmentRangePartiallyContainedInTheOther($assignmentRanges[0], $assignmentRanges[1])
+            || self::isAssignmentRangePartiallyContainedInTheOther($assignmentRanges[1], $assignmentRanges[0]);
     }
 
-    private static function isAssignmentRangeFullyContainedInTheOther(array $assignmentRange, array $otherAssignmentRange): bool
+    private static function isAssignmentRangeFullyContainedInTheOther(
+        Day04AssignmentRange $assignmentRange, Day04AssignmentRange $otherAssignmentRange): bool
     {
         return self::isFirstAssignedSectionTheSameOrAfterTheFirstAssignedSectionOfOtherRange($assignmentRange, $otherAssignmentRange)
             && self::isLastAssignedSectionTheSameOrBeforeTheLastAssignedSectionOfOtherRange($assignmentRange, $otherAssignmentRange);
     }
 
-    private static function isAssignmentRangePartiallyContainedInTheOther(array $assignmentRange, array $otherAssignmentRange): bool
+    private static function isAssignmentRangePartiallyContainedInTheOther(
+        Day04AssignmentRange $assignmentRange, Day04AssignmentRange $otherAssignmentRange): bool
     {
         return self::isFirstAssignedSectionTheSameOrBeforeTheFirstAssignedSectionOfOtherRange($assignmentRange, $otherAssignmentRange)
             && self::isLastAssignedSectionTheSameOrAfterTheFirstAssignedSectionOfOtherRange($assignmentRange, $otherAssignmentRange);
     }
 
-    private static function isFirstAssignedSectionTheSameOrAfterTheFirstAssignedSectionOfOtherRange(array $assignmentRange, array $otherAssignmentRange): bool
+    private static function isFirstAssignedSectionTheSameOrAfterTheFirstAssignedSectionOfOtherRange(
+        Day04AssignmentRange $assignmentRange, Day04AssignmentRange $otherAssignmentRange): bool
     {
-        return $assignmentRange['first'] >= $otherAssignmentRange['first'];
+        return $assignmentRange->getFirstAssignedSection() >= $otherAssignmentRange->getFirstAssignedSection();
     }
 
-    private static function isLastAssignedSectionTheSameOrBeforeTheLastAssignedSectionOfOtherRange(array $assignmentRange, array $otherAssignmentRange): bool
+    private static function isLastAssignedSectionTheSameOrBeforeTheLastAssignedSectionOfOtherRange(
+        Day04AssignmentRange $assignmentRange, Day04AssignmentRange $otherAssignmentRange): bool
     {
-        return $assignmentRange['last'] <= $otherAssignmentRange['last'];
+        return $assignmentRange->getLastAssignedSection() <= $otherAssignmentRange->getLastAssignedSection();
     }
 
-    private static function isFirstAssignedSectionTheSameOrBeforeTheFirstAssignedSectionOfOtherRange(array $assignmentRange, array $otherAssignmentRange): bool
+    private static function isFirstAssignedSectionTheSameOrBeforeTheFirstAssignedSectionOfOtherRange(
+        Day04AssignmentRange $assignmentRange, Day04AssignmentRange $otherAssignmentRange): bool
     {
-        return $assignmentRange['first'] <= $otherAssignmentRange['first'];
+        return $assignmentRange->getFirstAssignedSection() <= $otherAssignmentRange->getFirstAssignedSection();
     }
 
-    private static function isLastAssignedSectionTheSameOrAfterTheFirstAssignedSectionOfOtherRange(array $assignmentRange, array $otherAssignmentRange): bool
+    private static function isLastAssignedSectionTheSameOrAfterTheFirstAssignedSectionOfOtherRange(
+        Day04AssignmentRange $assignmentRange, Day04AssignmentRange $otherAssignmentRange): bool
     {
-        return $assignmentRange['last'] >= $otherAssignmentRange['first'];
+        return $assignmentRange->getLastAssignedSection() >= $otherAssignmentRange->getFirstAssignedSection();
     }
 }
