@@ -10,5 +10,5 @@ This repository stores code I have used to solve problems in the [Advent of Code
 | 2021 | Kotlin           | 12%        |
 | 2021 | PHP              | 4%         |
 | 2021 | TypeScript       | 24%        |
-| 2022 | PHP              | 12%        |
+| 2022 | PHP              | 16%        |
 | 2022 | Visual Basic 6.0 | 4%         |
