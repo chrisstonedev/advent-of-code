@@ -49,27 +49,17 @@ class Day05
         }
         foreach ($instructions as $instruction) {
             $instructionData = preg_split('/move | from | to /', $instruction, -1, PREG_SPLIT_NO_EMPTY);
-            if ($moveMultipleCratesTogether) {
-                $toBeMoved = [];
-                for ($movement = 0; $movement < $instructionData[0]; $movement++) {
-                    $thing = array_pop($stacks[$instructionData[1] - 1]);
-                    $toBeMoved[] = $thing;
-                }
-                for ($movement = 0; $movement < $instructionData[0]; $movement++) {
-                    $thing = array_pop($toBeMoved);
-                    $stacks[$instructionData[2] - 1][] = $thing;
-                }
-            } else {
-                for ($movement = 0; $movement < $instructionData[0]; $movement++) {
-                    $thing = array_pop($stacks[$instructionData[1] - 1]);
-                    $stacks[$instructionData[2] - 1][] = $thing;
-                }
+            $valuesToMove = array_splice($stacks[$instructionData[1] - 1], $instructionData[0] * -1);
+            if (!$moveMultipleCratesTogether) {
+                $valuesToMove = array_reverse($valuesToMove);
             }
+            $stacks[$instructionData[2] - 1] = array_merge($stacks[$instructionData[2] - 1], $valuesToMove);
         }
-        $result = '';
-        foreach ($stacks as $stack) {
-            $result = $result . array_pop($stack);
-        }
-        return $result;
+
+        $popEachStack = function (array $element) {
+            return array_pop($element);
+        };
+        return implode(array_map($popEachStack, $stacks));
     }
+
 }
