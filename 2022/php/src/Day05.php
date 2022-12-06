@@ -21,7 +21,6 @@ class Day05
         $isInstructions = false;
         $crateGraphicalRepresentation = [];
         $instructions = [];
-        $stacks = [];
         foreach ($input as $line) {
             if (strlen($line) === 0) {
                 $isInstructions = true;
@@ -33,6 +32,7 @@ class Day05
                 $crateGraphicalRepresentation[] = $line;
             }
         }
+        $stacks = [];
         for ($line = count($crateGraphicalRepresentation) - 1; $line >= 0; $line--) {
             if (empty($stacks)) {
                 $stackCount = strlen(str_replace(' ', '', $crateGraphicalRepresentation[$line]));
@@ -49,17 +49,20 @@ class Day05
         }
         foreach ($instructions as $instruction) {
             $instructionData = preg_split('/move | from | to /', $instruction, -1, PREG_SPLIT_NO_EMPTY);
-            $valuesToMove = array_splice($stacks[$instructionData[1] - 1], $instructionData[0] * -1);
+            $numberOfCratesToMove = $instructionData[0];
+            $indexOfSourceStack = $instructionData[1] - 1;
+            $valuesToMove = array_splice($stacks[$indexOfSourceStack], $numberOfCratesToMove * -1);
             if (!$moveMultipleCratesTogether) {
                 $valuesToMove = array_reverse($valuesToMove);
             }
-            $stacks[$instructionData[2] - 1] = array_merge($stacks[$instructionData[2] - 1], $valuesToMove);
+            $indexOfDestinationStack = $instructionData[2] - 1;
+            $stacks[$indexOfDestinationStack] = array_merge($stacks[$indexOfDestinationStack], $valuesToMove);
         }
 
-        $popEachStack = function (array $element) {
+        $getTopCrateFromStack = function (array $element) {
             return array_pop($element);
         };
-        return implode(array_map($popEachStack, $stacks));
+        return implode(array_map($getTopCrateFromStack, $stacks));
     }
 
 }
