@@ -1,8 +1,23 @@
 fun main() {
-    fun parseInputData(input: String): List<List<Int>> =
-        input.split("\n\n").map { elf -> elf.lines().map { it.toInt() } }
+    fun parseInputData(input: String): List<List<Int>> {
+        return input.split("\n\n").map { elf -> elf.lines().map { it.toInt() } }
+    }
 
     fun List<List<Int>>.topNElves(n: Int): Int = map { it.sum() }.sortedDescending().take(n).sum()
+
+    fun List<List<Int>>.topNElvesOptimized(n: Int): Int {
+        fun findTopN(n: Int, element: List<Int>): List<Int> {
+            if (element.size == n) return element
+            val x = element.random()
+            val small = element.filter { it < x }
+            val equal = element.filter { it == x }
+            val big = element.filter { it > x }
+            if (big.size >= n) return findTopN(n, big)
+            if (equal.size + big.size >= n) return (equal + big).takeLast(n)
+            return findTopN(n - equal.size - big.size, small) + equal + big
+        }
+        return findTopN(n, this.map { it.sum() }).sum()
+    }
 
     fun part1(input: String): Int = parseInputData(input).topNElves(1)
 
