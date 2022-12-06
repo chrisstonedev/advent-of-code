@@ -10,7 +10,7 @@ class Day06Test extends TestCase
     const DAY_NUMBER = 'Day06';
 
     /**
-     * @dataProvider part1Provider
+     * @dataProvider part1FromFileProvider
      */
     public function testPart1FromFile(string $filename, int $expected)
     {
@@ -18,7 +18,7 @@ class Day06Test extends TestCase
         $this->assertSame($expected, Day::executePartOne($testInput[0]));
     }
 
-    public function part1Provider(): array
+    public function part1FromFileProvider(): array
     {
         return [
             'test data' => [self::DAY_NUMBER . '_test', 7],
@@ -45,15 +45,15 @@ class Day06Test extends TestCase
     }
 
     /**
-     * @dataProvider part2Provider
+     * @dataProvider part2FromFileProvider
      */
-    public function testPart2(string $filename, int $expected)
+    public function testPart2FromFile(string $filename, int $expected)
     {
         $input = Utils::ReadAllLines($filename);
         $this->assertSame($expected, Day::executePartTwo($input[0]));
     }
 
-    public function part2Provider(): array
+    public function part2FromFileProvider(): array
     {
         return [
             'test data' => [self::DAY_NUMBER . '_test', 19],
