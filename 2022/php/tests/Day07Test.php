@@ -39,7 +39,7 @@ class Day07Test extends TestCase
     {
         return [
             'test data' => [self::DAY_NUMBER . '_test', 24933642],
-            'my puzzle input' => [self::DAY_NUMBER, 2746],
+            'my puzzle input' => [self::DAY_NUMBER, 6999588],
         ];
     }
 }

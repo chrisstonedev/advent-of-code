@@ -4,56 +4,13 @@ declare(strict_types=1);
 
 namespace aoc2022;
 
+use function substr;
+
 class Day07
 {
     public static function executePartOne(array $input): int
     {
-        $totalOfEachDirectory = ['/' => 0];
-        $currentWorkingDirectory = '';
-        foreach ($input as $inputLine) {
-            if (substr($inputLine, 0, 2) === '$ ') {
-                if (substr($inputLine, 2, 3) === 'cd ') {
-                    $relativePathToNewDirectory = substr($inputLine, 5);
-                    if ($relativePathToNewDirectory === '..') {
-                        $lastPosition = strrpos($currentWorkingDirectory, '/');
-                        $currentWorkingDirectory = substr($currentWorkingDirectory, 0, $lastPosition);
-                        if (strlen($currentWorkingDirectory) === 0) {
-                            $currentWorkingDirectory = '/';
-                        }
-                    } elseif ($relativePathToNewDirectory === '/') {
-                        $currentWorkingDirectory = '/';
-                    } else {
-                        if (substr($currentWorkingDirectory, -1) === '/') {
-                            $currentWorkingDirectory .= $relativePathToNewDirectory;
-                        } else {
-                            $currentWorkingDirectory .= '/' . $relativePathToNewDirectory;
-                        }
-                    }
-                }
-            } else {
-                $things = explode(' ', $inputLine);
-                if ($things[0] === 'dir') {
-                    if (substr($currentWorkingDirectory, -1) === '/') {
-                        $absoluteDirectoryPath = $currentWorkingDirectory . $things[1];
-                    } else {
-                        $absoluteDirectoryPath = $currentWorkingDirectory . '/' . $things[1];
-                    }
-                    $totalOfEachDirectory[$absoluteDirectoryPath] = 0;
-                } else {
-                    $totalOfEachDirectory[$currentWorkingDirectory] += $things[0];
-                }
-            }
-        }
-        $callback = function (string $path, int $element) use ($totalOfEachDirectory): int {
-            $result = 0;
-            foreach (array_keys($totalOfEachDirectory) as $key) {
-                if (substr($key, 0, strlen($path)) === $path) {
-                    $result += $totalOfEachDirectory[$key];
-                }
-            }
-            return $result;
-        };
-        $totalOfEachDirectoryRecursively = array_map($callback, array_keys($totalOfEachDirectory), array_values($totalOfEachDirectory));
+        $totalOfEachDirectoryRecursively = self::getTotalSizeOfEachDirectoryRecursively($input);
         $result = 0;
         foreach ($totalOfEachDirectoryRecursively as $total) {
             if ($total <= 100000) {
@@ -65,53 +22,8 @@ class Day07
 
     public static function executePartTwo(array $input): int
     {
-        $totalOfEachDirectory = ['/' => 0];
-        $currentWorkingDirectory = '';
-        foreach ($input as $inputLine) {
-            if (substr($inputLine, 0, 2) === '$ ') {
-                if (substr($inputLine, 2, 3) === 'cd ') {
-                    $relativePathToNewDirectory = substr($inputLine, 5);
-                    if ($relativePathToNewDirectory === '..') {
-                        $lastPosition = strrpos($currentWorkingDirectory, '/');
-                        $currentWorkingDirectory = substr($currentWorkingDirectory, 0, $lastPosition);
-                        if (strlen($currentWorkingDirectory) === 0) {
-                            $currentWorkingDirectory = '/';
-                        }
-                    } elseif ($relativePathToNewDirectory === '/') {
-                        $currentWorkingDirectory = '/';
-                    } else {
-                        if (substr($currentWorkingDirectory, -1) === '/') {
-                            $currentWorkingDirectory .= $relativePathToNewDirectory;
-                        } else {
-                            $currentWorkingDirectory .= '/' . $relativePathToNewDirectory;
-                        }
-                    }
-                }
-            } else {
-                $things = explode(' ', $inputLine);
-                if ($things[0] === 'dir') {
-                    if (substr($currentWorkingDirectory, -1) === '/') {
-                        $absoluteDirectoryPath = $currentWorkingDirectory . $things[1];
-                    } else {
-                        $absoluteDirectoryPath = $currentWorkingDirectory . '/' . $things[1];
-                    }
-                    $totalOfEachDirectory[$absoluteDirectoryPath] = 0;
-                } else {
-                    $totalOfEachDirectory[$currentWorkingDirectory] += $things[0];
-                }
-            }
-        }
-        $callback = function (string $path, int $element) use ($totalOfEachDirectory): int {
-            $result = 0;
-            foreach (array_keys($totalOfEachDirectory) as $key) {
-                if (substr($key, 0, strlen($path)) === $path) {
-                    $result += $totalOfEachDirectory[$key];
-                }
-            }
-            return $result;
-        };
-        $totalOfEachDirectoryRecursively = array_map($callback, array_keys($totalOfEachDirectory), array_values($totalOfEachDirectory));
-        $totalSpaceCurrently = $totalOfEachDirectoryRecursively[0];
+        $totalOfEachDirectoryRecursively = self::getTotalSizeOfEachDirectoryRecursively($input);
+        $totalSpaceCurrently = $totalOfEachDirectoryRecursively['/'];
         sort($totalOfEachDirectoryRecursively);
         foreach ($totalOfEachDirectoryRecursively as $total) {
             if ($totalSpaceCurrently - $total <= 40000000) {
@@ -119,5 +31,53 @@ class Day07
             }
         }
         return -1;
+    }
+
+    private static function getTotalSizeOfEachDirectoryRecursively(array $input): array
+    {
+        $totalOfEachDirectory = ['/' => 0];
+        $currentWorkingDirectory = '';
+        foreach ($input as $inputLine) {
+            if (substr($inputLine, 0, 5) === '$ cd ') {
+                $currentWorkingDirectory = self::getNewWorkingDirectory($currentWorkingDirectory, substr($inputLine, 5));
+                if (!array_key_exists($currentWorkingDirectory, $totalOfEachDirectory)) {
+                    $totalOfEachDirectory[$currentWorkingDirectory] = 0;
+                }
+            } elseif (substr($inputLine, 0, 2) !== '$ ' && substr($inputLine, 0, 4) !== 'dir ') {
+                $listFileComponents = explode(' ', $inputLine);
+                $totalOfEachDirectory[$currentWorkingDirectory] += $listFileComponents[0];
+            }
+        }
+        $callback = function (&$directorySizeRecursively, string $path) use ($totalOfEachDirectory) {
+            $result = 0;
+            foreach (array_keys($totalOfEachDirectory) as $key) {
+                if (substr($key, 0, strlen($path)) === $path) {
+                    $result += $totalOfEachDirectory[$key];
+                }
+            }
+            $directorySizeRecursively = $result;
+        };
+        array_walk($totalOfEachDirectory, $callback);
+        return $totalOfEachDirectory;
+    }
+
+    private static function appendDirectoryToPath($currentWorkingDirectory, $relativePathToNewDirectory): string
+    {
+        if ($currentWorkingDirectory === '/') {
+            return "/$relativePathToNewDirectory";
+        }
+        return "$currentWorkingDirectory/$relativePathToNewDirectory";
+    }
+
+    private static function getNewWorkingDirectory(string $currentWorkingDirectory, $relativePathToNewDirectory): string
+    {
+        if ($relativePathToNewDirectory === '/' || ($relativePathToNewDirectory === '..' && substr_count($currentWorkingDirectory, '/') === 1)) {
+            return '/';
+        }
+        if ($relativePathToNewDirectory !== '..') {
+            return self::appendDirectoryToPath($currentWorkingDirectory, $relativePathToNewDirectory);
+        }
+        $lastPositionOfSlash = strrpos($currentWorkingDirectory, '/');
+        return substr($currentWorkingDirectory, 0, $lastPositionOfSlash);
     }
 }
