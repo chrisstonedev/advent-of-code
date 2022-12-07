@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class Day06Test extends TestCase
 {
-    const DAY_NUMBER = 'Day06';
+    const DAY_NUMBER = '06';
 
     /**
      * @dataProvider part1FromFileProvider
@@ -21,8 +21,8 @@ class Day06Test extends TestCase
     public function part1FromFileProvider(): array
     {
         return [
-            'test data' => [self::DAY_NUMBER . '_test', 7],
-            'my puzzle input' => [self::DAY_NUMBER, 1480],
+            'test data' => ['test' . self::DAY_NUMBER, 7],
+            'my puzzle input' => ['input' . self::DAY_NUMBER, 1480],
         ];
     }
 
@@ -56,8 +56,8 @@ class Day06Test extends TestCase
     public function part2FromFileProvider(): array
     {
         return [
-            'test data' => [self::DAY_NUMBER . '_test', 19],
-            'my puzzle input' => [self::DAY_NUMBER, 2746],
+            'test data' => ['test' . self::DAY_NUMBER, 19],
+            'my puzzle input' => ['input' . self::DAY_NUMBER, 2746],
         ];
     }
 
