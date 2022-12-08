@@ -8,11 +8,10 @@ class Day08
 {
     public static function executePartOne(array $input): int
     {
-        $count = 0;
-        for ($row = 0; $row < count($input); $row++) {
-            for ($col = 0; $col < strlen($input[$row]); $col++) {
-                if (self::isOnTheEdgeOfTheGrid($input, $row, $col) ||
-                    self::isVisibleFromTheTop($input, $row, $col) ||
+        $count = self::getNumberOfTreesOnTheEdge($input);
+        for ($row = 1; $row < count($input) - 1; $row++) {
+            for ($col = 1; $col < strlen($input[$row]) - 1; $col++) {
+                if (self::isVisibleFromTheTop($input, $row, $col) ||
                     self::isVisibleFromTheBottom($input, $row, $col) ||
                     self::isVisibleFromTheLeft($input[$row], $col) ||
                     self::isVisibleFromTheRight($input[$row], $col)) {
@@ -40,9 +39,9 @@ class Day08
         return $highestScenicScore;
     }
 
-    private static function isOnTheEdgeOfTheGrid(array $input, int $row, int $col): bool
+    private static function getNumberOfTreesOnTheEdge(array $input): int
     {
-        return $row === 0 || $row === count($input) - 1 || $col === 0 || $col === strlen($input[$row]) - 1;
+        return 2 * count($input) + 2 * strlen($input[0]) - 4;
     }
 
     private static function isVisibleFromTheTop(array $input, int $row, int $col): bool
