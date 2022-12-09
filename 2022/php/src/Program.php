@@ -45,3 +45,13 @@ echo "Day 7\n";
 $day7Input = ReadAllLines('input07');
 echo sprintf("  Part 1: %s\n", Day07::ExecutePartOne($day7Input));
 echo sprintf("  Part 2: %s\n", Day07::ExecutePartTwo($day7Input));
+
+echo "Day 8\n";
+$day8Input = ReadAllLines('input08');
+echo sprintf("  Part 1: %s\n", Day08::ExecutePartOne($day8Input));
+echo sprintf("  Part 2: %s\n", Day08::ExecutePartTwo($day8Input));
+
+echo "Day 9\n";
+$day9Input = ReadAllLines('input09');
+echo sprintf("  Part 1: %s\n", Day09::ExecutePartOne($day9Input));
+echo sprintf("  Part 2: %s\n", Day09::ExecutePartTwo($day9Input));
