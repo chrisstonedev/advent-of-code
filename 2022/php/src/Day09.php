@@ -51,7 +51,56 @@ class Day09
 
     public static function executePartTwo(array $input): int
     {
-        return 0;
+        $headAndAllTails = [[0, 0], null, null, null, null, null, null, null, null, null];
+        $finalTailPositions = [];
+        foreach ($input as $instruction) {
+            $instructions = explode(' ', $instruction);
+            $numberOfSteps = intval($instructions[1]);
+            for ($i = 0; $i < $numberOfSteps; $i++) {
+                $proposedNewHead = self::getProposedNewHead($headAndAllTails[0], $instructions[0]);
+                for ($tailIndex = 1; $tailIndex < count($headAndAllTails); $tailIndex++) {
+                    if ($headAndAllTails[$tailIndex] === null && $tailIndex >= 2 && ($headAndAllTails[$tailIndex - 1] === null || $headAndAllTails[$tailIndex - 1] === [0, 0])) {
+                        continue;
+                    }
+                    if ($headAndAllTails[$tailIndex] === null) {
+                        $headAndAllTails[$tailIndex] = $headAndAllTails[0];
+                        continue;
+                    }
+                    if ((abs($proposedNewHead[0] - $headAndAllTails[$tailIndex][0]) > 1 && abs($proposedNewHead[1] - $headAndAllTails[$tailIndex][1]) > 0)
+                        || (abs($proposedNewHead[0] - $headAndAllTails[$tailIndex][0]) > 0 && abs($proposedNewHead[1] - $headAndAllTails[$tailIndex][1]) > 1)) {
+                        $headAndAllTails[$tailIndex] = $headAndAllTails[0];
+                        continue;
+                    }
+
+                    switch ($instructions[0]) {
+                        case 'U':
+                            if ($headAndAllTails[$tailIndex - 1][1] > $headAndAllTails[$tailIndex][1]) {
+                                $headAndAllTails[$tailIndex][1]++;
+                            }
+                            break;
+                        case 'D':
+                            if ($headAndAllTails[$tailIndex - 1][1] < $headAndAllTails[$tailIndex][1]) {
+                                $headAndAllTails[$tailIndex][1]--;
+                            }
+                            break;
+                        case 'L':
+                            if ($headAndAllTails[$tailIndex - 1][0] < $headAndAllTails[$tailIndex][0]) {
+                                $headAndAllTails[$tailIndex][0]--;
+                            }
+                            break;
+                        case 'R':
+                            if ($headAndAllTails[$tailIndex - 1][0] > $headAndAllTails[$tailIndex][0]) {
+                                $headAndAllTails[$tailIndex][0]++;
+                            }
+                            break;
+                    }
+                }
+                if ($headAndAllTails[8] !== null)
+                    $finalTailPositions = self::addToTailPositions($headAndAllTails[8], $finalTailPositions);
+                $headAndAllTails[0] = $proposedNewHead;
+            }
+        }
+        return count($finalTailPositions);
     }
 
     private static function addToTailPositions(array $tail, array $tailPositions): array
