@@ -6,13 +6,13 @@ namespace aoc2022;
 
 class Day01
 {
-    public static function ExecutePartOne(array $input): int
+    public static function executePartOne(array $input): int
     {
         $caloriesCarriedByEachElf = self::getCaloriesCarriedByEachElfInDescendingOrder($input);
         return $caloriesCarriedByEachElf[0];
     }
 
-    public static function ExecutePartTwo(array $input): int
+    public static function executePartTwo(array $input): int
     {
         $caloriesCarriedByEachElf = self::getCaloriesCarriedByEachElfInDescendingOrder($input);
         return $caloriesCarriedByEachElf[0] + $caloriesCarriedByEachElf[1] + $caloriesCarriedByEachElf[2];

@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 class Day02
 {
-    public static function ExecutePartOne(array $input): int
+    public static function executePartOne(array $input): int
     {
         $score = 0;
         foreach ($input as $line) {
@@ -20,7 +20,7 @@ class Day02
         return $score;
     }
 
-    public static function ExecutePartTwo(array $input): int
+    public static function executePartTwo(array $input): int
     {
         $score = 0;
         foreach ($input as $line) {

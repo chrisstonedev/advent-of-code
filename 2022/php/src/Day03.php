@@ -6,7 +6,7 @@ namespace aoc2022;
 
 class Day03
 {
-    public static function ExecutePartOne(array $input): int
+    public static function executePartOne(array $input): int
     {
         $sum = 0;
         foreach ($input as $line) {
@@ -21,7 +21,7 @@ class Day03
         return $sum;
     }
 
-    public static function ExecutePartTwo(array $input): int
+    public static function executePartTwo(array $input): int
     {
         $sum = 0;
         $inputInGroupsOfThree = array_chunk($input, 3);
