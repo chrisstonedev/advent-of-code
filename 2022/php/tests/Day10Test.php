@@ -16,6 +16,12 @@ class Day10Test extends TestCase
     public function testPart2()
     {
         $input = Utils::ReadAllLines('test10');
-        $this->assertSame(0, Day::executePartTwo($input));
+        $expected = '##..##..##..##..##..##..##..##..##..##..
+###...###...###...###...###...###...###.
+####....####....####....####....####....
+#####.....#####.....#####.....#####.....
+######......######......######......####
+#######.......#######.......#######.....';
+        $this->assertSame($expected, Day::executePartTwo($input));
     }
 }

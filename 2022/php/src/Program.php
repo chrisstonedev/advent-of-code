@@ -64,7 +64,7 @@ function executePartTwo(int $day, array $inputArray): string
         case 9:
             return strval(Day09::executePartTwo($inputArray));
         case 10:
-            return strval(Day10::executePartTwo($inputArray));
+            return "\n" . Day10::executePartTwo($inputArray);
         default:
             throw new InvalidArgumentException('Day number is not available');
     }

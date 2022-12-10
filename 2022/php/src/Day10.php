@@ -25,16 +25,41 @@ class Day10
         return $answer;
     }
 
-    public static function executePartTwo(array $input): int
+    public static function executePartTwo(array $input): string
     {
-        return 0;
+        $x = 1;
+        $answer = '';
+        $cycle = 1;
+        for ($index = 0; $index < count($input); $index++) {
+            $answer .= self::checkCycleAndAddToAnswerPart2($cycle, $x);
+            $cycle++;
+            $line = $input[$index];
+            if (strpos($line, 'addx') !== false) {
+                $answer .= self::checkCycleAndAddToAnswerPart2($cycle, $x);
+                $cycle++;
+                $value = intval(substr($line, 5));
+                $x += $value;
+            }
+        }
+
+        return $answer;
     }
 
-    private static function checkCycleAndAddToAnswer(int $cycle, int $x)
+    private static function checkCycleAndAddToAnswer(int $cycle, int $x): int
     {
         if (($cycle + 20) % 40 === 0) {
             return $cycle * $x;
         }
         return 0;
+    }
+
+    private static function checkCycleAndAddToAnswerPart2(int $cycle, int $x): string
+    {
+        $currentPosition = ($cycle - 1) % 40;
+        $result = $currentPosition >= $x - 1 && $currentPosition <= $x + 1 ? '#' : '.';
+        if ($cycle % 40 === 0 && $cycle < 240) {
+            return "$result\n";
+        }
+        return $result;
     }
 }
