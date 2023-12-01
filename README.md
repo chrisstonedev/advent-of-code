@@ -13,6 +13,6 @@ completed in the year it was released.
 | 2021 | Kotlin           | 12%        |
 | 2021 | PHP              | 4%         |
 | 2021 | TypeScript       | 24%        |
-| 2022 | Kotlin           | 4%         |
+| 2022 | Kotlin           | 6%         |
 | 2022 | PHP              | 38%        |
 | 2022 | Visual Basic 6.0 | 4%         |

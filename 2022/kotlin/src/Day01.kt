@@ -23,9 +23,9 @@ fun main() {
 
     fun part2(input: String): Int = parseInputData(input).topNElves(3)
 
-    val testInput = readInputAsText("Day01_test")
+    val testInput = readInputAsText("test01")
     checkValue(part1(testInput), 24000)
-    val input = readInputAsText("Day01")
+    val input = readInputAsText("input01")
     println(part1(input))
 
     checkValue(part2(testInput), 45000)
