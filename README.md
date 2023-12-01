@@ -7,12 +7,10 @@ completed in the year it was released.
 
 ## Status
 
-| Year | Language         | Completion |
-|------|------------------|------------|
-| 2021 | C#               | 40%        |
-| 2021 | Kotlin           | 12%        |
-| 2021 | PHP              | 4%         |
-| 2021 | TypeScript       | 24%        |
-| 2022 | Kotlin           | 6%         |
-| 2022 | PHP              | 38%        |
-| 2022 | Visual Basic 6.0 | 4%         |
+| Language         | 2021 | 2022 | 2023 |
+|------------------|------|------|------|
+| C#               | 40%  |      |      |
+| Kotlin           | 12%  | 6%   |      |
+| PHP              | 4%   | 38%  | 4%   |
+| TypeScript       | 24%  |      |      |
+| Visual Basic 6.0 |      | 4%   |      |
