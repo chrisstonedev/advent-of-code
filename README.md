@@ -16,4 +16,4 @@ completed in the year it was released.
 | 2022 | Kotlin           | 4%         |
 | 2022 | PHP              | 32%        |
 | 2022 | Visual Basic 6.0 | 4%         |
-| 2023 | PHP              | 0%         |
+| 2023 | PHP              | 2%         |

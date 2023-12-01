@@ -13,5 +13,5 @@ function ReadAllLines(string $filename): array
 
 echo "Day 1\n";
 $day1Input = ReadAllLines('input01');
-echo sprintf("  Part 1: %s\n", Day01::ExecutePartOne($day1Input));
-echo sprintf("  Part 2: %s\n", Day01::ExecutePartTwo($day1Input));
+echo sprintf("  Part 1: %s\n", Day01::executePartOne($day1Input));
+echo sprintf("  Part 2: %s\n", Day01::executePartTwo($day1Input));
