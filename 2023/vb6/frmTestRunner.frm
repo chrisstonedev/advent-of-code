@@ -39,6 +39,7 @@ Option Explicit
 Private Sub Form_Load()
     ' Add tests here
     AddTest New clsTestDay01
+    AddTest New clsTestDay02
 End Sub
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

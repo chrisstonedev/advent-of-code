@@ -18,7 +18,7 @@ Public Function ReadFile(ByVal strFilename) As String()
     Dim lineNo As Integer
 
     Do Until EOF(someFileHandle)
-        Input #someFileHandle, someStrings(lineNo)
+        Line Input #someFileHandle, someStrings(lineNo)
         lineNo = lineNo + 1
     Loop
 

@@ -5,6 +5,7 @@ Reference=*\AAdventOfCode.vbp
 Form=frmTestRunner.frm
 Class=clsTestDay01; clsTestDay01.cls
 Module=basUtils; basUtils.bas
+Class=clsTestDay02; clsTestDay02.cls
 Startup="frmTestRunner"
 Command32=""
 Name="AdventOfCodeTests"
