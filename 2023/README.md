@@ -8,3 +8,9 @@ I am starting Advent of Code this year with the intent of using PHP to solve as 
 becoming more comfortable with the language.
 
 🟢🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+
+## Visual Basic 6.0
+
+As with last year, I may occasionally also solve problems in VB6.
+
+🟢🟢🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
