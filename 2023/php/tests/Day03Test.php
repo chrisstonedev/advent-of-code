@@ -69,7 +69,7 @@ class Day03Test extends TestCase
     {
         return [
             'test' => ['test' . self::DAY_NUMBER, 467835],
-//            'input' => ['input' . self::DAY_NUMBER, 0],
+            'input' => ['input' . self::DAY_NUMBER, 80694070],
         ];
     }
 }
