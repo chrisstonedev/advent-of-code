@@ -57,12 +57,28 @@ class Day05Test extends TestCase
             'no mapping defined (1)' => [1, 1],
             'no mapping defined (48)' => [48, 48],
             'no mapping defined (49)' => [49, 49],
-            'first defined mapping (50)' => [50, 52],
-            'first defined mapping (51)' => [51, 53],
+            'second defined mapping (50)' => [50, 52],
+            'second defined mapping (51)' => [51, 53],
             'second defined mapping (96)' => [96, 98],
             'second defined mapping (97)' => [97, 99],
-            'second defined mapping (98)' => [98, 50],
-            'second defined mapping (99)' => [99, 51],
+            'first defined mapping (98)' => [98, 50],
+            'first defined mapping (99)' => [99, 51],
+        ];
+    }
+
+    /** @dataProvider mapValueFromObjectProvider */
+    public function testMapValueFromObject(int $input, int|false $expected)
+    {
+        $this->assertSame($expected, $this->expectedAlmanac->seedToSoil[0]->mapValue($input));
+    }
+
+    public static function mapValueFromObjectProvider(): array
+    {
+        return [
+            'no mapping defined (0)' => [0, false],
+            'no mapping defined (97)' => [97, false],
+            'first defined mapping (98)' => [98, 50],
+            'first defined mapping (99)' => [99, 51],
         ];
     }
 
@@ -93,14 +109,13 @@ class Day05Test extends TestCase
     {
         return [
             'test' => ['test' . self::DAY_NUMBER, 35],
-            'input' => ['input' . self::DAY_NUMBER, 28750],
+            'input' => ['input' . self::DAY_NUMBER, 650599855],
         ];
     }
 
     /** @dataProvider part2Provider */
     public function testPart2(string $filename, int $expected)
     {
-        $this->markTestSkipped();
         $input = Utils::ReadAllLines($filename);
         $this->assertSame($expected, Day::executePartTwo($input));
     }
@@ -108,8 +123,8 @@ class Day05Test extends TestCase
     public static function part2Provider(): array
     {
         return [
-            'test' => ['test' . self::DAY_NUMBER, 30],
-            'input' => ['input' . self::DAY_NUMBER, 10212704],
+            'test' => ['test' . self::DAY_NUMBER, 46],
+            'input' => ['input' . self::DAY_NUMBER, 0],
         ];
     }
 }

@@ -16,4 +16,12 @@ class Day05Mapping
         $this->sourceRangeStart = $sourceRangeStart;
         $this->rangeLength = $rangeLength;
     }
+
+    public function mapValue(int $source): int|false
+    {
+        if ($source >= $this->sourceRangeStart && $source < $this->sourceRangeStart + $this->rangeLength) {
+            return $source - $this->sourceRangeStart + $this->destinationRangeStart;
+        }
+        return false;
+    }
 }

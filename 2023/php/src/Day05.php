@@ -8,7 +8,6 @@ class Day05
 {
     public static function executePartOne(array $input): int
     {
-        $value = 0;
         $almanac = self::parseInputAsAlmanac($input);
         $locations = array_map(fn($value): int => self::calculateLocationForSeed($almanac, $value), $almanac->seeds);
         return min($locations);
@@ -16,7 +15,26 @@ class Day05
 
     public static function executePartTwo(array $input): int
     {
-        return self::executePartOne($input);
+        $minimumLocation = PHP_INT_MAX;
+        $almanac = self::parseInputAsAlmanac($input);
+        print_r($almanac->seeds);
+        print_r("\n");
+        ob_flush();
+        flush();
+        for ($i = 0; $i < count($almanac->seeds); $i += 2) {
+            $startSeed = $almanac->seeds[$i];
+            $seedRange = $almanac->seeds[$i + 1];
+            print_r("Starting $startSeed\n");
+            ob_flush();
+            flush();
+            for ($j = $startSeed; $j < $startSeed + $seedRange; $j++) {
+                $location = self::calculateLocationForSeed($almanac, $j);
+                if ($location < $minimumLocation) {
+                    $minimumLocation = $location;
+                }
+            }
+        }
+        return $minimumLocation;
     }
 
     public static function parseInputAsAlmanac(array $input): Day05Almanac
@@ -64,13 +82,12 @@ class Day05
     /** @param Day05Mapping[] $mappings */
     public static function moveToNextArea(array $mappings, int $start): int
     {
-        $mappingDictionary = [];
         foreach ($mappings as $mapping) {
-            for ($i = 0; $i < $mapping->rangeLength; $i++) {
-                $mappingDictionary[$mapping->sourceRangeStart + $i] = $mapping->destinationRangeStart + $i;
-            }
+            $destination = $mapping->mapValue($start);
+            if ($destination)
+                return $destination;
         }
-        return $mappingDictionary[$start] ?? $start;
+        return $start;
     }
 
     public static function calculateLocationForSeed(Day05Almanac $almanac, int $seed): int
