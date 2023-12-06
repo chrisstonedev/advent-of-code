@@ -6,8 +6,6 @@ namespace aoc2023;
 
 class Day05Almanac
 {
-    /** @var int[] $seeds */
-    public array $seeds;
     /** @var Day05Mapping[] */
     public array $seedToSoil;
     /** @var Day05Mapping[] */

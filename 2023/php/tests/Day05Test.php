@@ -17,7 +17,6 @@ class Day05Test extends TestCase
         parent::setUp();
 
         $this->expectedAlmanac = new Day05Almanac();
-        $this->expectedAlmanac->seeds = [79, 14, 55, 13];
         $this->expectedAlmanac->seedToSoil[] = new Day05Mapping(50, 98, 2);
         $this->expectedAlmanac->seedToSoil[] = new Day05Mapping(52, 50, 48);
         $this->expectedAlmanac->soilToFertilizer[] = new Day05Mapping(0, 15, 37);
@@ -124,7 +123,7 @@ class Day05Test extends TestCase
     {
         return [
             'test' => ['test' . self::DAY_NUMBER, 46],
-            'input' => ['input' . self::DAY_NUMBER, 0],
+            'input' => ['input' . self::DAY_NUMBER, 1240035],
         ];
     }
 }

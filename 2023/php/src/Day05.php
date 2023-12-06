@@ -8,26 +8,34 @@ class Day05
 {
     public static function executePartOne(array $input): int
     {
+        $seeds = self::getSeeds($input[0]);
         $almanac = self::parseInputAsAlmanac($input);
-        $locations = array_map(fn($value): int => self::calculateLocationForSeed($almanac, $value), $almanac->seeds);
+        $locations = array_map(fn($value): int => self::calculateLocationForSeed($almanac, $value), $seeds);
         return min($locations);
     }
 
     public static function executePartTwo(array $input): int
     {
         $minimumLocation = PHP_INT_MAX;
+        $seeds = self::getSeeds($input[0]);
         $almanac = self::parseInputAsAlmanac($input);
-        print_r($almanac->seeds);
+        print_r($seeds);
         print_r("\n");
         ob_flush();
         flush();
-        for ($i = 0; $i < count($almanac->seeds); $i += 2) {
-            $startSeed = $almanac->seeds[$i];
-            $seedRange = $almanac->seeds[$i + 1];
+        for ($i = 0; $i < count($seeds); $i += 2) {
+            $startSeed = $seeds[$i];
+            $seedRange = $seeds[$i + 1];
             print_r("Starting $startSeed\n");
             ob_flush();
             flush();
             for ($j = $startSeed; $j < $startSeed + $seedRange; $j++) {
+                $iteration = $j - $startSeed + 1;
+                if ($iteration % 100000 === 0) {
+                    print_r("Completed $iteration out of $seedRange (current minimum is $minimumLocation)\n");
+                    ob_flush();
+                    flush();
+                }
                 $location = self::calculateLocationForSeed($almanac, $j);
                 if ($location < $minimumLocation) {
                     $minimumLocation = $location;
@@ -40,8 +48,6 @@ class Day05
     public static function parseInputAsAlmanac(array $input): Day05Almanac
     {
         $almanac = new Day05Almanac();
-        preg_match_all('/\d+/', $input[0], $seeds);
-        $almanac->seeds = array_map('intval', $seeds[0]);
         $mapStep = 0;
         for ($i = 3; $i < count($input); $i++) {
             if (strlen($input[$i]) === 0) {
@@ -99,5 +105,11 @@ class Day05
         $temperature = self::moveToNextArea($almanac->lightToTemperature, $light);
         $humidity = self::moveToNextArea($almanac->temperatureToHumidity, $temperature);
         return self::moveToNextArea($almanac->humidityToLocation, $humidity);
+    }
+
+    public static function getSeeds(string $inputLineWithSeeds): array
+    {
+        preg_match_all('/\d+/', $inputLineWithSeeds, $seedsMatches);
+        return array_map('intval', $seedsMatches[0]);
     }
 }
