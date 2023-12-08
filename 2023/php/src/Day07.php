@@ -41,8 +41,8 @@ class Day07
     public static function executePartTwo(array $input): int
     {
         usort($input, function ($x, $y) {
-            $xHand = self::getHandType($x);
-            $yHand = self::getHandType($y);
+            $xHand = self::getBestHandType($x);
+            $yHand = self::getBestHandType($y);
             if ($xHand !== $yHand) {
                 return $xHand > $yHand ? -1 : 1;
             }
@@ -92,6 +92,45 @@ class Day07
         }
     }
 
+    public static function getBestHandType(string $line): int
+    {
+        if (!str_contains($line, 'J')) {
+            return self::getHandType($line);
+        }
+        $allHandCounts = self::getAllHandCounts($line);
+        foreach ($allHandCounts as $counts) {
+            if (array_search(5, $counts)) {
+                return 6;
+            }
+        }
+        foreach ($allHandCounts as $counts) {
+            if (array_search(4, $counts)) {
+                return 5;
+            }
+        }
+        foreach ($allHandCounts as $counts) {
+            if (array_search(3, $counts) && array_search(2, $counts)) {
+                return 4;
+            }
+        }
+        foreach ($allHandCounts as $counts) {
+            if (array_search(3, $counts)) {
+                return 3;
+            }
+        }
+        foreach ($allHandCounts as $counts) {
+            if (count(array_keys($counts, 2)) === 2) {
+                return 2;
+            }
+        }
+        foreach ($allHandCounts as $counts) {
+            if (array_search(2, $counts)) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
     private static function getCardValue(string|int $card, int $jValue = 11): int
     {
         return match ($card) {
@@ -102,5 +141,18 @@ class Day07
             'T' => 10,
             default => intval($card),
         };
+    }
+
+    private static function getAllHandCounts(string $line): array
+    {
+        $data = [];
+        $letters = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K'];
+        foreach ($letters as $letter) {
+            $attempt = str_replace('J', $letter, $line);
+            preg_match_all('/\w+/', $attempt, $values);
+            $hand = str_split($values[0][0]);
+            $data[] = array_count_values($hand);
+        }
+        return $data;
     }
 }
