@@ -11,6 +11,6 @@ completed in the year it was released.
 |------------------|------|------|------|
 | C#               | 40%  |      |      |
 | Kotlin           | 12%  | 6%   |      |
-| PHP              | 4%   | 38%  | 26%  |
+| PHP              | 4%   | 38%  | 30%  |
 | TypeScript       | 24%  |      |      |
 | Visual Basic 6.0 |      | 4%   | 8%   |
