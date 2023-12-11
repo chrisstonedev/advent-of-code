@@ -51,8 +51,26 @@ class Day10Test extends TestCase
     public static function part2Provider(): array
     {
         return [
-            'test' => ['test' . self::DAY_NUMBER, 0],
-            'input' => ['input' . self::DAY_NUMBER, 0], // 457 is too low
+            'test' => ['test' . self::DAY_NUMBER, 1],
+            'input' => ['input' . self::DAY_NUMBER, 495],
+        ];
+    }
+
+    /** @dataProvider part2WithoutFilesProvider */
+    public function testPart2WithoutFiles(array $input, int $expected)
+    {
+        $this->assertSame($expected, Day::executePartTwo($input));
+    }
+
+    public static function part2WithoutFilesProvider(): array
+    {
+        return [
+            '3 inside box with no padding' => [['S---7','|...|','L---J'], 3],
+            '3 inside box with padding' => [['.S---7.','.|...|.','.L---J.'], 3],
+            'box with upper-right corner' => [['.S--7..','.|..L7.','.L---J.'], 2],
+            'box with lower-right corner' => [['.S---7.','.|..FJ.','.L--J..'], 2],
+            'box with upper-left corner' => [['..S--7.','.FJ..|.','.L---J.'], 2],
+            'box with lower-left corner' => [['.S---7.','.L7..|.','..L--J.'], 2],
         ];
     }
 }

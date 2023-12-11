@@ -21,7 +21,59 @@ class Day10
     {
         $paths = self::getPaths($input);
         self::renderPrettyGrid($input, $paths);
-        return 0;
+        $enclosed = 0;
+        $enclosedThings = [];
+        for ($line = 0; $line < count($input); $line++) {
+            /*
+             * 0 - outside
+             * 1 - on the way in, coming from the bottom
+             * 4 - on the way in, coming from the top
+             * 2 - inside
+             * 3 - on the way out, coming from the bottom
+             * 5 - on the way out, coming from the top
+             */
+            $currentState = 0;
+            for ($column = 0; $column < strlen($input[$line]); $column++) {
+                if (!isset($paths["$line,$column"])) {
+                    if ($currentState === 2) {
+                        $enclosed++;
+                        $enclosedThings["$line,$column"] = 1;
+                    }
+                    continue;
+                }
+                if ($currentState === 0 && ($input[$line][$column] == 'F' || $input[$line][$column] === 'S')) {
+                    $currentState = 1;
+                } elseif ($currentState === 0 && ($input[$line][$column] == 'L' || $input[$line][$column] === 'S')) {
+                    $currentState = 4;
+                } elseif ($currentState === 0 && ($input[$line][$column] === '|' || $input[$line][$column] === 'S')) {
+                    $currentState = 2;
+                } elseif ($currentState === 1 && ($input[$line][$column] == 'J' || $input[$line][$column] === 'S')) {
+                    $currentState = 2;
+                } elseif ($currentState === 1 && ($input[$line][$column] == '7' || $input[$line][$column] === 'S')) {
+                    $currentState = 0;
+                } elseif ($currentState === 4 && ($input[$line][$column] == 'J' || $input[$line][$column] === 'S')) {
+                    $currentState = 0;
+                } elseif ($currentState === 4 && ($input[$line][$column] == '7' || $input[$line][$column] === 'S')) {
+                    $currentState = 2;
+                } elseif ($currentState === 2 && ($input[$line][$column] == 'L' || $input[$line][$column] === 'S')) {
+                    $currentState = 5;
+                } elseif ($currentState === 2 && ($input[$line][$column] == 'F' || $input[$line][$column] === 'S')) {
+                    $currentState = 3;
+                } elseif ($currentState === 2 && ($input[$line][$column] == '|' || $input[$line][$column] === 'S')) {
+                    $currentState = 0;
+                } elseif ($currentState === 3 && ($input[$line][$column] == 'J' || $input[$line][$column] === 'S')) {
+                    $currentState = 0;
+                } elseif ($currentState === 3 && ($input[$line][$column] == '7' || $input[$line][$column] === 'S')) {
+                    $currentState = 2;
+                } elseif ($currentState === 5 && ($input[$line][$column] == 'J' || $input[$line][$column] === 'S')) {
+                    $currentState = 2;
+                } elseif ($currentState === 5 && ($input[$line][$column] == '7' || $input[$line][$column] === 'S')) {
+                    $currentState = 0;
+                }
+            }
+        }
+        self::renderPrettyGridWithEnclosed($input, $paths, $enclosedThings);
+        return $enclosed;
     }
 
     private static function getPaths(array $input): array
@@ -94,6 +146,43 @@ class Day10
             $gridRowText = '';
             for ($j = 0; $j < strlen($input[$i]); $j++) {
                 if (!isset($paths["$i,$j"])) {
+                    $gridRowText .= ' ';
+                } else {
+                    $letter = $input[$i][$j];
+                    if ($letter === '-') {
+                        $gridRowText .= '─';
+                    } elseif ($letter === '|') {
+                        $gridRowText .= '│';
+                    } elseif ($letter === 'F') {
+                        $gridRowText .= '┌';
+                    } elseif ($letter === '7') {
+                        $gridRowText .= '┐';
+                    } elseif ($letter === 'L') {
+                        $gridRowText .= '└';
+                    } elseif ($letter === 'J') {
+                        $gridRowText .= '┘';
+                    } else {
+                        $gridRowText .= '#';
+                    }
+                }
+            }
+            $grid[] = $gridRowText;
+        }
+        $gridText = implode("\n", $grid);
+        print_r($gridText);
+        return $gridText;
+    }
+
+    public static function renderPrettyGridWithEnclosed(array $input, array $paths, array $enclosedThings): string
+    {
+        print_r("\n");
+        $grid = [];
+        for ($i = 0; $i < count($input); $i++) {
+            $gridRowText = '';
+            for ($j = 0; $j < strlen($input[$i]); $j++) {
+                if (isset($enclosedThings["$i,$j"])) {
+                    $gridRowText .= '1';
+                } elseif (!isset($paths["$i,$j"])) {
                     $gridRowText .= ' ';
                 } else {
                     $letter = $input[$i][$j];
