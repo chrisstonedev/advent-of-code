@@ -14,7 +14,7 @@ class Day08
         $currentNode = 'AAA';
         while ($currentNode !== 'ZZZ') {
             $moveRight = $directions[$trips % strlen($directions)] === 'R';
-            $currentNode = self::getNextNode($data, $currentNode, $moveRight);
+            $currentNode = $moveRight ? $data[$currentNode]['right'] : $data[$currentNode]['left'];
             $trips++;
         }
         return $trips;
@@ -25,25 +25,33 @@ class Day08
         $directions = $input[0];
         $data = self::prepareData($input);
         $trips = 0;
-        $currentNodes1 = array_filter($data, fn($element) => str_ends_with($element['pattern'], 'A'));
-        $currentNodes = array_values(array_map(fn($value): string => $value['pattern'], $currentNodes1));
+//        $currentNodes = array_values(array_filter(array_keys($data), fn($key) => str_ends_with($key, 'A')));
+        $currentNodesReverse = array_values(array_filter(array_keys($data), fn($key) => str_ends_with($key, 'A')));
+        $currentNodes = [];
+        for ($jj = count($currentNodesReverse) - 1; $jj >= 0; $jj--) {
+            $currentNodes[] = $currentNodesReverse[$jj];
+        }
+
         $allNodesAreAtTheEnd = false;
-        print_r($currentNodes);
-        flush();
-        ob_flush();
         while (!$allNodesAreAtTheEnd) {
+//            $allNodesAreAtTheEnd = ($trips + 1) % 44225543 === 0;
             $allNodesAreAtTheEnd = true;
             $moveRight = $directions[$trips % strlen($directions)] === 'R';
+//            for ($i = 3; $i < count($currentNodes); $i++) {
             for ($i = 0; $i < count($currentNodes); $i++) {
-                $currentNodes[$i] = self::getNextNode($data, $currentNodes[$i], $moveRight);
-                if (!str_ends_with($currentNodes[$i], 'Z')) {
+                $currentNodes[$i] = $moveRight ? $data[$currentNodes[$i]]['right'] : $data[$currentNodes[$i]]['left'];
+                if ($allNodesAreAtTheEnd && !str_ends_with($currentNodes[$i], 'Z')) {
+//                    if ($i > 3) {
+                    if ($i > 1) {
+                        $currentTrip = $trips + 1;
+                        print_r("On $currentTrip trips, it needed to go to index $i to find one not ending in Z\n");
+                        flush();
+                        ob_flush();
+                    }
                     $allNodesAreAtTheEnd = false;
                 }
             }
             $trips++;
-            print_r($currentNodes);
-            flush();
-            ob_flush();
         }
         return $trips;
     }
@@ -53,18 +61,11 @@ class Day08
         $data = [];
         for ($i = 2; $i < count($input); $i++) {
             preg_match_all('/\w+/', $input[$i], $values);
-            $data[] = [
-                'pattern' => $values[0][0],
+            $data[$values[0][0]] = [
                 'left' => $values[0][1],
                 'right' => $values[0][2],
             ];
         }
         return $data;
-    }
-
-    private static function getNextNode(array $data, mixed $currentNode, bool $moveRight): string
-    {
-        $object = current(array_filter($data, fn($element) => $element['pattern'] === $currentNode));
-        return $moveRight ? $object['right'] : $object['left'];
     }
 }
