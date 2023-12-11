@@ -19,10 +19,6 @@ class Day05
         $minimumLocation = PHP_INT_MAX;
         $seeds = self::getSeeds($input[0]);
         $almanac = self::parseInputAsAlmanac($input);
-        print_r($seeds);
-        print_r("\n");
-        ob_flush();
-        flush();
         for ($i = 0; $i < count($seeds); $i += 2) {
             $startSeed = $seeds[$i];
             $seedRange = $seeds[$i + 1];
@@ -56,44 +52,44 @@ class Day05
                 continue;
             }
             preg_match_all('/\d+/', $input[$i], $mappingValues);
-            $mapping = new Day05Mapping(intval($mappingValues[0][0]), intval($mappingValues[0][1]),
-                intval($mappingValues[0][2]));
+            $destinationRangeStart = intval($mappingValues[0][0]);
+            $sourceRangeStart = intval($mappingValues[0][1]);
+            $rangeLength = intval($mappingValues[0][2]);
             switch ($mapStep) {
                 case 0:
-                    $almanac->seedToSoil[] = $mapping;
+                    $almanac->seedToSoil->addValue($destinationRangeStart, $sourceRangeStart, $rangeLength);
                     break;
                 case 1:
-                    $almanac->soilToFertilizer[] = $mapping;
+                    $almanac->soilToFertilizer->addValue($destinationRangeStart, $sourceRangeStart, $rangeLength);
                     break;
                 case 2:
-                    $almanac->fertilizerToWater[] = $mapping;
+                    $almanac->fertilizerToWater->addValue($destinationRangeStart, $sourceRangeStart, $rangeLength);
                     break;
                 case 3:
-                    $almanac->waterToLight[] = $mapping;
+                    $almanac->waterToLight->addValue($destinationRangeStart, $sourceRangeStart, $rangeLength);
                     break;
                 case 4:
-                    $almanac->lightToTemperature[] = $mapping;
+                    $almanac->lightToTemperature->addValue($destinationRangeStart, $sourceRangeStart, $rangeLength);
                     break;
                 case 5:
-                    $almanac->temperatureToHumidity[] = $mapping;
+                    $almanac->temperatureToHumidity->addValue($destinationRangeStart, $sourceRangeStart, $rangeLength);
                     break;
                 case 6:
-                    $almanac->humidityToLocation[] = $mapping;
+                    $almanac->humidityToLocation->addValue($destinationRangeStart, $sourceRangeStart, $rangeLength);
                     break;
             }
         }
         return $almanac;
     }
 
-    /** @param Day05Mapping[] $mappings */
-    public static function moveToNextArea(array $mappings, int $start): int
+    public static function moveToNextArea(Day05Mappings $mappings, int $start): int
     {
-        foreach ($mappings as $mapping) {
-            $destination = $mapping->mapValue($start);
-            if ($destination)
-                return $destination;
-        }
-        return $start;
+        $mapping = $mappings->getBestMapping($start);
+        if (!$mapping)
+            return $start;
+
+        $destination = $mapping->mapValue($start);
+        return $destination ?: $start;
     }
 
     public static function calculateLocationForSeed(Day05Almanac $almanac, int $seed): int

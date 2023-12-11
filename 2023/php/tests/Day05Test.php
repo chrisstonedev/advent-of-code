@@ -17,24 +17,24 @@ class Day05Test extends TestCase
         parent::setUp();
 
         $this->expectedAlmanac = new Day05Almanac();
-        $this->expectedAlmanac->seedToSoil[] = new Day05Mapping(50, 98, 2);
-        $this->expectedAlmanac->seedToSoil[] = new Day05Mapping(52, 50, 48);
-        $this->expectedAlmanac->soilToFertilizer[] = new Day05Mapping(0, 15, 37);
-        $this->expectedAlmanac->soilToFertilizer[] = new Day05Mapping(37, 52, 2);
-        $this->expectedAlmanac->soilToFertilizer[] = new Day05Mapping(39, 0, 15);
-        $this->expectedAlmanac->fertilizerToWater[] = new Day05Mapping(49, 53, 8);
-        $this->expectedAlmanac->fertilizerToWater[] = new Day05Mapping(0, 11, 42);
-        $this->expectedAlmanac->fertilizerToWater[] = new Day05Mapping(42, 0, 7);
-        $this->expectedAlmanac->fertilizerToWater[] = new Day05Mapping(57, 7, 4);
-        $this->expectedAlmanac->waterToLight[] = new Day05Mapping(88, 18, 7);
-        $this->expectedAlmanac->waterToLight[] = new Day05Mapping(18, 25, 70);
-        $this->expectedAlmanac->lightToTemperature[] = new Day05Mapping(45, 77, 23);
-        $this->expectedAlmanac->lightToTemperature[] = new Day05Mapping(81, 45, 19);
-        $this->expectedAlmanac->lightToTemperature[] = new Day05Mapping(68, 64, 13);
-        $this->expectedAlmanac->temperatureToHumidity[] = new Day05Mapping(0, 69, 1);
-        $this->expectedAlmanac->temperatureToHumidity[] = new Day05Mapping(1, 0, 69);
-        $this->expectedAlmanac->humidityToLocation[] = new Day05Mapping(60, 56, 37);
-        $this->expectedAlmanac->humidityToLocation[] = new Day05Mapping(56, 93, 4);
+        $this->expectedAlmanac->seedToSoil->addValue(50, 98, 2);
+        $this->expectedAlmanac->seedToSoil->addValue(52, 50, 48);
+        $this->expectedAlmanac->soilToFertilizer->addValue(0, 15, 37);
+        $this->expectedAlmanac->soilToFertilizer->addValue(37, 52, 2);
+        $this->expectedAlmanac->soilToFertilizer->addValue(39, 0, 15);
+        $this->expectedAlmanac->fertilizerToWater->addValue(49, 53, 8);
+        $this->expectedAlmanac->fertilizerToWater->addValue(0, 11, 42);
+        $this->expectedAlmanac->fertilizerToWater->addValue(42, 0, 7);
+        $this->expectedAlmanac->fertilizerToWater->addValue(57, 7, 4);
+        $this->expectedAlmanac->waterToLight->addValue(88, 18, 7);
+        $this->expectedAlmanac->waterToLight->addValue(18, 25, 70);
+        $this->expectedAlmanac->lightToTemperature->addValue(45, 77, 23);
+        $this->expectedAlmanac->lightToTemperature->addValue(81, 45, 19);
+        $this->expectedAlmanac->lightToTemperature->addValue(68, 64, 13);
+        $this->expectedAlmanac->temperatureToHumidity->addValue(0, 69, 1);
+        $this->expectedAlmanac->temperatureToHumidity->addValue(1, 0, 69);
+        $this->expectedAlmanac->humidityToLocation->addValue(60, 56, 37);
+        $this->expectedAlmanac->humidityToLocation->addValue(56, 93, 4);
     }
 
     public function testParseIntoAlmanac()
@@ -68,7 +68,8 @@ class Day05Test extends TestCase
     /** @dataProvider mapValueFromObjectProvider */
     public function testMapValueFromObject(int $input, int|false $expected)
     {
-        $this->assertSame($expected, $this->expectedAlmanac->seedToSoil[0]->mapValue($input));
+        $mapping = new Day05Mapping(50, 98, 2);
+        $this->assertSame($expected, $mapping->mapValue($input));
     }
 
     public static function mapValueFromObjectProvider(): array
