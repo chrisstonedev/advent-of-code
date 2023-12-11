@@ -52,7 +52,7 @@ class Day10Test extends TestCase
     {
         return [
             'test' => ['test' . self::DAY_NUMBER, 0],
-            'input' => ['input' . self::DAY_NUMBER, 457], // 457 is too low
+            'input' => ['input' . self::DAY_NUMBER, 0], // 457 is too low
         ];
     }
 }
