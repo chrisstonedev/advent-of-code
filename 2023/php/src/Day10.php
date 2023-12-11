@@ -6,6 +6,11 @@ namespace aoc2023;
 
 class Day10
 {
+    const FACE_RIGHT = ['-', 'L', 'F', 'S'];
+    const FACE_LEFT = ['-', 'J', '7', 'S'];
+    const FACE_UP = ['|', 'L', 'J', 'S'];
+    const FACE_DOWN = ['|', '7', 'F', 'S'];
+
     public static function executePartOne(array $input): int
     {
         $paths = self::getPaths($input);
@@ -16,65 +21,6 @@ class Day10
     {
         $paths = self::getPaths($input);
         self::renderPrettyGrid($input, $paths);
-
-//        $enclosed = 0;
-//        $enclosedCoords = [];
-//        for ($line = 0; $line < count($input); $line++) {
-//            for ($column = 0; $column < strlen($input[$i]); $column++) {
-//                // part of the loop
-//                if (isset($paths["$line,$column"])) {
-//                    continue;
-//                }
-//                // outside the loop
-//                $hasTilesAbove = false;
-//                for ($checkLine = 0; $checkLine < $line; $checkLine++) {
-//                    if (isset($paths["$checkLine,$column"])) {
-//                        $hasTilesAbove = true;
-//                        break;
-//                    }
-//                }
-//                if (!$hasTilesAbove) {
-//                    continue;
-//                }
-//                $hasTilesBelow = false;
-//                for ($checkLine = count($input) - 1; $checkLine > $line; $checkLine--) {
-//                    if (isset($paths["$checkLine,$column"])) {
-//                        $hasTilesBelow = true;
-//                        break;
-//                    }
-//                }
-//                if (!$hasTilesBelow) {
-//                    continue;
-//                }
-//                $hasTilesToTheLeft = false;
-//                for ($checkColumn = 0; $checkColumn < $column; $checkColumn++) {
-//                    if (isset($paths["$line,$checkColumn"])) {
-//                        $hasTilesToTheLeft = true;
-//                        break;
-//                    }
-//                }
-//                if (!$hasTilesToTheLeft) {
-//                    continue;
-//                }
-//                $hasTilesToTheRight = false;
-//                for ($checkColumn = strlen($input[$i]) - 1; $checkColumn > $column; $checkColumn--) {
-//                    if (isset($paths["$line,$checkColumn"])) {
-//                        $hasTilesToTheRight = true;
-//                        break;
-//                    }
-//                }
-//                if (!$hasTilesToTheRight) {
-//                    continue;
-//                }
-//
-//                $enclosedCoords[] = "$line,$column";
-//                $enclosed++;
-//            }
-//        }
-//        print_r("\npaths:\n");
-//        print_r($paths);
-//        print_r("\nenclosed:\n");
-//        print_r($enclosedCoords);
         return 0;
     }
 
@@ -98,32 +44,43 @@ class Day10
             foreach ($keys as $key) {
                 $positionValues = array_map('intval', explode(',', $key));
 
-                // check to the right
                 $line = $positionValues[0];
-                $column = $positionValues[1] + 1;
-                if (!isset($paths["$line,$column"]) && in_array($input[$line][$column], ['-', 'J', '7'])) {
-                    $paths["$line,$column"] = $value + 1;
-                }
-
-                // check to the left
-                $line = $positionValues[0];
-                $column = $positionValues[1] - 1;
-                if (!isset($paths["$line,$column"]) && in_array($input[$line][$column], ['-', 'L', 'F'])) {
-                    $paths["$line,$column"] = $value + 1;
-                }
-
-                // check up
-                $line = $positionValues[0] - 1;
                 $column = $positionValues[1];
-                if (!isset($paths["$line,$column"]) && in_array($input[$line][$column], ['|', '7', 'F'])) {
-                    $paths["$line,$column"] = $value + 1;
+                $checkToTheRight = in_array($input[$line][$column], self::FACE_RIGHT);
+                $checkToTheLeft = in_array($input[$line][$column], self::FACE_LEFT);
+                $checkUp = in_array($input[$line][$column], self::FACE_UP);
+                $checkDown = in_array($input[$line][$column], self::FACE_DOWN);
+
+                if ($checkToTheRight) {
+                    $line = $positionValues[0];
+                    $column = $positionValues[1] + 1;
+                    if (!isset($paths["$line,$column"]) && in_array(substr($input[$line], $column, 1), self::FACE_LEFT)) {
+                        $paths["$line,$column"] = $value + 1;
+                    }
                 }
 
-                // check down
-                $line = $positionValues[0] + 1;
-                $column = $positionValues[1];
-                if (!isset($paths["$line,$column"]) && in_array($input[$line][$column], ['|', 'L', 'J'])) {
-                    $paths["$line,$column"] = $value + 1;
+                if ($checkToTheLeft && $column > 0) {
+                    $line = $positionValues[0];
+                    $column = $positionValues[1] - 1;
+                    if (!isset($paths["$line,$column"]) && in_array(substr($input[$line], $column, 1), self::FACE_RIGHT)) {
+                        $paths["$line,$column"] = $value + 1;
+                    }
+                }
+
+                if ($checkUp) {
+                    $line = $positionValues[0] - 1;
+                    $column = $positionValues[1];
+                    if (!isset($paths["$line,$column"]) && in_array($input[$line][$column], self::FACE_DOWN)) {
+                        $paths["$line,$column"] = $value + 1;
+                    }
+                }
+
+                if ($checkDown) {
+                    $line = $positionValues[0] + 1;
+                    $column = $positionValues[1];
+                    if (!isset($paths["$line,$column"]) && in_array($input[$line][$column], self::FACE_UP)) {
+                        $paths["$line,$column"] = $value + 1;
+                    }
                 }
             }
         }
