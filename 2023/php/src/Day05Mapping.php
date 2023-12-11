@@ -24,4 +24,12 @@ class Day05Mapping
         }
         return false;
     }
+
+    public function mapValueReverse(int $source): int|false
+    {
+        if ($source >= $this->destinationRangeStart && $source < $this->destinationRangeStart + $this->rangeLength) {
+            return $source - $this->destinationRangeStart + $this->sourceRangeStart;
+        }
+        return false;
+    }
 }

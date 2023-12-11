@@ -16,29 +16,26 @@ class Day05
 
     public static function executePartTwo(array $input): int
     {
-        $minimumLocation = PHP_INT_MAX;
         $seeds = self::getSeeds($input[0]);
         $almanac = self::parseInputAsAlmanac($input);
-        for ($i = 0; $i < count($seeds); $i += 2) {
-            $startSeed = $seeds[$i];
-            $seedRange = $seeds[$i + 1];
-            print_r("Starting $startSeed\n");
-            ob_flush();
-            flush();
-            for ($j = $startSeed; $j < $startSeed + $seedRange; $j++) {
-                $iteration = $j - $startSeed + 1;
-                if ($iteration % 100000 === 0) {
-                    print_r("Completed $iteration out of $seedRange (current minimum is $minimumLocation)\n");
-                    ob_flush();
-                    flush();
-                }
-                $location = self::calculateLocationForSeed($almanac, $j);
-                if ($location < $minimumLocation) {
-                    $minimumLocation = $location;
+        for ($location = 0; ; $location++) {
+            if (($location + 1) % 100000)
+
+            $humidity = self::moveToPreviousArea($almanac->humidityToLocation, $location);
+            $temperature = self::moveToPreviousArea($almanac->temperatureToHumidity, $humidity);
+            $light = self::moveToPreviousArea($almanac->lightToTemperature, $temperature);
+            $water = self::moveToPreviousArea($almanac->waterToLight, $light);
+            $fertilizer = self::moveToPreviousArea($almanac->fertilizerToWater, $water);
+            $soil = self::moveToPreviousArea($almanac->soilToFertilizer, $fertilizer);
+            $seed = self::moveToPreviousArea($almanac->seedToSoil, $soil);
+
+            for ($i = 0; $i < count($seeds); $i += 2) {
+                if ($seed >= $seeds[$i] && $seed < $seeds[$i] + $seeds[$i + 1]) {
+                    return $location;
                 }
             }
         }
-        return $minimumLocation;
+        return -1;
     }
 
     public static function parseInputAsAlmanac(array $input): Day05Almanac
@@ -84,11 +81,21 @@ class Day05
 
     public static function moveToNextArea(Day05Mappings $mappings, int $start): int
     {
-        $mapping = $mappings->getBestMapping($start);
+        $mapping = $mappings->getBestMappingForNext($start);
         if (!$mapping)
             return $start;
 
         $destination = $mapping->mapValue($start);
+        return $destination ?: $start;
+    }
+
+    public static function moveToPreviousArea(Day05Mappings $mappings, int $start): int
+    {
+        $mapping = $mappings->getBestMappingForPrevious($start);
+        if (!$mapping)
+            return $start;
+
+        $destination = $mapping->mapValueReverse($start);
         return $destination ?: $start;
     }
 
