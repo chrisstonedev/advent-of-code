@@ -17,10 +17,16 @@ class Day05
     public static function executePartTwo(array $input): int
     {
         $seeds = self::getSeeds($input[0]);
+        $seedRanges = [];
+        for ($i = 0; $i < count($seeds); $i += 2) {
+            $seedRanges[] = [
+                'start' => $seeds[$i],
+                'length' => $seeds[$i + 1],
+            ];
+        }
+        usort($seedRanges, fn($x, $y) => $x['start'] > $y['start'] ? -1 : 1);
         $almanac = self::parseInputAsAlmanac($input);
         for ($location = 0; ; $location++) {
-            if (($location + 1) % 100000)
-
             $humidity = self::moveToPreviousArea($almanac->humidityToLocation, $location);
             $temperature = self::moveToPreviousArea($almanac->temperatureToHumidity, $humidity);
             $light = self::moveToPreviousArea($almanac->lightToTemperature, $temperature);
@@ -29,9 +35,12 @@ class Day05
             $soil = self::moveToPreviousArea($almanac->soilToFertilizer, $fertilizer);
             $seed = self::moveToPreviousArea($almanac->seedToSoil, $soil);
 
-            for ($i = 0; $i < count($seeds); $i += 2) {
-                if ($seed >= $seeds[$i] && $seed < $seeds[$i] + $seeds[$i + 1]) {
-                    return $location;
+            foreach ($seedRanges as $seedRange) {
+                if ($seed >= $seedRange['start']) {
+                    if ($seed < $seedRange['start'] + $seedRange['length']) {
+                        return $location;
+                    }
+                    break;
                 }
             }
         }
