@@ -19,13 +19,7 @@ class Day12
             $record = $parts[0];
             $instructions = array_map('intval', explode(',', $parts[1]));
 
-            $poundsAlreadyDefined = substr_count($record, '#');
-            $questions = substr_count($record, '?');
-            $totalPoundsNeeded = array_sum($instructions);
-            $poundsWeStillNeed = $totalPoundsNeeded - $poundsAlreadyDefined;
-
-            $combinations = self::getCombinations($questions, $poundsWeStillNeed);
-            $possibleArrangements += self::replaceStringsEx($record, $combinations, $instructions);
+            $possibleArrangements += self::getCountOfPossibleArrangements($record, $instructions);
         }
         return $possibleArrangements;
     }
@@ -52,15 +46,20 @@ class Day12
             flush();
             ob_flush();
 
-            $poundsAlreadyDefined = substr_count($fullRecord, '#');
-            $questions = substr_count($fullRecord, '?');
-            $totalPoundsNeeded = array_sum($allInstructions);
-            $poundsWeStillNeed = $totalPoundsNeeded - $poundsAlreadyDefined;
-
-            $combinations = self::getCombinations($questions, $poundsWeStillNeed);
-            $possibleArrangements += self::replaceStringsEx($fullRecord, $combinations, $allInstructions);
+            $possibleArrangements += self::getCountOfPossibleArrangements($fullRecord, $allInstructions);
         }
         return $possibleArrangements;
+    }
+
+    public static function getCountOfPossibleArrangements(string $record, array $instructions)
+    {
+        $poundsAlreadyDefined = substr_count($record, '#');
+        $questions = substr_count($record, '?');
+        $totalPoundsNeeded = array_sum($instructions);
+        $poundsWeStillNeed = $totalPoundsNeeded - $poundsAlreadyDefined;
+
+        $combinations = self::getCombinations($questions, $poundsWeStillNeed);
+        return self::replaceStringsEx($record, $combinations, $instructions);
     }
 
     public static function getCombinations(int $totalCharacters, int $questionCharacters): array
