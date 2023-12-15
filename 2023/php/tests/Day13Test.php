@@ -22,7 +22,7 @@ class Day13Test extends TestCase
     {
         return [
             'test' => ['test' . self::DAY_NUMBER, 405],
-//            'input' => ['input' . self::DAY_NUMBER, 0],
+            'input' => ['input' . self::DAY_NUMBER, 34911],
         ];
     }
 
@@ -36,7 +36,7 @@ class Day13Test extends TestCase
     public static function part2Provider(): array
     {
         return [
-            'test' => ['test' . self::DAY_NUMBER, 0],
+            'test' => ['test' . self::DAY_NUMBER, 400],
 //            'input' => ['input' . self::DAY_NUMBER, 0],
         ];
     }
