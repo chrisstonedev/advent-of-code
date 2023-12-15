@@ -41,7 +41,7 @@ class Day13
         $patterns[] = $pattern;
         $value = 0;
         foreach ($patterns as $pattern) {
-            $value += self::calculateValue($pattern);
+            $value += self::calculateValueWithFuzzyEquality($pattern);
         }
         return $value;
     }
@@ -94,7 +94,7 @@ class Day13
 
         foreach ($rowPairs as $rowPair) {
             $rowPairIsValid = true;
-            for ($i = 0; (($rowPair + $i) < count($pattern) && ($rowPair - 1 - $i) >= 0); $i++) {
+            for ($i = 1; (($rowPair + $i) < count($pattern) && ($rowPair - 1 - $i) >= 0); $i++) {
                 if ($pattern[$rowPair + $i] !== $pattern[$rowPair - 1 - $i]) {
                     $rowPairIsValid = false;
                     break;
@@ -112,24 +112,46 @@ class Day13
     {
         $rowPairs = [];
         for ($row = 1; $row < count($pattern); $row++) {
-            if ($pattern[$row - 1] === $pattern[$row]) {
+            $equality = self::checkEquality($pattern[$row - 1], $pattern[$row]);
+            if ($equality > 0) {
                 $rowPairs[] = $row;
             }
         }
 
         foreach ($rowPairs as $rowPair) {
             $rowPairIsValid = true;
+            $foundOneIssue = false;
             for ($i = 0; (($rowPair + $i) < count($pattern) && ($rowPair - 1 - $i) >= 0); $i++) {
-                if ($pattern[$rowPair + $i] !== $pattern[$rowPair - 1 - $i]) {
-                    $rowPairIsValid = false;
-                    break;
+                $equality1 = self::checkEquality($pattern[$rowPair + $i], $pattern[$rowPair - 1 - $i]);
+                if ($equality1 === 1 && !$foundOneIssue) {
+                    $foundOneIssue = true;
+                    continue;
                 }
+                if ($equality1 === 2) {
+                    continue;
+                }
+                $rowPairIsValid = false;
+                break;
             }
-            if ($rowPairIsValid) {
+            if ($rowPairIsValid && $foundOneIssue) {
                 return $rowPair;
             }
         }
 
         return false;
+    }
+
+    private static function checkEquality(string $line1, string $line2): int
+    {
+        if ($line1 === $line2) {
+            return 2;
+        }
+        for ($i = 0; $i < strlen($line1); $i++) {
+            $fakeLine1 = substr_replace($line1, $line1[$i] === '#' ? '.' : '#', $i, 1);
+            if ($fakeLine1 === $line2) {
+                return 1;
+            }
+        }
+        return 0;
     }
 }

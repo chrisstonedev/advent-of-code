@@ -29,7 +29,6 @@ class Day13Test extends TestCase
 
     #[DataProvider('part2Provider')] public function testPart2(string $filename, int $expected)
     {
-        $this->markTestSkipped('Did not solve part 2 in PHP yet.');
         $input = Utils::ReadAllLines($filename);
         $this->assertSame($expected, Day::executePartTwo($input));
     }
@@ -38,7 +37,7 @@ class Day13Test extends TestCase
     {
         return [
             'test' => [sprintf("2023_%s_test", self::DAY_NUMBER), 400],
-            'input' => [sprintf("2023_%s_input", self::DAY_NUMBER), 0],
+            'input' => [sprintf("2023_%s_input", self::DAY_NUMBER), 33183],
         ];
     }
 }
