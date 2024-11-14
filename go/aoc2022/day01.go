@@ -1,4 +1,4 @@
-package main
+package aoc2022
 
 import (
 	"sort"
@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-func part1(input string) int {
+func Part1(input string) int {
 	elves := getElves(input)
 	return elves[0]
 }
 
-func part2(input string) int {
+func Part2(input string) int {
 	elves := getElves(input)
 	return elves[0] + elves[1] + elves[2]
 }

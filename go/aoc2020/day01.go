@@ -1,4 +1,4 @@
-package main
+package aoc2020
 
 import (
 	"strconv"
@@ -14,7 +14,7 @@ func convertInputStringToNumberArray(input string) []int {
 	return numbers
 }
 
-func part1(input string) int {
+func Part1(input string) int {
 	numbers := convertInputStringToNumberArray(input)
 	for i := 0; i < len(numbers); i++ {
 		for j := i + 1; j < len(numbers); j++ {
@@ -26,7 +26,7 @@ func part1(input string) int {
 	return 0
 }
 
-func part2(input string) int {
+func Part2(input string) int {
 	numbers := convertInputStringToNumberArray(input)
 	for i := 0; i < len(numbers); i++ {
 		for j := i + 1; j < len(numbers); j++ {
