@@ -1,11 +1,11 @@
-﻿using AdventOfCode._2021.Console;
+﻿using AdventOfCode.Console;
 
 try
 {
     var day = GetDay(14);
 
-    var testInput = Utils.ReadAllLines($"Day{day.DayNumber:00}_test");
-    var input = Utils.ReadAllLines($"Day{day.DayNumber:00}");
+    var testInput = Utils.ReadAllLines($"2021_{day.DayNumber:00}_test");
+    var input = Utils.ReadAllLines($"2021_{day.DayNumber:00}_input");
 
     Utils.AssertTestAnswer(day.ExecutePartOne(testInput), day.PartOneTestAnswer);
     Console.WriteLine("Part 1: " + day.ExecutePartOne(input));
@@ -29,6 +29,8 @@ catch (Exception ex)
 {
     Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
 }
+
+return;
 
 static IDay GetDay(int day)
 {

@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode._2021.Console;
+﻿namespace AdventOfCode.Console;
 
 internal static class Utils
 {

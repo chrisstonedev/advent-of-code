@@ -4,12 +4,6 @@ This repository contains the code that I have written to solve Advent of Code 20
 
 I will try to always solve each day's problem on my own without any outside help in one of the below languages; then, I may try to migrate to another language to strengthen my "language translation" skills in  look to others' solutions to see if my code could have used some improvements.
 
-## C#
-
-C# is my primary programming language and it is the one in which I am the most comfortable.
-
-🟢🟢🟢🔴🟢🟢🟢🟢🔴🔴🔴🟢🟢🟢🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
-
 ## TypeScript
 
 TypeScript is a language I use often but I do not feel as strong in it as I do in C#, so I will try to also solve a few in TypeScript as well.

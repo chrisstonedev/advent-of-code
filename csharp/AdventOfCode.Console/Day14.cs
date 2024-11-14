@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace AdventOfCode._2021.Console;
+namespace AdventOfCode.Console;
 
 public class Day14 : ILongDay
 {

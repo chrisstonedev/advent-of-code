@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.2021.Console", "AdventOfCode.2021.Console\AdventOfCode.2021.Console.csproj", "{BA15C823-5619-4C86-8ABA-89271DEA15F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Console", "AdventOfCode.Console\AdventOfCode.Console.csproj", "{BA15C823-5619-4C86-8ABA-89271DEA15F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.2021.Tests", "AdventOfCode.2021.Tests\AdventOfCode.2021.Tests.csproj", "{EA6B7DEB-1528-421A-95BC-CFD0E67FAC5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Tests", "AdventOfCode.Tests\AdventOfCode.Tests.csproj", "{EA6B7DEB-1528-421A-95BC-CFD0E67FAC5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

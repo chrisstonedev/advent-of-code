@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>AdventOfCode._2021.Tests</RootNamespace>
+        <TargetFramework>net8.0</TargetFramework>
+        <RootNamespace>AdventOfCode.Tests</RootNamespace>
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AdventOfCode.2021.Console\AdventOfCode.2021.Console.csproj" />
+      <ProjectReference Include="..\AdventOfCode.Console\AdventOfCode.Console.csproj" />
     </ItemGroup>
 
 </Project>

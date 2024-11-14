@@ -1,7 +1,7 @@
-using AdventOfCode._2021.Console;
+using AdventOfCode.Console;
 using NUnit.Framework;
 
-namespace AdventOfCode._2021.Tests;
+namespace AdventOfCode.Tests;
 
 [TestFixture]
 public class Day12Tests
