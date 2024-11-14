@@ -21,3 +21,10 @@ As with last year, I will also solve some puzzles in Kotlin to learn the languag
 the [Kotlin YouTube videos](https://www.youtube.com/playlist?list=PLlFc5cFwUnmwxQlKf8uWp-la8BVSTH47J).
 
 🟢🔴🔴🔴🔴🔴🔴🔴🟡🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+
+## Go
+
+Go is another language that was good to learn at the time during Advent of Code 2022, but was mostly not used until
+later years.
+
+🟢🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴

@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	data, _ := os.ReadFile("../data/input/Day01.txt")
+	data, _ := os.ReadFile("../data/input01.txt")
 	input := string(data)
 	part1 := part1(input)
 	fmt.Printf("Part 1: %d\n", part1)

@@ -19,7 +19,7 @@ func part2(input string) int {
 func getElves(input string) []int {
 	var elves []int
 
-	for _, elf := range strings.Split(strings.ReplaceAll(input, "\n\r", "\n"), "\n\n") {
+	for _, elf := range strings.Split(input, "\n\n") {
 		calories := strings.Split(elf, "\n")
 		total := 0
 		for _, amount := range calories {
