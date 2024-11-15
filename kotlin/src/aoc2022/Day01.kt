@@ -1,3 +1,8 @@
+package aoc2022
+
+import checkValue
+import readInputAsText
+
 fun main() {
     fun parseInputData(input: String): List<List<Int>> {
         return input.split("\n\n").map { elf -> elf.lines().map { it.toInt() } }
@@ -23,9 +28,9 @@ fun main() {
 
     fun part2(input: String): Int = parseInputData(input).topNElves(3)
 
-    val testInput = readInputAsText("test01")
+    val testInput = readInputAsText("2022_01_test")
     checkValue(part1(testInput), 24000)
-    val input = readInputAsText("input01")
+    val input = readInputAsText("2022_01_input")
     println(part1(input))
 
     checkValue(part2(testInput), 45000)

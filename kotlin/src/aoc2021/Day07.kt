@@ -1,3 +1,6 @@
+package aoc2021
+
+import readInput
 import kotlin.math.abs
 
 fun main() {
@@ -22,8 +25,8 @@ fun main() {
         return calculateLeastAmountOfFuelSpend(input, ::sumFunction)
     }
 
-    val testInput = readInput("Day07_test")
-    val input = readInput("Day07")
+    val testInput = readInput("2021_07_test")
+    val input = readInput("2021_07_input")
 
     check(part1(testInput) == 37)
     println(part1(input))

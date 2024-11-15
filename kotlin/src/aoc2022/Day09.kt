@@ -1,3 +1,7 @@
+package aoc2022
+
+import checkValue
+import readInputAsLines
 import kotlin.math.abs
 
 data class Move(val dx: Int, val dy: Int)
@@ -55,9 +59,9 @@ fun main() {
         return 0
     }
 
-    val testInput = readInputAsLines("test09")
+    val testInput = readInputAsLines("2022_09_test")
     checkValue(part1(testInput), 13)
-    val input = readInputAsLines("input09")
+    val input = readInputAsLines("2022_09_input")
     println(part1(input))
 
     checkValue(part2(testInput), 1)

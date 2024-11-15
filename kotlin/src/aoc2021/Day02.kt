@@ -1,3 +1,7 @@
+package aoc2021
+
+import readInput
+
 fun main() {
     data class Operation(val direction: String, val amount: Int)
 
@@ -38,8 +42,8 @@ fun main() {
         return horizontalPosition * depth
     }
 
-    val testInput = readInput("Day02_test")
-    val input = readInput("Day02")
+    val testInput = readInput("2021_02_test")
+    val input = readInput("2021_02_input")
 
     check(part1(testInput) == 150)
     println(part1(input))
