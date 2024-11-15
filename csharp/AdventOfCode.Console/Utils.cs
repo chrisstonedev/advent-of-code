@@ -4,7 +4,7 @@ internal static class Utils
 {
     internal static string[] ReadAllLines(string fileName)
     {
-        var file = Path.Join(AppDomain.CurrentDomain.BaseDirectory, $"../../../../../data/{fileName}.txt");
+        var file = Path.Join(AppDomain.CurrentDomain.BaseDirectory, $"../../../../../../aoc-data/{fileName}.txt");
         return File.ReadAllLines(file);
     }
 

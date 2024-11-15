@@ -12,11 +12,11 @@ fun readInputAsLines(name: String) = getFileData(name).readLines()
  */
 fun readInputAsText(name: String) = getFileData(name).readText()
 
-fun readInput(name: String) = File("../data", "$name.txt").readLines()
+fun readInput(name: String) = File("../../aoc-data", "$name.txt").readLines()
 
 fun readInputAsInts(name: String) = readInput(name).map { it.toInt() }
 
-private fun getFileData(name: String) = File("../data", "$name.txt")
+private fun getFileData(name: String) = File("../../aoc-data", "$name.txt")
 
 fun checkValue(actual: Int, expected: Int) {
     check(actual == expected) { "Expected: ${expected}, Actual: $actual" }

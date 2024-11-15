@@ -1,2 +1,0 @@
-Per request of the creator of Advent of Code, solution inputs will not be shared. Files for test input should be added
-to this directory in the format `yyyy_dd_test.txt` and pull input should be added in the format `yyyy_dd_input.txt`.
