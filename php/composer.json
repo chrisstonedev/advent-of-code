@@ -1,0 +1,19 @@
+{
+  "require-dev": {
+    "mockery/mockery": "^1.6.12",
+    "phpunit/phpunit": "^11.4.3"
+  },
+  "require": {
+    "php": "~8.3.13"
+  },
+  "autoload": {
+    "psr-4": {
+      "aoc\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "test\\": "tests/"
+    }
+  }
+}
