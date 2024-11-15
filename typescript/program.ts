@@ -20,8 +20,8 @@ function goDoThis() {
     return;
   }
 
-  let testInput = Utils.readInput(`Day${day.dayNumber.toString().padStart(2, '0')}_test`);
-  let input = Utils.readInput(`Day${day.dayNumber.toString().padStart(2, '0')}`);
+  let testInput = Utils.readInput(`2021_${day.dayNumber.toString().padStart(2, '0')}_test`);
+  let input = Utils.readInput(`2021_${day.dayNumber.toString().padStart(2, '0')}_input`);
   if (!Utils.assertTestAnswer(day.executePartOne(testInput), day.partOneTestAnswer)) {
     return;
   }
