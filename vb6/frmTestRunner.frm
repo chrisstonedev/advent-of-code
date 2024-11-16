@@ -38,8 +38,9 @@ Option Explicit
 
 Private Sub Form_Load()
     ' Add tests here
-    AddTest New clsTestDay01
-    AddTest New clsTestDay02
+    AddTest New clsTest2022Day01
+    AddTest New clsTest2023Day01
+    AddTest New clsTest2023Day02
 End Sub
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

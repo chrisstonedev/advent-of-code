@@ -6,11 +6,11 @@ BEGIN
   DataSourceBehavior  = 0  'vbNone
   MTSTransactionMode  = 0  'NotAnMTSObject
 END
-Attribute VB_Name = "clsDay01"
+Attribute VB_Name = "cls2022Day01"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
-Attribute VB_Exposed = False
+Attribute VB_Exposed = True
 Option Explicit
 
 Public Function ExecutePartOne(ByRef inputArray() As String) As Long
@@ -75,3 +75,4 @@ Private Function GetCaloriesCarriedByEachElf(ByRef inputArray() As String) As Lo
     Next
     GetCaloriesCarriedByEachElf = Result
 End Function
+

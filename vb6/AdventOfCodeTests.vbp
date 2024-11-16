@@ -1,11 +1,12 @@
 Type=Exe
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
 Object={7983BD3B-752A-43EA-9BFF-444BBA1FC293}#5.0#0; SimplyVBUnit.Component.ocx
 Reference=*\AAdventOfCode.vbp
 Form=frmTestRunner.frm
-Class=clsTestDay01; clsTestDay01.cls
+Class=clsTest2023Day01; clsTest2023Day01.cls
 Module=basUtils; basUtils.bas
-Class=clsTestDay02; clsTestDay02.cls
+Class=clsTest2023Day02; clsTest2023Day02.cls
+Class=clsTest2022Day01; clsTest2022Day01.cls
 Startup="frmTestRunner"
 Command32=""
 Name="AdventOfCodeTests"

@@ -1,7 +1,8 @@
 Type=OleDll
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
-Class=clsDay01; clsDay01.cls
-Class=clsDay02; clsDay02.cls
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
+Class=cls2023Day01; cls2023Day01.cls
+Class=cls2023Day02; cls2023Day02.cls
+Class=cls2022Day01; cls2022Day01.cls
 Startup="(None)"
 Command32=""
 Name="AdventOfCode"
