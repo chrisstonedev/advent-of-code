@@ -6,33 +6,90 @@ import { Day09 } from "./2021/day09";
 import { Day10 } from "./2021/day10";
 import { Day11 } from "./2021/day11";
 import { Day202401 } from "./2024/day202401";
+import { select } from "@inquirer/prompts";
 
-const days: Day[] = [
-  new Day01(),
-  new Day02(),
-  new Day04(),
-  new Day09(),
-  new Day10(),
-  new Day11(),
-  new Day202401(),
-];
+const dayMap = new Map<number, Map<number, Day>>([
+  [
+    2021,
+    new Map<number, Day>([
+      [1, new Day01()],
+      [2, new Day02()],
+      [4, new Day04()],
+      [9, new Day09()],
+      [10, new Day10()],
+      [11, new Day11()],
+    ]),
+  ],
+  [2024, new Map<number, Day>([[1, new Day202401()]])],
+]);
 
-function goDoThis() {
-  if (process.argv.length < 3) {
-    console.error(
-      "Please pass the day number as an argument (e.g. `ts-node program.ts 1`).",
-    );
-    return;
+const years = Array.from(dayMap.keys());
+const minYear = Math.min(...years);
+const maxYear = Math.max(...years);
+const yearChoices: {
+  name: string;
+  value: number;
+  description: string | undefined;
+  disabled: string | undefined;
+}[] = [];
+for (let i = minYear; i <= maxYear; i++) {
+  const daysSolved = Array.from(dayMap.get(i)?.keys() ?? []).length;
+  yearChoices.push({
+    name: `${i}`,
+    value: i,
+    description:
+      daysSolved > 0
+        ? `${daysSolved} days solved (${daysSolved * 4}%)`
+        : undefined,
+    disabled: daysSolved > 0 ? undefined : "(none)",
+  });
+}
+
+function getDayChoices(year: number) {
+  const days = Array.from(dayMap.get(year)?.keys() ?? []);
+  const minDay = Math.min(...days);
+  const maxDay = Math.max(...days);
+  const dayChoices: {
+    name: string;
+    value: number;
+    disabled: string | undefined;
+  }[] = [];
+  for (let i = minDay; i <= maxDay; i++) {
+    const solved = days.includes(i);
+    dayChoices.push({
+      name: `Day ${i}`,
+      value: i,
+      disabled: solved ? undefined : "(not yet solved)",
+    });
   }
+  return { dayChoices, maxDay };
+}
 
-  const day = days.find((day) => day.dayNumber === Number(process.argv[2]));
+async function goDoThis() {
+  const year = await select({
+    message: "Select a year:",
+    choices: yearChoices,
+    default: maxYear,
+  });
+  const { dayChoices, maxDay } = getDayChoices(year);
+  const dayNumber = await select({
+    message: "Select a day:",
+    choices: dayChoices,
+    default: maxDay,
+  });
+
+  const day = dayMap.get(year)?.get(dayNumber);
   if (day === undefined) {
     console.error("Could not find day with that day number.");
     return;
   }
 
-  const testInput = Utils.readInput(`2024_01_test`);
-  const input = Utils.readInput(`2024_01_input`);
+  const testInput = Utils.readInput(
+    `${year}_${dayNumber.toString().padStart(2, "0")}_test`,
+  );
+  const input = Utils.readInput(
+    `${year}_${dayNumber.toString().padStart(2, "0")}_input`,
+  );
   if (
     !Utils.assertTestAnswer(
       day.executePartOne(testInput),
@@ -54,7 +111,7 @@ function goDoThis() {
 }
 
 try {
-  goDoThis();
+  goDoThis().then();
 } catch (err) {
   console.error(err);
 }

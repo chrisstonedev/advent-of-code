@@ -1,9 +1,14 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
-    "target": "ES2021",
+    "module": "NodeNext",
+    "target": "ESNext",
     "outDir": "out",
     "rootDir": "",
-    "strict": true
+    "strict": true,
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true
+  },
+  "ts-node": {
+    "esm": true
   }
 }
