@@ -2,7 +2,6 @@ import globals from "globals";
 import pluginJs from "@eslint/js";
 import ts_eslint from "typescript-eslint";
 
-/** @type {import('eslint').Linter.Config[]} */
 export default [
   {
     files: ["**/*.{js,mjs,cjs,ts}"],
@@ -10,7 +9,4 @@ export default [
   { languageOptions: { globals: globals.node } },
   pluginJs.configs.recommended,
   ...ts_eslint.configs.recommended,
-  {
-    ignores: ["jasmine-typescript-helper.js"],
-  },
 ];
