@@ -1,6 +1,4 @@
 {
   "spec_files": ["*.spec.ts"],
-  "helpers": [
-    "jasmine-typescript-helper.js"
-  ]
+  "helpers": ["jasmine-typescript-helper.js"]
 }

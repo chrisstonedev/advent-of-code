@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node program.ts",
-    "test": "jasmine --config=jasmine.json"
+    "test": "jasmine --config=jasmine.json",
+    "prettier": "prettier -w ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/jasmine": "^5.1.4",
-    "@types/node": "^22.9.0",
+    "@types/jasmine": "^5.1.5",
+    "@types/node": "^22.10.1",
     "jasmine": "^5.4.0",
+    "prettier": "^3.4.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   }
 }
