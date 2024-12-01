@@ -1,8 +1,6 @@
 import { Day } from "../program";
 
 export class Day02 implements Day {
-  dayNumber = 2;
-
   partOneTestAnswer = 150;
   partTwoTestAnswer = 900;
 

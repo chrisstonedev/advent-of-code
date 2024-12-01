@@ -1,26 +1,26 @@
 import { Utils } from "./utils";
-import { Day01 } from "./2021/day01";
-import { Day02 } from "./2021/day02";
-import { Day04 } from "./2021/day04";
-import { Day09 } from "./2021/day09";
-import { Day10 } from "./2021/day10";
-import { Day11 } from "./2021/day11";
-import { Day202401 } from "./2024/day202401";
+import { Day01 as Day2021_01 } from "./2021/day01";
+import { Day02 as Day2021_02 } from "./2021/day02";
+import { Day04 as Day2021_04 } from "./2021/day04";
+import { Day09 as Day2021_09 } from "./2021/day09";
+import { Day10 as Day2021_10 } from "./2021/day10";
+import { Day11 as Day2021_11 } from "./2021/day11";
+import { Day01 as Day2024_01 } from "./2024/day01";
 import { select } from "@inquirer/prompts";
 
 const dayMap = new Map<number, Map<number, Day>>([
   [
     2021,
     new Map<number, Day>([
-      [1, new Day01()],
-      [2, new Day02()],
-      [4, new Day04()],
-      [9, new Day09()],
-      [10, new Day10()],
-      [11, new Day11()],
+      [1, new Day2021_01()],
+      [2, new Day2021_02()],
+      [4, new Day2021_04()],
+      [9, new Day2021_09()],
+      [10, new Day2021_10()],
+      [11, new Day2021_11()],
     ]),
   ],
-  [2024, new Map<number, Day>([[1, new Day202401()]])],
+  [2024, new Map<number, Day>([[1, new Day2024_01()]])],
 ]);
 
 const years = Array.from(dayMap.keys());
@@ -39,7 +39,7 @@ for (let i = minYear; i <= maxYear; i++) {
     value: i,
     description:
       daysSolved > 0
-        ? `${daysSolved} days solved (${daysSolved * 4}%)`
+        ? `${daysSolved} ${daysSolved != 1 ? "days" : "day"} solved (${daysSolved * 4}%)`
         : undefined,
     disabled: daysSolved > 0 ? undefined : "(none)",
   });
@@ -47,14 +47,13 @@ for (let i = minYear; i <= maxYear; i++) {
 
 function getDayChoices(year: number) {
   const days = Array.from(dayMap.get(year)?.keys() ?? []);
-  const minDay = Math.min(...days);
   const maxDay = Math.max(...days);
   const dayChoices: {
     name: string;
     value: number;
     disabled: string | undefined;
   }[] = [];
-  for (let i = minDay; i <= maxDay; i++) {
+  for (let i = 1; i <= maxDay; i++) {
     const solved = days.includes(i);
     dayChoices.push({
       name: `Day ${i}`,
@@ -65,7 +64,7 @@ function getDayChoices(year: number) {
   return { dayChoices, maxDay };
 }
 
-async function goDoThis() {
+async function runProgram() {
   const year = await select({
     message: "Select a year:",
     choices: yearChoices,
@@ -84,12 +83,9 @@ async function goDoThis() {
     return;
   }
 
-  const testInput = Utils.readInput(
-    `${year}_${dayNumber.toString().padStart(2, "0")}_test`,
-  );
-  const input = Utils.readInput(
-    `${year}_${dayNumber.toString().padStart(2, "0")}_input`,
-  );
+  const yearAndDayFileFormat = `${year}_${dayNumber.toString().padStart(2, "0")}`;
+  const testInput = Utils.readInput(`${yearAndDayFileFormat}_test`);
+  const input = Utils.readInput(`${yearAndDayFileFormat}_input`);
   if (
     !Utils.assertTestAnswer(
       day.executePartOne(testInput),
@@ -111,13 +107,12 @@ async function goDoThis() {
 }
 
 try {
-  goDoThis().then();
+  runProgram().then();
 } catch (err) {
   console.error(err);
 }
 
 export interface Day {
-  dayNumber: number;
   partOneTestAnswer: number;
   partTwoTestAnswer: number;
   executePartOne: (input: string[]) => number;
