@@ -71,7 +71,7 @@ export class Day04 implements Day {
   private static createGameBoard(gameBoardLineStrings: string[]): number[][] {
     const numberArrays = [];
     for (let i = 0; i < 5; i++) {
-      const numbersInRowAsStrings = gameBoardLineStrings[i].trim().split(/[ ]+/);
+      const numbersInRowAsStrings = gameBoardLineStrings[i].trim().split(/ +/);
       const numbersInRow = numbersInRowAsStrings.map((x) => +x.trim());
       numberArrays.push(numbersInRow);
     }

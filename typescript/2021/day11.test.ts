@@ -1,4 +1,6 @@
 import { Day11 } from "./day11";
+import * as assert from "node:assert";
+import { describe, it } from "node:test";
 
 describe("Day 11", () => {
   const day = new Day11();
@@ -8,7 +10,7 @@ describe("Day 11", () => {
     const expected = [[2]];
     const actual = day.advanceSteps(initial, 1).energyLevelGrid;
 
-    expect(actual).toEqual(expected);
+    assert.deepStrictEqual(actual, expected);
   });
 
   it("should set level to 0 after it flashes", () => {
@@ -16,7 +18,7 @@ describe("Day 11", () => {
     const expected = [[0]];
     const actual = day.advanceSteps(initial, 1).energyLevelGrid;
 
-    expect(actual).toEqual(expected);
+    assert.deepStrictEqual(actual, expected);
   });
 
   it("should increase adjacent energy levels of a flashing octopus", () => {
@@ -32,7 +34,7 @@ describe("Day 11", () => {
     ];
     const actual = day.advanceSteps(initial, 1).energyLevelGrid;
 
-    expect(actual).toEqual(expected);
+    assert.deepStrictEqual(actual, expected);
   });
 
   it("should increase adjacent energy levels when flashing without touching others", () => {
@@ -50,7 +52,7 @@ describe("Day 11", () => {
     ];
     const actual = day.advanceSteps(initial, 1).energyLevelGrid;
 
-    expect(actual).toEqual(expected);
+    assert.deepStrictEqual(actual, expected);
   });
 
   it("should handle multiple flashing octopuses", () => {
@@ -68,7 +70,7 @@ describe("Day 11", () => {
     ];
     const actual = day.advanceSteps(initial, 1).energyLevelGrid;
 
-    expect(actual).toEqual(expected);
+    assert.deepStrictEqual(actual, expected);
   });
 
   it("should handle the first step of the complex example", () => {
@@ -88,7 +90,7 @@ describe("Day 11", () => {
     ];
     const actual = day.advanceSteps(initial, 1).energyLevelGrid;
 
-    expect(actual).toEqual(expected);
+    assert.deepStrictEqual(actual, expected);
   });
 
   describe("Using the test input file", () => {
@@ -120,8 +122,8 @@ describe("Day 11", () => {
       ];
       const actual = day.advanceSteps(initial, 2);
 
-      expect(actual.energyLevelGrid).toEqual(expectedGrid);
-      expect(actual.totalFlashes).toEqual(35);
+      assert.deepStrictEqual(actual.energyLevelGrid, expectedGrid);
+      assert.strictEqual(actual.totalFlashes, 35);
     });
 
     it("should give the right output for the test input after 3 steps", () => {
@@ -139,13 +141,13 @@ describe("Day 11", () => {
       ];
       const actual = day.advanceSteps(initial, 3);
 
-      expect(actual.energyLevelGrid).toEqual(expectedGrid);
-      expect(actual.totalFlashes).toEqual(80);
+      assert.deepStrictEqual(actual.energyLevelGrid, expectedGrid);
+      assert.strictEqual(actual.totalFlashes, 80);
     });
 
     it("should give the right output for the test input after 10 steps", () => {
       const actual = day.advanceSteps(initial, 10);
-      expect(actual.totalFlashes).toEqual(204);
+      assert.strictEqual(actual.totalFlashes, 204);
     });
   });
 });

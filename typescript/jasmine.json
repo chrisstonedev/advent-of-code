@@ -1,5 +1,0 @@
-{
-  "spec_files": ["**/*.spec.ts"],
-  "helpers": ["jasmine-typescript-helper.js"],
-  "spec_dir": ""
-}
