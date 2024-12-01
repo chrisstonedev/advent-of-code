@@ -1,4 +1,4 @@
-import {Day} from './program';
+import {Day} from '../program';
 
 export class Day11 implements Day {
   dayNumber = 11;

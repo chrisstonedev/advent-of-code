@@ -1,12 +1,13 @@
 import {Utils} from './utils';
-import {Day01} from './day01';
-import {Day02} from './day02';
-import {Day04} from './day04';
-import {Day09} from './day09';
-import {Day10} from './day10';
-import {Day11} from './day11';
+import {Day01} from './2021/day01';
+import {Day02} from './2021/day02';
+import {Day04} from './2021/day04';
+import {Day09} from './2021/day09';
+import {Day10} from './2021/day10';
+import {Day11} from './2021/day11';
+import {Day202401} from './2024/day202401';
 
-let days: Day[] = [new Day01(), new Day02(), new Day04(), new Day09(), new Day10(), new Day11()];
+let days: Day[] = [new Day01(), new Day02(), new Day04(), new Day09(), new Day10(), new Day11(), new Day202401()];
 
 function goDoThis() {
   if (process.argv.length < 3) {
@@ -20,8 +21,8 @@ function goDoThis() {
     return;
   }
 
-  let testInput = Utils.readInput(`2021_${day.dayNumber.toString().padStart(2, '0')}_test`);
-  let input = Utils.readInput(`2021_${day.dayNumber.toString().padStart(2, '0')}_input`);
+  let testInput = Utils.readInput(`2024_01_test`);
+  let input = Utils.readInput(`2024_01_input`);
   if (!Utils.assertTestAnswer(day.executePartOne(testInput), day.partOneTestAnswer)) {
     return;
   }
