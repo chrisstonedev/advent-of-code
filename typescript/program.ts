@@ -7,7 +7,7 @@ import { Day10 } from "./2021/day10";
 import { Day11 } from "./2021/day11";
 import { Day202401 } from "./2024/day202401";
 
-let days: Day[] = [
+const days: Day[] = [
   new Day01(),
   new Day02(),
   new Day04(),
@@ -25,14 +25,14 @@ function goDoThis() {
     return;
   }
 
-  let day = days.find((day) => day.dayNumber === Number(process.argv[2]));
+  const day = days.find((day) => day.dayNumber === Number(process.argv[2]));
   if (day === undefined) {
     console.error("Could not find day with that day number.");
     return;
   }
 
-  let testInput = Utils.readInput(`2024_01_test`);
-  let input = Utils.readInput(`2024_01_input`);
+  const testInput = Utils.readInput(`2024_01_test`);
+  const input = Utils.readInput(`2024_01_input`);
   if (
     !Utils.assertTestAnswer(
       day.executePartOne(testInput),

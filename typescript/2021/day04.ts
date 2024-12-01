@@ -7,18 +7,18 @@ export class Day04 implements Day {
   partTwoTestAnswer = 1924;
 
   executePartOne(input: string[]): number {
-    let { gameBoards, numbersToDraw } = Day04.setUpGameEnvironment(input);
+    const { gameBoards, numbersToDraw } = Day04.setUpGameEnvironment(input);
 
     for (let i = 5; i < numbersToDraw.length; i++) {
-      let numbersDrawn = numbersToDraw.slice(0, i);
+      const numbersDrawn = numbersToDraw.slice(0, i);
 
-      for (let gameBoard of gameBoards) {
+      for (const gameBoard of gameBoards) {
         if (Day04.didGameBoardWin(gameBoard, numbersDrawn)) {
-          let uncalledNumbersSum = Day04.getUncalledNumbersSum(
+          const uncalledNumbersSum = Day04.getUncalledNumbersSum(
             gameBoard,
             numbersDrawn,
           );
-          let numberThatWasJustCalled = numbersToDraw[i - 1];
+          const numberThatWasJustCalled = numbersToDraw[i - 1];
           return uncalledNumbersSum * numberThatWasJustCalled;
         }
       }
@@ -28,22 +28,22 @@ export class Day04 implements Day {
   }
 
   executePartTwo(input: string[]): number {
-    let { gameBoards, numbersToDraw } = Day04.setUpGameEnvironment(input);
+    const { gameBoards, numbersToDraw } = Day04.setUpGameEnvironment(input);
 
     for (let i = numbersToDraw.length; i >= 5; i--) {
-      let numbersDrawn = numbersToDraw.slice(0, i);
+      const numbersDrawn = numbersToDraw.slice(0, i);
 
-      for (let gameBoard of gameBoards) {
+      for (const gameBoard of gameBoards) {
         if (!Day04.didGameBoardWin(gameBoard, numbersDrawn)) {
-          let numbersNeededToBeDrawnForThisBoardToWin = numbersToDraw.slice(
+          const numbersNeededToBeDrawnForThisBoardToWin = numbersToDraw.slice(
             0,
             i + 1,
           );
-          let uncalledNumbersSum = Day04.getUncalledNumbersSum(
+          const uncalledNumbersSum = Day04.getUncalledNumbersSum(
             gameBoard,
             numbersNeededToBeDrawnForThisBoardToWin,
           );
-          let numberToBeCalledThatWillResultInAWin = numbersToDraw[i];
+          const numberToBeCalledThatWillResultInAWin = numbersToDraw[i];
           return uncalledNumbersSum * numberToBeCalledThatWillResultInAWin;
         }
       }
@@ -53,13 +53,13 @@ export class Day04 implements Day {
   }
 
   private static setUpGameEnvironment(input: string[]) {
-    let workingInput = Array.from(input);
-    let numbersToDraw = workingInput
+    const workingInput = Array.from(input);
+    const numbersToDraw = workingInput
       .shift()!
       .split(",")
       .map((x) => +x);
 
-    let gameBoards = [];
+    const gameBoards = [];
     for (let i = 0; i < Math.floor(workingInput.length / 6); i++) {
       gameBoards.push(
         Day04.createGameBoard(workingInput.slice(i * 6 + 1, (i + 1) * 6)),
@@ -69,10 +69,10 @@ export class Day04 implements Day {
   }
 
   private static createGameBoard(gameBoardLineStrings: string[]): number[][] {
-    let numberArrays = [];
+    const numberArrays = [];
     for (let i = 0; i < 5; i++) {
-      let numbersInRowAsStrings = gameBoardLineStrings[i].trim().split(/[ ]+/);
-      let numbersInRow = numbersInRowAsStrings.map((x) => +x.trim());
+      const numbersInRowAsStrings = gameBoardLineStrings[i].trim().split(/[ ]+/);
+      const numbersInRow = numbersInRowAsStrings.map((x) => +x.trim());
       numberArrays.push(numbersInRow);
     }
     return numberArrays;
@@ -113,7 +113,7 @@ export class Day04 implements Day {
     gameBoard: number[][],
     numbersDrawn: number[],
   ): number {
-    let uncalledNumbers = [];
+    const uncalledNumbers = [];
     for (let row = 0; row < 5; row++) {
       for (let col = 0; col < 5; col++) {
         if (!numbersDrawn.includes(gameBoard[row][col])) {

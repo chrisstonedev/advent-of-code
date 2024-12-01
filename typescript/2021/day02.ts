@@ -7,30 +7,30 @@ export class Day02 implements Day {
   partTwoTestAnswer = 900;
 
   executePartOne(input: string[]): number {
-    let operations = input.map((x) => {
-      let splitString = x.split(" ");
-      let direction: string = splitString[0];
-      let amount: number = +splitString[1];
+    const operations = input.map((x) => {
+      const splitString = x.split(" ");
+      const direction: string = splitString[0];
+      const amount: number = +splitString[1];
       return { direction, amount } as Operation;
     });
-    let horizontalPosition = Day02.getSumOfValues(operations, "forward");
-    let down = Day02.getSumOfValues(operations, "down");
-    let up = Day02.getSumOfValues(operations, "up");
-    let depth = down - up;
+    const horizontalPosition = Day02.getSumOfValues(operations, "forward");
+    const down = Day02.getSumOfValues(operations, "down");
+    const up = Day02.getSumOfValues(operations, "up");
+    const depth = down - up;
     return horizontalPosition * depth;
   }
 
   executePartTwo(input: string[]): number {
-    let operations = input.map((x) => {
-      let splitString = x.split(" ");
-      let direction: string = splitString[0];
-      let amount: number = +splitString[1];
+    const operations = input.map((x) => {
+      const splitString = x.split(" ");
+      const direction: string = splitString[0];
+      const amount: number = +splitString[1];
       return { direction, amount } as Operation;
     });
     let horizontalPosition = 0;
     let depth = 0;
     let aim = 0;
-    for (let operation of operations) {
+    for (const operation of operations) {
       switch (operation.direction) {
         case "forward":
           horizontalPosition += operation.amount;

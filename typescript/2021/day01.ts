@@ -7,14 +7,14 @@ export class Day01 implements Day {
   partTwoTestAnswer = 5;
 
   executePartOne(input: string[]): number {
-    let numbers = input.map((x) => +x);
+    const numbers = input.map((x) => +x);
 
     return Day01.getCountOfIncreasesInArray(numbers);
   }
 
   executePartTwo(input: string[]): number {
-    let numbers = input.map((x) => +x);
-    let slidingWindow = [];
+    const numbers = input.map((x) => +x);
+    const slidingWindow = [];
     for (let i = 2; i < numbers.length; i++) {
       slidingWindow.push(numbers[i - 2] + numbers[i - 1] + numbers[i]);
     }

@@ -7,8 +7,8 @@ export class Day09 implements Day {
   partTwoTestAnswer = 1134;
 
   executePartOne(input: string[]): number {
-    let heightMap = new HeightMap(input);
-    let lowPoints = [];
+    const heightMap = new HeightMap(input);
+    const lowPoints = [];
     for (let row = 0; row < heightMap.rowCount; row++) {
       for (let column = 0; column < heightMap.columnCount; column++) {
         if (
@@ -30,20 +30,20 @@ export class Day09 implements Day {
       }
     }
 
-    let riskLevels = lowPoints.map((x) => x + 1);
+    const riskLevels = lowPoints.map((x) => x + 1);
     return riskLevels.reduce((a, b) => a + b);
   }
 
   executePartTwo(input: string[]): number {
-    let heightMap = new HeightMap(input);
-    let basins: Basin[] = [];
+    const heightMap = new HeightMap(input);
+    const basins: Basin[] = [];
     for (let row = 0; row < heightMap.rowCount; row++) {
       for (let column = 0; column < heightMap.columnCount; column++) {
         if (
           heightMap.getValue(row, column) !== 9 &&
           basins.find((x) => x.containsItem(row, column)) === undefined
         ) {
-          let itemsInThisBasin = Day09.addLocationAndAdjacentLocationsToArray(
+          const itemsInThisBasin = Day09.addLocationAndAdjacentLocationsToArray(
             heightMap,
             row,
             column,
@@ -70,8 +70,10 @@ export class Day09 implements Day {
     workingArray.push({ row: row, column: column });
 
     function checkLocationAndAddIfAppropriate(row: number, column: number) {
-      heightMap.getValue(row, column) !== 9 &&
-        !locationExistsInArray(workingArray, row, column) &&
+      if (
+        heightMap.getValue(row, column) !== 9 &&
+        !locationExistsInArray(workingArray, row, column)
+      )
         Day09.addLocationAndAdjacentLocationsToArray(
           heightMap,
           row,
@@ -80,11 +82,11 @@ export class Day09 implements Day {
         );
     }
 
-    row > 0 && checkLocationAndAddIfAppropriate(row - 1, column);
-    column > 0 && checkLocationAndAddIfAppropriate(row, column - 1);
-    row < heightMap.rowCount - 1 &&
+    if (row > 0) checkLocationAndAddIfAppropriate(row - 1, column);
+    if (column > 0) checkLocationAndAddIfAppropriate(row, column - 1);
+    if (row < heightMap.rowCount - 1)
       checkLocationAndAddIfAppropriate(row + 1, column);
-    column < heightMap.columnCount - 1 &&
+    if (column < heightMap.columnCount - 1)
       checkLocationAndAddIfAppropriate(row, column + 1);
 
     return workingArray;

@@ -15,10 +15,10 @@ export class Day10 implements Day {
     let numberOfBadCloseBraces = 0;
     let numberOfBadCloseAngleBrackets = 0;
 
-    for (let line of input) {
-      let openSymbols = [];
+    for (const line of input) {
+      const openSymbols = [];
 
-      for (let character of line.split("")) {
+      for (const character of line.split("")) {
         if (this.allOpenSymbols.includes(character)) {
           openSymbols.push(character);
         } else if (this.allCloseSymbols.includes(character)) {
@@ -48,13 +48,13 @@ export class Day10 implements Day {
   }
 
   executePartTwo(input: string[]): number {
-    let completionStrings = [];
+    const completionStrings = [];
 
-    for (let line of input) {
-      let openSymbols = [];
+    for (const line of input) {
+      const openSymbols = [];
       let corruptedLine = false;
 
-      for (let character of line.split("")) {
+      for (const character of line.split("")) {
         if (this.allOpenSymbols.includes(character)) {
           openSymbols.push(character);
         } else if (this.allCloseSymbols.includes(character)) {
@@ -75,12 +75,12 @@ export class Day10 implements Day {
       }
     }
 
-    let scores = completionStrings
+    const scores = completionStrings
       .map((charactersToClose) => {
         let score = 0;
         while (charactersToClose.length > 0) {
-          let nextCharacterToClose = charactersToClose.pop()!;
-          let characterValue =
+          const nextCharacterToClose = charactersToClose.pop()!;
+          const characterValue =
             nextCharacterToClose === "("
               ? 1
               : nextCharacterToClose === "["
