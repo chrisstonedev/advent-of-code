@@ -5,45 +5,46 @@ export class Day03 implements Day {
   partTwoTestAnswer = 48;
 
   executePartOne(input: string[]): number {
-    const fullString = input.join("");
-    const matches = this.getAllMuls(fullString);
+    const fullInput = input.join("");
+    const instructions = this.getAllMulInstructions(fullInput);
     let sum = 0;
-    matches.forEach((match) => {
-      const numbers = this.extractNumbers(match);
-      sum += numbers[0] * numbers[1];
-    });
+    instructions.forEach(
+      (instruction) => (sum += this.executeMul(instruction)),
+    );
     return sum;
   }
 
   executePartTwo(input: string[]): number {
-    const fullString = input.join("");
-    const matches = this.getAllInstructions(fullString);
+    const fullInput = input.join("");
+    const instructions = this.getAllValidInstructions(fullInput);
     let sum = 0;
-    let yesDo = true;
-    matches.forEach((match) => {
-      if (match.startsWith("mul") && yesDo) {
-        const numbers = this.extractNumbers(match);
-        sum += numbers[0] * numbers[1];
-      } else if (match.startsWith("don't")) {
-        yesDo = false;
-      } else if (match.startsWith("do")) {
-        yesDo = true;
+    let instructionsEnabled = true;
+    instructions.forEach((match) => {
+      if (instructionsEnabled && match.startsWith("mul")) {
+        sum += this.executeMul(match);
+      } else {
+        instructionsEnabled = match === "do()";
       }
     });
     return sum;
   }
 
-  getAllMuls(value: string) {
+  executeMul(instruction: string) {
+    const numbers = this.extractNumbers(instruction);
+    return numbers[0] * numbers[1];
+  }
+
+  getAllMulInstructions(fullInput: string) {
     const regex = /mul\([0-9]+,[0-9]+\)/g;
-    return Array.from(value.match(regex) ?? []);
+    return fullInput.match(regex) ?? [];
   }
 
-  extractNumbers(match: string) {
-    return match.replace("mul(", "").replace(")", "").split(",").map(Number);
+  extractNumbers(instruction: string) {
+    return (instruction.match(/([0-9]+)/g) ?? []).map(Number);
   }
 
-  getAllInstructions(value: string) {
+  getAllValidInstructions(value: string) {
     const regex = /(mul\([0-9]+,[0-9]+\)|do(n't)?\(\))/g;
-    return Array.from(value.match(regex) ?? []);
+    return value.match(regex) ?? [];
   }
 }
