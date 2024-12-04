@@ -8,6 +8,7 @@ import { Day11 as Day2021_11 } from "./2021/day11";
 import { Day01 as Day2024_01 } from "./2024/day01";
 import { Day02 as Day2024_02 } from "./2024/day02";
 import { Day03 as Day2024_03 } from "./2024/day03";
+import { Day04 as Day2024_04 } from "./2024/day04";
 import { select } from "@inquirer/prompts";
 
 const dayMap = new Map<number, Map<number, Day>>([
@@ -28,6 +29,7 @@ const dayMap = new Map<number, Map<number, Day>>([
       [1, new Day2024_01()],
       [2, new Day2024_02()],
       [3, new Day2024_03()],
+      [4, new Day2024_04()],
     ]),
   ],
 ]);

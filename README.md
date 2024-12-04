@@ -13,5 +13,5 @@ completed in the year it was released.
 | Go               | 4%   |      | 4%   |      |      |
 | Kotlin           |      | 12%  | 6%   |      |      |
 | PHP              |      | 4%   | 38%  | 42%  |      |
-| TypeScript       |      | 24%  |      |      | 12%  |
+| TypeScript       |      | 24%  |      |      | 16%  |
 | Visual Basic 6.0 |      |      | 4%   | 8%   |      |
