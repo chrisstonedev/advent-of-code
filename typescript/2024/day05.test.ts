@@ -37,7 +37,7 @@ describe("Day 5", () => {
         "75|13",
         "53|13",
       ];
-      assert.deepStrictEqual(day.doSomething(first, input), expected);
+      assert.deepStrictEqual(day.isInCorrectOrder(first, input), expected);
     });
   });
 });
