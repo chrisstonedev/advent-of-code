@@ -7,32 +7,22 @@ export class Day05 implements Day {
   executePartOne(input: string[]): number {
     const pageOrderingRules = input.slice(0, input.indexOf(""));
     const pagesToProduceInEachUpdate = input.slice(input.indexOf("") + 1);
-    let sumOfMiddlePageFromUpdates = 0;
-    for (const pagesToProduceInUpdate of pagesToProduceInEachUpdate) {
-      const pages = pagesToProduceInUpdate.split(",");
-      if (this.isInCorrectOrder(pageOrderingRules, pages)) {
-        sumOfMiddlePageFromUpdates += Number(
-          pages[Math.floor(pages.length / 2)],
-        );
-      }
-    }
-    return sumOfMiddlePageFromUpdates;
+    return pagesToProduceInEachUpdate
+      .map((pages) => pages.split(","))
+      .filter((pages) => this.isInCorrectOrder(pageOrderingRules, pages))
+      .map((pages) => Number(pages[Math.floor(pages.length / 2)]))
+      .reduce((a, b) => a + b);
   }
 
   executePartTwo(input: string[]): number {
     const pageOrderingRules = input.slice(0, input.indexOf(""));
     const pagesToProduceInEachUpdate = input.slice(input.indexOf("") + 1);
-    let sumOfMiddlePagesFromUpdates = 0;
-    for (const pagesToProduceInUpdate of pagesToProduceInEachUpdate) {
-      const pages = pagesToProduceInUpdate.split(",");
-      if (!this.isInCorrectOrder(pageOrderingRules, pages)) {
-        const correctOrder = this.getCorrectOrder(pageOrderingRules, pages);
-        sumOfMiddlePagesFromUpdates += Number(
-          correctOrder[Math.floor(correctOrder.length / 2)],
-        );
-      }
-    }
-    return sumOfMiddlePagesFromUpdates;
+    return pagesToProduceInEachUpdate
+      .map((pages) => pages.split(","))
+      .filter((pages) => !this.isInCorrectOrder(pageOrderingRules, pages))
+      .map((pages) => this.getCorrectOrder(pageOrderingRules, pages))
+      .map((pages) => Number(pages[Math.floor(pages.length / 2)]))
+      .reduce((a, b) => a + b);
   }
 
   isInCorrectOrder(pageOrderingRules: string[], pages: string[]) {
