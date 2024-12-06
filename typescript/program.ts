@@ -10,6 +10,7 @@ import { Day02 as Day2024_02 } from "./2024/day02";
 import { Day03 as Day2024_03 } from "./2024/day03";
 import { Day04 as Day2024_04 } from "./2024/day04";
 import { Day05 as Day2024_05 } from "./2024/day05";
+import { Day06 as Day2024_06 } from "./2024/day06";
 import { select } from "@inquirer/prompts";
 
 const dayMap = new Map<number, Map<number, Day>>([
@@ -32,6 +33,7 @@ const dayMap = new Map<number, Map<number, Day>>([
       [3, new Day2024_03()],
       [4, new Day2024_04()],
       [5, new Day2024_05()],
+      [6, new Day2024_06()],
     ]),
   ],
 ]);
@@ -99,6 +101,7 @@ async function runProgram() {
   const yearAndDayFileFormat = `${year}_${dayNumber.toString().padStart(2, "0")}`;
   const testInput = Utils.readInput(`${yearAndDayFileFormat}_test`);
   const input = Utils.readInput(`${yearAndDayFileFormat}_input`);
+  const startTest1 = new Date().getTime();
   if (
     !Utils.assertTestAnswer(
       day.executePartOne(testInput),
@@ -107,7 +110,11 @@ async function runProgram() {
   ) {
     return;
   }
-  console.log("Part 1: " + day.executePartOne(input));
+  const startInput1 = new Date().getTime();
+  console.log(`Test 1 passed (${startInput1 - startTest1}ms)`);
+  const input1 = day.executePartOne(input);
+  const startTest2 = new Date().getTime();
+  console.log(`Part 1: ${input1} (${startTest2 - startInput1}ms)`);
   if (
     !Utils.assertTestAnswer(
       day.executePartTwo(testInput),
@@ -116,7 +123,10 @@ async function runProgram() {
   ) {
     return;
   }
-  console.log("Part 2: " + day.executePartTwo(input));
+  const startInput2 = new Date().getTime();
+  console.log(`Test 2 passed (${startInput2 - startTest2}ms)`);
+  const input2 = day.executePartTwo(input);
+  console.log(`Part 2: ${input2} (${new Date().getTime() - startInput2}ms)`);
 }
 
 try {
