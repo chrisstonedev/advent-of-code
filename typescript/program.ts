@@ -14,6 +14,7 @@ import {
   Day04 as Day2024_04,
   Day05 as Day2024_05,
   Day06 as Day2024_06,
+  Day07 as Day2024_07,
 } from "./2024";
 import { select } from "@inquirer/prompts";
 
@@ -38,6 +39,7 @@ const dayMap = new Map<number, Map<number, Day>>([
       [4, new Day2024_04()],
       [5, new Day2024_05()],
       [6, new Day2024_06()],
+      [7, new Day2024_07()],
     ]),
   ],
 ]);
