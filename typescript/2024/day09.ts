@@ -2,62 +2,87 @@ import { Day } from "../program";
 
 export class Day09 implements Day {
   partOneTestAnswer = 1928;
-  partTwoTestAnswer = 11387;
-  inProgress = true;
+  partTwoTestAnswer = 2858;
 
   executePartOne(input: string[]): number {
-    console.log("hi1");
-    console.log(input[0]);
-    // return input
-    //   .map(this.expandInput)
-    //   .map(this.moveBlocks)
-    //   .map(this.calculateChecksum)[0];
-    const a = input.map(this.expandInput);
-    console.log("hi2");
-    console.log(a[0]);
-    const b = a.map(this.moveBlocks);
-    console.log("hi3");
-    console.log(b[0]);
-    const c = b.map(this.calculateChecksum);
-    return c[0];
+    return input
+      .map(this.expandInput)
+      .map(this.moveBlocks)
+      .map(this.calculateChecksum)[0];
   }
 
   executePartTwo(input: string[]): number {
-    return input.length;
+    return input
+      .map(this.expandInput)
+      .map(this.moveContiguousBlocks)
+      .map(this.calculateChecksum)[0];
   }
 
   expandInput(input: string) {
     let currentId = 0;
     let display = true;
-    let output = "";
+    const output: (number | null)[] = [];
     for (const thing of input.split("").map(Number)) {
       if (display) {
-        output += currentId.toString().repeat(thing);
+        for (let i = 0; i < thing; i++) {
+          output.push(currentId);
+        }
         currentId++;
       } else {
-        output += ".".toString().repeat(thing);
+        for (let i = 0; i < thing; i++) {
+          output.push(null);
+        }
       }
       display = !display;
     }
     return output;
   }
 
-  moveBlocks(input: string) {
-    let newString = input.replaceAll(".", " ");
-    while (newString.includes(" ")) {
-      newString = newString
-        .replace(" ", newString.charAt(newString.length - 1))
-        .slice(0, newString.length - 1)
-        .trim();
+  moveBlocks(input: (number | null)[]): number[] {
+    while (input.includes(null)) {
+      input[input.indexOf(null)] = input[input.length - 1];
+      input = input.slice(0, input.lastIndexOf(null, 1));
     }
-    return newString;
+    return input as number[];
   }
 
-  calculateChecksum(input: string) {
-    const numbers = input.split("").map(Number);
+  moveContiguousBlocks(input: (number | null)[]) {
+    let lastValue: number = input[input.length - 1] as number;
+    while (
+      lastValue > 0 ||
+      !input.slice(0, input.indexOf(lastValue)).includes(null)
+    ) {
+      const countOfBlocks = input.filter((x) => x === lastValue).length;
+      let counter = 0;
+      for (let i = input.indexOf(null); i < input.indexOf(lastValue); i++) {
+        if (input[i] === null) {
+          counter++;
+        } else {
+          counter = 0;
+        }
+        if (counter === countOfBlocks) {
+          const newStuff = input.map((x) => (x === lastValue ? null : x));
+          input = [
+            ...newStuff.slice(0, i - countOfBlocks + 1),
+            ...Array(countOfBlocks).fill(lastValue),
+            ...newStuff.slice(i + 1),
+          ];
+        }
+      }
+      lastValue--;
+    }
+    while (input[input.length - 1] === null) {
+      input = input.slice(0, input.length - 1);
+    }
+    return input;
+  }
+
+  calculateChecksum(input: (number | null)[]) {
     let answer = 0;
-    for (let i = 0; i < numbers.length; i++) {
-      answer += i * numbers[i];
+    for (let i = 0; i < input.length; i++) {
+      if (input[i] !== null) {
+        answer += i * input[i]!;
+      }
     }
     return answer;
   }
