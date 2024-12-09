@@ -72,7 +72,7 @@ class Day13
         return $columnValue ?: 0;
     }
 
-    private static function transposeArray(array $pattern): array
+    public static function transposeArray(array $pattern): array
     {
         $transposedArray = [];
         for ($row = 0; $row < count($pattern); $row++) {

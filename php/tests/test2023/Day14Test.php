@@ -15,9 +15,6 @@ class Day14Test extends TestCase
 
     #[DataProvider('part1Provider')] public function testPart1(string $filename, int $expected)
     {
-        if (str_contains($filename, 'input')) {
-            $this->markTestSkipped('Did not solve part 1 in PHP yet.');
-        }
         $testInput = Utils::ReadAllLines($filename);
         $this->assertSame($expected, Day::executePartOne($testInput));
     }
@@ -26,15 +23,13 @@ class Day14Test extends TestCase
     {
         return [
             'test' => [sprintf("2023_%s_test", self::DAY_NUMBER), 136],
-            'input' => [sprintf("2023_%s_input", self::DAY_NUMBER), 0],
+            'input' => [sprintf("2023_%s_input", self::DAY_NUMBER), 110407],
         ];
     }
 
     #[DataProvider('part2Provider')] public function testPart2(string $filename, int $expected)
     {
-        if (str_contains($filename, 'input')) {
-            $this->markTestSkipped('Did not solve part 1 in PHP yet.');
-        }
+        $this->markTestSkipped('Did not solve part 2 in PHP yet.');
         $input = Utils::ReadAllLines($filename);
         $this->assertSame($expected, Day::executePartTwo($input));
     }
@@ -42,7 +37,7 @@ class Day14Test extends TestCase
     public static function part2Provider(): array
     {
         return [
-            'test' => [sprintf("2023_%s_test", self::DAY_NUMBER), 0],
+            'test' => [sprintf("2023_%s_test", self::DAY_NUMBER), 64],
             'input' => [sprintf("2023_%s_input", self::DAY_NUMBER), 0],
         ];
     }
