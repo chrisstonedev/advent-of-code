@@ -15,6 +15,7 @@ import {
   Day05 as Day2024_05,
   Day06 as Day2024_06,
   Day07 as Day2024_07,
+  Day08 as Day2024_08,
 } from "./2024";
 import { select } from "@inquirer/prompts";
 
@@ -40,6 +41,7 @@ const dayMap = new Map<number, Map<number, Day>>([
       [5, new Day2024_05()],
       [6, new Day2024_06()],
       [7, new Day2024_07()],
+      [8, new Day2024_08()],
     ]),
   ],
 ]);
@@ -54,14 +56,20 @@ const yearChoices: {
   disabled: string | undefined;
 }[] = [];
 for (let i = minYear; i <= maxYear; i++) {
-  const daysSolved = Array.from(dayMap.get(i)?.keys() ?? []).length;
+  const daysInYear = Array.from(dayMap.get(i)?.values() ?? []);
+  const inProgress = daysInYear.filter((x) => x.inProgress).length;
+  const daysSolved = daysInYear.length - inProgress;
+  let description =
+    daysSolved > 0
+      ? `${daysSolved} ${daysSolved != 1 ? "days" : "day"} solved (${daysSolved * 4}%)`
+      : undefined;
+  if (inProgress > 0) {
+    description += `, ${inProgress} ${inProgress != 1 ? "days" : "day"} in progress`;
+  }
   yearChoices.push({
     name: `${i}`,
     value: i,
-    description:
-      daysSolved > 0
-        ? `${daysSolved} ${daysSolved != 1 ? "days" : "day"} solved (${daysSolved * 4}%)`
-        : undefined,
+    description: description,
     disabled: daysSolved > 0 ? undefined : "(none)",
   });
 }
@@ -144,6 +152,7 @@ try {
 export interface Day {
   partOneTestAnswer: number;
   partTwoTestAnswer: number;
+  inProgress?: boolean;
   executePartOne: (input: string[]) => number;
   executePartTwo: (input: string[]) => number;
 }
