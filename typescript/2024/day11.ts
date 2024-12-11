@@ -5,55 +5,43 @@ export class Day11 implements Day {
   partTwoTestAnswer = 65601038650482;
 
   executePartOne(input: string[]): number {
-    return this.getAnswer(input[0], 25);
+    return this.blinkSeveralTimes(input[0], 25);
   }
 
   executePartTwo(input: string[]): number {
-    return this.getAnswerNew(input[0], 75);
+    return this.blinkSeveralTimes(input[0], 75);
   }
 
-  solvePartOne(input: string, blinks: number) {
-    for (let i = 0; i < blinks; i++) {
-      input = this.doThings(input);
+  private followRulesForStones(engraving: string) {
+    if (engraving === "0") {
+      return "1";
     }
-    return input;
+    if (engraving.length % 2 === 0) {
+      const leftSide = engraving.slice(0, engraving.length / 2);
+      const rightSide = engraving.slice(engraving.length / 2);
+      return `${Number(leftSide)} ${Number(rightSide)}`;
+    }
+    return (Number(engraving) * 2024).toString();
   }
 
-  doThings(input: string) {
-    return input
-      .split(" ")
-      .map((x) => {
-        if (x === "0") {
-          return "1";
-        }
-        if (x.length % 2 === 0) {
-          const leftSide = x.slice(0, x.length / 2);
-          const rightSide = x.slice(x.length / 2);
-          return `${Number(leftSide)} ${Number(rightSide)}`;
-        }
-        return Number(x) * 2024;
-      })
-      .join(" ");
-  }
-
-  getAnswer(input: string, blinks: number) {
-    const thing = this.solvePartOne(input, blinks);
-    return thing.split(" ").length;
-  }
-
-  getAnswerNew(input: string, blinks: number) {
-    let parts = new Map(input.split(" ").map((x) => [x, 1]));
-    for (let iteration = 0; iteration < blinks / 5; iteration++) {
-      const nextTime = new Map<string, number>();
-      for (const [marking, count] of parts) {
-        const blueberry = this.solvePartOne(marking, 5);
-        const apple = blueberry.split(" ");
-        for (const stem of apple) {
-          nextTime.set(stem, (nextTime.get(stem) ?? 0) + count);
+  blinkSeveralTimes(input: string, blinks: number) {
+    let stonesToEvaluateInCurrentLoop = new Map(
+      input.split(" ").map((x) => [x, 1]),
+    );
+    for (let iteration = 0; iteration < blinks; iteration++) {
+      const stonesToEvaluateInNextLoop = new Map<string, number>();
+      for (const [marking, count] of stonesToEvaluateInCurrentLoop) {
+        for (const newStone of this.followRulesForStones(marking).split(" ")) {
+          stonesToEvaluateInNextLoop.set(
+            newStone,
+            (stonesToEvaluateInNextLoop.get(newStone) ?? 0) + count,
+          );
         }
       }
-      parts = new Map([...nextTime]);
+      stonesToEvaluateInCurrentLoop = new Map([...stonesToEvaluateInNextLoop]);
     }
-    return Array.from(parts.values()).reduce((a, b) => a + b);
+    return Array.from(stonesToEvaluateInCurrentLoop.values()).reduce(
+      (a, b) => a + b,
+    );
   }
 }
