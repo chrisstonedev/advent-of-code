@@ -22,25 +22,25 @@ func Part2(input string) int {
 
 func secretPassword(rotations []string, passwordMethod PasswordMethod) int {
 	clicksOnZero := 0
-	value := 50
+	dialPosition := 50
 	for _, instruction := range rotations {
 		distance := mustParseRotationDistance(instruction)
-		if distance < 0 && value == 0 {
-			value = 100
+		if distance < 0 && dialPosition == 0 {
+			dialPosition = 100
 		}
-		value += distance
-		for value < 0 {
-			value = value + 100
+		dialPosition += distance
+		for dialPosition < 0 {
+			dialPosition += 100
 			if passwordMethod == Method0x434C49434B {
 				clicksOnZero++
 			}
 		}
-		if value == 0 {
+		if dialPosition == 0 {
 			clicksOnZero++
 		}
-		for value > 99 {
-			value -= 100
-			if passwordMethod == Method0x434C49434B || value == 0 {
+		for dialPosition > 99 {
+			dialPosition -= 100
+			if passwordMethod == Method0x434C49434B || dialPosition == 0 {
 				clicksOnZero++
 			}
 		}
