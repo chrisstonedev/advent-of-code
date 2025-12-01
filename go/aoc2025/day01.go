@@ -12,11 +12,11 @@ const (
 	Method0x434C49434B
 )
 
-func Part1(input string) int {
+func Day01Part1(input string) int {
 	return secretPassword(strings.Split(input, "\n"), Standard)
 }
 
-func Part2(input string) int {
+func Day01Part2(input string) int {
 	return secretPassword(strings.Split(input, "\n"), Method0x434C49434B)
 }
 
@@ -31,7 +31,7 @@ func secretPassword(rotations []string, passwordMethod PasswordMethod) int {
 		dialPosition += distance
 		if dialPosition < 0 {
 			if passwordMethod == Method0x434C49434B {
-				clicksOnZero += ((dialPosition * -1) + 99) / 100
+				clicksOnZero += (dialPosition - 99) / -100
 			}
 			dialPosition = (dialPosition % 100) + 100
 		}

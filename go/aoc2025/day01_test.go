@@ -10,29 +10,29 @@ import (
 	"aoc/utils"
 )
 
-const date = "2025_01"
+const day01 = "2025_01"
 
 func TestDay01Part1(t *testing.T) {
-	input := utils.ReadFileIntoString(date, "test")
-	require.Equal(t, 3, Part1(input))
+	input := utils.ReadFileIntoString(day01, "test")
+	require.Equal(t, 3, Day01Part1(input))
 }
 
 func TestDay01Part1Input(t *testing.T) {
-	input := utils.ReadFileIntoString(date, "input")
-	require.Equal(t, 1147, Part1(input))
+	input := utils.ReadFileIntoString(day01, "input")
+	require.Equal(t, 1147, Day01Part1(input))
 }
 
 func TestDay01Part2(t *testing.T) {
-	input := utils.ReadFileIntoString(date, "test")
-	require.Equal(t, 6, Part2(input))
+	input := utils.ReadFileIntoString(day01, "test")
+	require.Equal(t, 6, Day01Part2(input))
 }
 
 func TestDay01Part2Input(t *testing.T) {
-	input := utils.ReadFileIntoString(date, "input")
-	require.Equal(t, 6789, Part2(input))
+	input := utils.ReadFileIntoString(day01, "input")
+	require.Equal(t, 6789, Day01Part2(input))
 }
 
-func TestPart2InSmallerParts(t *testing.T) {
+func TestDay01Part2InSmallerParts(t *testing.T) {
 	tests := []struct {
 		input    []string
 		source   string
@@ -55,7 +55,7 @@ func TestPart2InSmallerParts(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("Trying with only %d lines of %s input", len(tt.input), tt.source), func(t *testing.T) {
-			require.Equal(t, tt.expected, Part2(strings.Join(tt.input, "\n")))
+			require.Equal(t, tt.expected, Day01Part2(strings.Join(tt.input, "\n")))
 		})
 	}
 }
