@@ -29,20 +29,21 @@ func secretPassword(rotations []string, passwordMethod PasswordMethod) int {
 			dialPosition = 100
 		}
 		dialPosition += distance
-		for dialPosition < 0 {
-			dialPosition += 100
+		if dialPosition < 0 {
 			if passwordMethod == Method0x434C49434B {
-				clicksOnZero++
+				clicksOnZero += ((dialPosition * -1) + 99) / 100
 			}
+			dialPosition = (dialPosition % 100) + 100
 		}
-		if dialPosition == 0 {
+		if passwordMethod == Method0x434C49434B && dialPosition == 0 {
 			clicksOnZero++
 		}
-		for dialPosition > 99 {
-			dialPosition -= 100
-			if passwordMethod == Method0x434C49434B || dialPosition == 0 {
-				clicksOnZero++
-			}
+		if passwordMethod == Method0x434C49434B {
+			clicksOnZero += dialPosition / 100
+		}
+		dialPosition %= 100
+		if passwordMethod != Method0x434C49434B && dialPosition == 0 {
+			clicksOnZero++
 		}
 	}
 	return clicksOnZero
