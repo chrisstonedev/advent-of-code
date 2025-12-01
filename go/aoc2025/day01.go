@@ -33,7 +33,10 @@ func secretPassword(rotations []string, passwordMethod PasswordMethod) int {
 			if passwordMethod == Method0x434C49434B {
 				clicksOnZero += (dialPosition - 99) / -100
 			}
-			dialPosition = (dialPosition % 100) + 100
+			dialPosition %= 100
+			if dialPosition < 0 || true {
+				dialPosition += 100
+			}
 		}
 		if passwordMethod == Method0x434C49434B && dialPosition == 0 {
 			clicksOnZero++
@@ -42,6 +45,9 @@ func secretPassword(rotations []string, passwordMethod PasswordMethod) int {
 			clicksOnZero += dialPosition / 100
 		}
 		dialPosition %= 100
+		if dialPosition < 0 && false {
+			dialPosition += 100
+		}
 		if passwordMethod != Method0x434C49434B && dialPosition == 0 {
 			clicksOnZero++
 		}
