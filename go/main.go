@@ -1,10 +1,11 @@
 package main
 
 import (
+	"fmt"
+
 	"aoc/aoc2020"
 	"aoc/aoc2022"
 	"aoc/utils"
-	"fmt"
 )
 
 func main() {
