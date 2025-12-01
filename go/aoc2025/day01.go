@@ -44,9 +44,7 @@ func Part2(input string) int {
 	value := 50
 	for _, instruction := range strings.Split(input, "\n") {
 		previousTimes := timesItGotToZero
-		direction := " up "
 		if strings.HasPrefix(instruction, "L") {
-			direction = "down"
 			if value == 0 {
 				value = 100
 			}
@@ -56,11 +54,11 @@ func Part2(input string) int {
 				log.Panicf("bad number? %s", instruction)
 			}
 			value = value - b
-			if value == 0 {
-				timesItGotToZero++
-			}
 			for value < 0 {
 				value = 100 + value
+				timesItGotToZero++
+			}
+			if value == 0 {
 				timesItGotToZero++
 			}
 		} else if strings.HasPrefix(instruction, "R") {
@@ -75,11 +73,10 @@ func Part2(input string) int {
 				timesItGotToZero++
 			}
 		}
-		increaseExplanation := "did not hit 0 this time"
-		if previousTimes != timesItGotToZero {
-			increaseExplanation = fmt.Sprintf("hit zero %d time(s), for a new total of %d", timesItGotToZero-previousTimes, timesItGotToZero)
+		fmt.Printf("after %s, value is now %d\n", instruction, value)
+		for i := previousTimes + 1; i <= timesItGotToZero; i++ {
+			fmt.Printf("%d. %s\n", i, instruction)
 		}
-		fmt.Printf("%s: went %s to %d and %s\n", instruction, direction, value, increaseExplanation)
 	}
 	return timesItGotToZero
 }
@@ -88,10 +85,7 @@ func Part2NextGen(input string) int {
 	timesItGotToZero := 0
 	value := 50
 	for _, instruction := range strings.Split(input, "\n") {
-		previousTimes := timesItGotToZero
-		direction := " up "
 		if strings.HasPrefix(instruction, "L") {
-			direction = "down"
 			if value == 0 {
 				value = 100
 			}
@@ -104,6 +98,7 @@ func Part2NextGen(input string) int {
 				value--
 				if value == 0 {
 					timesItGotToZero++
+					fmt.Printf("%d. %s\n", timesItGotToZero, instruction)
 				}
 				if value == -1 {
 					value = 99
@@ -119,15 +114,11 @@ func Part2NextGen(input string) int {
 				value++
 				if value == 100 {
 					timesItGotToZero++
+					fmt.Printf("%d. %s\n", timesItGotToZero, instruction)
 					value = 0
 				}
 			}
 		}
-		increaseExplanation := "did not hit 0 this time"
-		if previousTimes != timesItGotToZero {
-			increaseExplanation = fmt.Sprintf("hit zero %d time(s), for a new total of %d", timesItGotToZero-previousTimes, timesItGotToZero)
-		}
-		fmt.Printf("%s: went %s to %d and %s\n", instruction, direction, value, increaseExplanation)
 	}
 	return timesItGotToZero
 }
