@@ -5,59 +5,59 @@ import (
 	"strings"
 )
 
+type PasswordMethod int
+
+const (
+	Standard PasswordMethod = iota
+	Method0x434C49434B
+)
+
 func Part1(input string) int {
-	timesItGotToZero := 0
-	value := 50
-	for _, instruction := range strings.Split(input, "\n") {
-		amount := mustParseInstructionAmount(instruction)
-		value = value + amount
-		for value < 0 {
-			value = 100 + value
-		}
-		for value > 99 {
-			value = value - 100
-		}
-		if value == 0 {
-			timesItGotToZero++
-		}
-	}
-	return timesItGotToZero
+	return secretPassword(strings.Split(input, "\n"), Standard)
 }
 
 func Part2(input string) int {
-	timesItGotToZero := 0
-	value := 50
-	for _, instruction := range strings.Split(input, "\n") {
-		amount := mustParseInstructionAmount(instruction)
-		if amount < 0 && value == 0 {
-			value = 100
-		}
-		value = value + amount
-		for value < 0 {
-			value = 100 + value
-			timesItGotToZero++
-		}
-		if value == 0 {
-			timesItGotToZero++
-		}
-		for value > 99 {
-			value = value - 100
-			timesItGotToZero++
-		}
-	}
-	return timesItGotToZero
+	return secretPassword(strings.Split(input, "\n"), Method0x434C49434B)
 }
 
-func mustParseInstructionAmount(instruction string) int {
-	amount, err := strconv.Atoi(instruction[1:])
+func secretPassword(rotations []string, passwordMethod PasswordMethod) int {
+	clicksOnZero := 0
+	value := 50
+	for _, instruction := range rotations {
+		distance := mustParseRotationDistance(instruction)
+		if distance < 0 && value == 0 {
+			value = 100
+		}
+		value += distance
+		for value < 0 {
+			value = value + 100
+			if passwordMethod == Method0x434C49434B {
+				clicksOnZero++
+			}
+		}
+		if value == 0 {
+			clicksOnZero++
+		}
+		for value > 99 {
+			value -= 100
+			if passwordMethod == Method0x434C49434B || value == 0 {
+				clicksOnZero++
+			}
+		}
+	}
+	return clicksOnZero
+}
+
+func mustParseRotationDistance(instruction string) int {
+	distance, err := strconv.Atoi(instruction[1:])
 	if err != nil {
 		panic("unable to parse what was expected to be a number")
 	}
 	if strings.HasPrefix(instruction, "L") {
-		return amount * -1
+		return distance * -1
 	}
 	if strings.HasPrefix(instruction, "R") {
-		return amount
+		return distance
 	}
 	panic("instruction does not contain expected prefix")
 }
