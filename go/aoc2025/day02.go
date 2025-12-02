@@ -29,9 +29,15 @@ func sumAllInvalidIDs(productIDRanges []string, maxRepeats int) int {
 			text := strconv.Itoa(productID)
 			for j := len(text) / 2; j >= 1; j-- {
 				segment := text[:j]
+				if len(text)%len(segment) != 0 {
+					continue
+				}
 				r := regexp.MustCompile(fmt.Sprintf(`^(%s)%s$`, segment, maxRepeatRegExpFormat))
 				if r.MatchString(text) {
 					sum += productID
+					break
+				}
+				if j == 2 {
 					break
 				}
 			}
