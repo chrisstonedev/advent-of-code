@@ -55,6 +55,76 @@ func Test_consolidateRanges(t *testing.T) {
 			[]FreshRange{{318321327621, 2000604286918}, {1276540942943, 3152355546365}},
 			[]FreshRange{{318321327621, 3152355546365}},
 		},
+		{
+			name:     "single with same single",
+			input:    []FreshRange{{1, 1}, {1, 1}},
+			expected: []FreshRange{{1, 1}},
+		},
+		{
+			name:     "single that matches start of following range",
+			input:    []FreshRange{{1, 1}, {1, 2}},
+			expected: []FreshRange{{1, 2}},
+		},
+		{
+			name:     "single with different single",
+			input:    []FreshRange{{1, 1}, {2, 2}},
+			expected: []FreshRange{{1, 1}, {2, 2}},
+		},
+		{
+			name:     "single with separate range next",
+			input:    []FreshRange{{1, 1}, {2, 3}},
+			expected: []FreshRange{{1, 1}, {2, 3}},
+		},
+		{
+			name:     "range with identical range ",
+			input:    []FreshRange{{1, 2}, {1, 2}},
+			expected: []FreshRange{{1, 2}},
+		},
+		{
+			name:     "range with range with same start",
+			input:    []FreshRange{{1, 2}, {1, 3}},
+			expected: []FreshRange{{1, 3}},
+		},
+		{
+			name:     "range with single that matches end",
+			input:    []FreshRange{{1, 2}, {2, 2}},
+			expected: []FreshRange{{1, 2}},
+		},
+		{
+			name:     "ranges with an overlapping start and end",
+			input:    []FreshRange{{1, 2}, {2, 3}},
+			expected: []FreshRange{{1, 3}},
+		},
+		{
+			name:     "range with single outside range",
+			input:    []FreshRange{{1, 2}, {3, 3}},
+			expected: []FreshRange{{1, 2}, {3, 3}},
+		},
+		{
+			name:     "ranges with no overlap",
+			input:    []FreshRange{{1, 2}, {3, 4}},
+			expected: []FreshRange{{1, 2}, {3, 4}},
+		},
+		{
+			name:     "ranges with same end",
+			input:    []FreshRange{{1, 3}, {2, 3}},
+			expected: []FreshRange{{1, 3}},
+		},
+		{
+			name:     "staggered ranges",
+			input:    []FreshRange{{1, 3}, {2, 4}},
+			expected: []FreshRange{{1, 4}},
+		},
+		{
+			name:     "single with range it fits inside",
+			input:    []FreshRange{{2, 2}, {1, 3}},
+			expected: []FreshRange{{1, 3}},
+		},
+		{
+			name:     "inner range then outer range",
+			input:    []FreshRange{{2, 3}, {1, 4}},
+			expected: []FreshRange{{1, 4}},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

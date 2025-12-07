@@ -161,7 +161,8 @@ func consolidateRanges2(ranges []FreshRange) []FreshRange {
 				//fmt.Printf("The ranges of %d-%d and %d-%d will consolidate to become %d-%d\n", myRange.Start, myRange.End, ranges[j].Start, ranges[j].End, myRange.Start, ranges[j].End)
 				fmt.Printf("Ranges at index %d and %d will be consolidated\n", i, j)
 				skipIndexes = append(skipIndexes, i, j)
-				newRanges = append(newRanges, FreshRange{myRange.Start, ranges[j].End})
+				newStart := min(myRange.Start, ranges[j].Start)
+				newRanges = append(newRanges, FreshRange{newStart, ranges[j].End})
 				break
 			}
 		}
