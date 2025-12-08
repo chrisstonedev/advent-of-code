@@ -22,8 +22,25 @@ func Day08Part1(input string, iterations int) int {
 }
 
 func Day08Part2(input string) int {
-	value := strings.Count(input, "^") - 1
-	return value
+	allLines := strings.Split(input, "\n")
+	var allNumbers []string
+	for i := 0; ; i++ {
+		fmt.Printf("iteration %d\n", i)
+		_, numbers := shortestDistance3D(allLines, allNumbers)
+		allNumbers = append(allNumbers, numbers)
+		gigi := doAThing(allNumbers)
+		if len(gigi) == 1 && gigi[0] == len(allLines) {
+			finalExtensionCable := allNumbers[len(allNumbers)-1]
+			finalJunctionBoxIndexes := strings.Split(finalExtensionCable, "-")
+			finalJunctionIndex1, _ := strconv.Atoi(finalJunctionBoxIndexes[0])
+			finalJunctionIndex2, _ := strconv.Atoi(finalJunctionBoxIndexes[1])
+			finalCoords1 := strings.Split(allLines[finalJunctionIndex1], ",")
+			finalCoords2 := strings.Split(allLines[finalJunctionIndex2], ",")
+			finalX1, _ := strconv.Atoi(finalCoords1[0])
+			finalX2, _ := strconv.Atoi(finalCoords2[0])
+			return finalX1 * finalX2
+		}
+	}
 }
 
 func shortestDistance3D(allLines []string, connected []string) ([]string, string) {
@@ -54,10 +71,42 @@ func shortestDistance3D(allLines []string, connected []string) ([]string, string
 	return pairs, numbers
 }
 
+//func shortestDistance3DV2(allLines []string) []string {
+//	var niftyStuff []string
+//	for i := 0; i < len(allLines)-1; i++ {
+//		for j := i + 1; j < len(allLines); j++ {
+//			niftyStuff = append(niftyStuff, fmt.Sprintf("%d-%d", i, j))
+//		}
+//	}
+//	sort.Slice(niftyStuff, func(i, j int) bool {
+//		distanceI := calculateDistance(niftyStuff[i])
+//		distanceJ := calculateDistance(niftyStuff[j])
+//		line1 := strings.Split(allLines[i], ",")
+//		x1, _ := strconv.ParseFloat(line1[0], 64)
+//		y1, _ := strconv.ParseFloat(line1[1], 64)
+//		z1, _ := strconv.ParseFloat(line1[2], 64)
+//		line2 := strings.Split(allLines[j], ",")
+//		x2, _ := strconv.ParseFloat(line2[0], 64)
+//		y2, _ := strconv.ParseFloat(line2[1], 64)
+//		z2, _ := strconv.ParseFloat(line2[2], 64)
+//		distance := math.Sqrt(math.Pow(x1-x2, 2) + math.Pow(y1-y2, 2) + math.Pow(z1-z2, 2))
+//		if distance < shortestDistance {
+//			shortestDistance = distance
+//			numbers = fmt.Sprintf("%d-%d", i, j)
+//			pairs = []string{allLines[i], allLines[j]}
+//		}
+//		return niftyStuff[i].Age < niftyStuff[j].Age
+//	})
+//	return niftyStuff
+//}
+
+//func calculateDistance(s string) float64 {
+//
+//}
+
 func doAThing(helpMe []string) []int {
 	var circuits [][]int
-	for helpHeeHee, thingThingThing := range helpMe {
-		fmt.Printf("sort %d\n", helpHeeHee)
+	for _, thingThingThing := range helpMe {
 		values := strings.Split(thingThingThing, "-")
 		thing1, _ := strconv.Atoi(values[0])
 		thing2, _ := strconv.Atoi(values[1])
