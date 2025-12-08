@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"aoc/aoc2020"
-	"aoc/aoc2022"
-	"aoc/utils"
+	"github.com/chrisstonedev/advent-of-code/go/aoc2020"
+	"github.com/chrisstonedev/advent-of-code/go/aoc2022"
+	"github.com/chrisstonedev/advent-of-code/go/utils"
 )
 
 func main() {

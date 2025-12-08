@@ -1,9 +1,11 @@
 package aoc2020
 
 import (
-	"aoc/utils"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+
+	"github.com/chrisstonedev/advent-of-code/go/utils"
 )
 
 const date = "2020_01"

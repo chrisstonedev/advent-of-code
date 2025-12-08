@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"aoc/utils"
+	"github.com/chrisstonedev/advent-of-code/go/utils"
 )
 
 const day02 = "2025_02"
