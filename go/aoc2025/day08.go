@@ -26,14 +26,10 @@ func Day08Part2(input string) int {
 		gigi := doAThing(testNumbers)
 		if len(gigi) == 1 && gigi[0] == len(allLines) {
 			finalExtensionCable := testNumbers[len(testNumbers)-1]
-			finalJunctionBoxIndexes := strings.Split(finalExtensionCable, "-")
-			finalJunctionIndex1, _ := strconv.Atoi(finalJunctionBoxIndexes[0])
-			finalJunctionIndex2, _ := strconv.Atoi(finalJunctionBoxIndexes[1])
-			finalCoords1 := strings.Split(allLines[finalJunctionIndex1], ",")
-			finalCoords2 := strings.Split(allLines[finalJunctionIndex2], ",")
-			finalX1, _ := strconv.Atoi(finalCoords1[0])
-			finalX2, _ := strconv.Atoi(finalCoords2[0])
-			return finalX1 * finalX2
+			finalJunctionIndex1, finalJunctionIndex2, _ := getJunctions(finalExtensionCable)
+			finalX1, _, _, _ := getNumericCoordinates(allLines[finalJunctionIndex1])
+			finalX2, _, _, _ := getNumericCoordinates(allLines[finalJunctionIndex2])
+			return int(finalX1 * finalX2)
 		}
 	}
 }
@@ -47,14 +43,8 @@ func shortestDistance3D(allLines []string, connected []string) ([]string, string
 			if slices.Contains(connected, fmt.Sprintf("%d-%d", i, j)) {
 				continue
 			}
-			line1 := strings.Split(allLines[i], ",")
-			x1, _ := strconv.ParseFloat(line1[0], 64)
-			y1, _ := strconv.ParseFloat(line1[1], 64)
-			z1, _ := strconv.ParseFloat(line1[2], 64)
-			line2 := strings.Split(allLines[j], ",")
-			x2, _ := strconv.ParseFloat(line2[0], 64)
-			y2, _ := strconv.ParseFloat(line2[1], 64)
-			z2, _ := strconv.ParseFloat(line2[2], 64)
+			x1, y1, z1, _ := getNumericCoordinates(allLines[i])
+			x2, y2, z2, _ := getNumericCoordinates(allLines[j])
 			distance := math.Sqrt(math.Pow(x1-x2, 2) + math.Pow(y1-y2, 2) + math.Pow(z1-z2, 2))
 			if distance < shortestDistance {
 				shortestDistance = distance
@@ -64,6 +54,23 @@ func shortestDistance3D(allLines []string, connected []string) ([]string, string
 		}
 	}
 	return pairs, numbers
+}
+
+func getNumericCoordinates(line string) (float64, float64, float64, error) {
+	linePieces := strings.Split(line, ",")
+	x, err := strconv.ParseFloat(linePieces[0], 64)
+	if err != nil {
+		return 0, 0, 0, fmt.Errorf("aoc2025.getNumericCoordinates: failed to parse first numeric coordinate (%s) from %s, %w", linePieces[0], line, err)
+	}
+	y, err := strconv.ParseFloat(linePieces[1], 64)
+	if err != nil {
+		return 0, 0, 0, fmt.Errorf("aoc2025.getNumericCoordinates: failed to parse second numeric coordinate (%s) from %s, %w", linePieces[1], line, err)
+	}
+	z, err := strconv.ParseFloat(linePieces[2], 64)
+	if err != nil {
+		return 0, 0, 0, fmt.Errorf("aoc2025.getNumericCoordinates: failed to parse third numeric coordinate (%s) from %s, %w", linePieces[2], line, err)
+	}
+	return x, y, z, nil
 }
 
 func shortestDistance3DV2(allLines []string) []string {
@@ -82,29 +89,30 @@ func shortestDistance3DV2(allLines []string) []string {
 }
 
 func calculateDistance(s string, allLines []string) float64 {
-	a := strings.Split(s, "-")
-	a1, _ := strconv.Atoi(a[0])
-	a2, _ := strconv.Atoi(a[1])
-	lineBBB1 := allLines[a1]
-	lineBBB2 := allLines[a2]
-	line1 := strings.Split(lineBBB1, ",")
-	x1, _ := strconv.ParseFloat(line1[0], 64)
-	y1, _ := strconv.ParseFloat(line1[1], 64)
-	z1, _ := strconv.ParseFloat(line1[2], 64)
-	line2 := strings.Split(lineBBB2, ",")
-	x2, _ := strconv.ParseFloat(line2[0], 64)
-	y2, _ := strconv.ParseFloat(line2[1], 64)
-	z2, _ := strconv.ParseFloat(line2[2], 64)
+	a1, a2, _ := getJunctions(s)
+	x1, y1, z1, _ := getNumericCoordinates(allLines[a1])
+	x2, y2, z2, _ := getNumericCoordinates(allLines[a2])
 	distance := math.Sqrt(math.Pow(x1-x2, 2) + math.Pow(y1-y2, 2) + math.Pow(z1-z2, 2))
 	return distance
+}
+
+func getJunctions(s string) (int, int, error) {
+	a := strings.Split(s, "-")
+	a1, err := strconv.Atoi(a[0])
+	if err != nil {
+		return 0, 0, fmt.Errorf("aoc2025.getJunctions: failed to parse first index (%s) from %s, %w", a[0], s, err)
+	}
+	a2, err := strconv.Atoi(a[1])
+	if err != nil {
+		return 0, 0, fmt.Errorf("aoc2025.getJunctions: failed to parse second index (%s) from %s, %w", a[1], s, err)
+	}
+	return a1, a2, nil
 }
 
 func doAThing(helpMe []string) []int {
 	var circuits [][]int
 	for _, thingThingThing := range helpMe {
-		values := strings.Split(thingThingThing, "-")
-		thing1, _ := strconv.Atoi(values[0])
-		thing2, _ := strconv.Atoi(values[1])
+		thing1, thing2, _ := getJunctions(thingThingThing)
 		circuit1 := slices.IndexFunc(circuits, func(e []int) bool {
 			return slices.Contains(e, thing1)
 		})
