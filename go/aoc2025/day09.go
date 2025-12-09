@@ -14,15 +14,22 @@ func Day09Part1(input string) int {
 	return area
 }
 
+var (
+	something9 map[string]bool
+)
+
 func Day09Part2(input string) int {
 	lines := strings.Split(input, "\n")
 	pairs := pairsWithBiggestArea(lines)
 	fmt.Println("got all pairs")
 	perimeter := getPerimeter(lines)
 	fmt.Println("got perimeter")
-	for _, pair := range pairs {
+	something9 = make(map[string]bool)
+	for ix, pair := range pairs {
 		if isInside(pair, perimeter) {
 			return pair.Area
+		} else {
+			fmt.Printf("pair at ix %d is not inside\n", ix)
 		}
 	}
 	return 0
@@ -31,24 +38,31 @@ func Day09Part2(input string) int {
 func isInside(pair SomeKindOfType, perimeter [][]int) bool {
 	for x := min(pair.X1, pair.X2) + 1; x < max(pair.X1, pair.X2); x++ {
 		for y := min(pair.Y1, pair.Y2) + 1; y < max(pair.Y1, pair.Y2); y++ {
+			mapKey := fmt.Sprintf("%d,%d", x, y)
+			if val, ok := something9[mapKey]; ok {
+				if val {
+					continue
+				} else {
+					return false
+				}
+			}
 			if slices.IndexFunc(perimeter, func(e []int) bool {
 				return e[0] == x && e[1] == y
 			}) >= 0 {
+				something9[mapKey] = true
 				continue
 			}
-			if y == 0 {
-				return false
-			}
 			edges := 0
-			for testY := y - 1; testY >= 0; testY-- {
-				if slices.IndexFunc(perimeter, func(e []int) bool {
-					return e[0] == x && e[1] == testY
-				}) >= 0 {
+			for _, point := range perimeter {
+				if point[0] == x && point[1] > y {
 					edges++
 				}
 			}
 			if edges%2 == 0 {
+				something9[mapKey] = false
 				return false
+			} else {
+				something9[mapKey] = true
 			}
 		}
 	}
