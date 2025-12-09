@@ -45,6 +45,7 @@ func TestDay09Part2(t *testing.T) {
 	require.Equal(t, 24, Day09Part2(input))
 }
 
+// 3034335888 is too high
 func TestDay09Part2Input(t *testing.T) {
 	input := utils.ReadFileIntoString(day09, "input")
 	require.Equal(t, 36045012, Day09Part2(input))

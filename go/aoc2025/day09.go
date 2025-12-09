@@ -25,12 +25,12 @@ func Day09Part2(input string) int {
 	perimeter := getPerimeter(lines)
 	fmt.Println("got perimeter")
 	something9 = make(map[string]bool)
-	for ix, pair := range pairs {
-		if isInside(pair, perimeter) {
-			return pair.Area
-		} else {
-			fmt.Printf("pair at ix %d is not inside\n", ix)
+	for ix := 21299; ix < len(pairs); ix++ {
+		if isInside(pairs[ix], perimeter) {
+			return pairs[ix].Area
 		}
+
+		fmt.Printf("pair at ix %d is not inside\n", ix)
 	}
 	return 0
 }
