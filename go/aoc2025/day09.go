@@ -2,6 +2,7 @@ package aoc2025
 
 import (
 	"fmt"
+	"image"
 	"slices"
 	"sort"
 	"strconv"
@@ -15,7 +16,7 @@ func Day09Part1(input string) int {
 }
 
 var (
-	something9 map[string]bool
+	cache map[string]bool
 )
 
 func Day09Part2(input string) int {
@@ -24,75 +25,95 @@ func Day09Part2(input string) int {
 	fmt.Println("got all pairs")
 	perimeter := getPerimeter(lines)
 	fmt.Println("got perimeter")
-	something9 = make(map[string]bool)
-	for ix := 21299; ix < len(pairs); ix++ {
-		if isInside(pairs[ix], perimeter) {
-			return pairs[ix].Area
+	maxXOfTotalArea := 0
+	for _, perPoint := range perimeter {
+		if perPoint.X > maxXOfTotalArea {
+			maxXOfTotalArea = perPoint.X
 		}
-
-		fmt.Printf("pair at ix %d is not inside\n", ix)
 	}
+	fmt.Println("got maxXOfTotalArea")
+	cache = make(map[string]bool)
+	for ix := 21299; ix < len(pairs); ix++ {
+		if isInside(pairs[ix], perimeter, maxXOfTotalArea) {
+			return pairs[ix].Area
+		} else {
+			fmt.Printf("pair at ix %d is not inside\n", ix)
+		}
+	}
+
 	return 0
 }
 
-func isInside(pair SomeKindOfType, perimeter [][]int) bool {
-	for x := min(pair.X1, pair.X2) + 1; x < max(pair.X1, pair.X2); x++ {
-		for y := min(pair.Y1, pair.Y2) + 1; y < max(pair.Y1, pair.Y2); y++ {
+func isInside(pair SomeKindOfType, perimeter []image.Point, maxXOfTotalArea int) bool {
+	minX := min(pair.X1, pair.X2)
+	maxX := max(pair.X1, pair.X2)
+	minY := min(pair.Y1, pair.Y2)
+	maxY := max(pair.Y1, pair.Y2)
+	for x := minX; x <= maxX; x++ {
+		for y := minY; y <= maxY; y++ {
+			if x > minX && x < maxX && y > minY && y < maxY {
+				continue
+			}
 			mapKey := fmt.Sprintf("%d,%d", x, y)
-			if val, ok := something9[mapKey]; ok {
+			if val, ok := cache[mapKey]; ok {
 				if val {
 					continue
 				} else {
 					return false
 				}
 			}
-			if slices.IndexFunc(perimeter, func(e []int) bool {
-				return e[0] == x && e[1] == y
-			}) >= 0 {
-				something9[mapKey] = true
-				continue
-			}
-			edges := 0
-			for _, point := range perimeter {
-				if point[0] == x && point[1] > y {
-					edges++
-				}
-			}
-			if edges%2 == 0 {
-				something9[mapKey] = false
+			isInsideYes := isPointInsideArea(perimeter, image.Point{X: x, Y: y}, maxXOfTotalArea)
+			cache[mapKey] = isInsideYes
+			if !isInsideYes {
 				return false
-			} else {
-				something9[mapKey] = true
 			}
 		}
 	}
 	return true
 }
 
-func getPerimeter(lines []string) [][]int {
-	pointsThatMakeUpThePerimeter := [][]int{lineToI(lines[0])}
+func isPointInsideArea(perimeter []image.Point, point image.Point, maxX int) bool {
+	if slices.IndexFunc(perimeter, func(e image.Point) bool {
+		return e.X == point.X && e.Y == point.Y
+	}) >= 0 {
+		return true
+	}
+	edges := 0
+	lastOneWasAlsoInPerimeter := false
+	for i := point.X + 1; i <= maxX; i++ {
+		thisTimeItIsInPerimeter := slices.Contains(perimeter, image.Point{X: i, Y: point.Y})
+		if !lastOneWasAlsoInPerimeter && thisTimeItIsInPerimeter {
+			edges++
+		}
+		lastOneWasAlsoInPerimeter = thisTimeItIsInPerimeter
+	}
+	return edges%2 == 1
+}
+
+func getPerimeter(lines []string) []image.Point {
+	pointsThatMakeUpThePerimeter := []image.Point{lineToI(lines[0])}
 	for i := 1; i <= len(lines); i++ {
 		index := i % len(lines)
 		lastPoint := pointsThatMakeUpThePerimeter[len(pointsThatMakeUpThePerimeter)-1]
 		newPoint := lineToI(lines[index])
-		if lastPoint[0] == newPoint[0] {
-			if lastPoint[1] < newPoint[1] {
-				for j := lastPoint[1] + 1; j < newPoint[1]; j++ {
-					pointsThatMakeUpThePerimeter = append(pointsThatMakeUpThePerimeter, []int{newPoint[0], j})
+		if lastPoint.X == newPoint.X {
+			if lastPoint.Y < newPoint.Y {
+				for j := lastPoint.Y + 1; j < newPoint.Y; j++ {
+					pointsThatMakeUpThePerimeter = append(pointsThatMakeUpThePerimeter, image.Point{X: newPoint.X, Y: j})
 				}
 			} else {
-				for j := lastPoint[1] - 1; j > newPoint[1]; j-- {
-					pointsThatMakeUpThePerimeter = append(pointsThatMakeUpThePerimeter, []int{newPoint[0], j})
+				for j := lastPoint.Y - 1; j > newPoint.Y; j-- {
+					pointsThatMakeUpThePerimeter = append(pointsThatMakeUpThePerimeter, image.Point{X: newPoint.X, Y: j})
 				}
 			}
 		} else {
-			if lastPoint[0] < newPoint[0] {
-				for j := lastPoint[0] + 1; j < newPoint[0]; j++ {
-					pointsThatMakeUpThePerimeter = append(pointsThatMakeUpThePerimeter, []int{j, newPoint[1]})
+			if lastPoint.X < newPoint.X {
+				for j := lastPoint.X + 1; j < newPoint.X; j++ {
+					pointsThatMakeUpThePerimeter = append(pointsThatMakeUpThePerimeter, image.Point{X: j, Y: newPoint.Y})
 				}
 			} else {
-				for j := lastPoint[0] - 1; j > newPoint[0]; j-- {
-					pointsThatMakeUpThePerimeter = append(pointsThatMakeUpThePerimeter, []int{j, newPoint[1]})
+				for j := lastPoint.X - 1; j > newPoint.X; j-- {
+					pointsThatMakeUpThePerimeter = append(pointsThatMakeUpThePerimeter, image.Point{X: j, Y: newPoint.Y})
 				}
 			}
 		}
@@ -103,11 +124,11 @@ func getPerimeter(lines []string) [][]int {
 	return pointsThatMakeUpThePerimeter
 }
 
-func lineToI(s string) []int {
+func lineToI(s string) image.Point {
 	point := strings.Split(s, ",")
 	x, _ := strconv.Atoi(point[0])
 	y, _ := strconv.Atoi(point[1])
-	return []int{x, y}
+	return image.Point{X: x, Y: y}
 }
 
 func pairWithBiggestArea(input []string) (int, []string) {
