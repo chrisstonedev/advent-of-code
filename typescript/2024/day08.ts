@@ -1,4 +1,4 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day08 implements Day {
   partOneTestAnswer = 14;
@@ -20,7 +20,7 @@ export class Day08 implements Day {
     const map = new Map<string, number[][]>();
     for (let row = 0; row < input.length; row++) {
       for (let col = 0; col < input[row].length; col++) {
-        if (input[row][col] !== ".") {
+        if (input[row][col] !== '.') {
           if (map.has(input[row][col])) {
             map.get(input[row][col])!.push([row, col]);
           } else {

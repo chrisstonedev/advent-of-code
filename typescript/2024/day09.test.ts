@@ -1,14 +1,14 @@
-import * as assert from "node:assert";
-import { describe, it } from "node:test";
-import { Day09 } from "../2024";
+import * as assert from 'node:assert';
+import { describe, it } from 'node:test';
+import { Day09 } from '../2024';
 
-describe("Day 9", () => {
+describe('Day 9', () => {
   const day = new Day09();
 
-  describe("when expanding input", () => {
+  describe('when expanding input', () => {
     [
       {
-        input: "12345",
+        input: '12345',
         expected: [
           0,
           null,
@@ -28,7 +28,7 @@ describe("Day 9", () => {
         ],
       },
       {
-        input: "2333133121414131402",
+        input: '2333133121414131402',
         expected: [
           0,
           0,
@@ -75,7 +75,7 @@ describe("Day 9", () => {
         ],
       },
       {
-        input: "123456789",
+        input: '123456789',
         expected: [
           0,
           null,
@@ -125,14 +125,14 @@ describe("Day 9", () => {
         ],
       },
       {
-        input: "90909",
+        input: '90909',
         expected: [
           0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2,
           2, 2, 2, 2,
         ],
       },
       {
-        input: "101010101010101010101",
+        input: '101010101010101010101',
         expected: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       },
     ].forEach(({ input, expected }) => {
@@ -142,7 +142,7 @@ describe("Day 9", () => {
     });
   });
 
-  describe("when moving blocks", () => {
+  describe('when moving blocks', () => {
     [
       {
         input: [0, null, null, 1, 1, 1, null, null, null, null, 2, 2, 2, 2, 2],
@@ -258,7 +258,7 @@ describe("Day 9", () => {
     });
   });
 
-  describe("when moving contiguous blocks", () => {
+  describe('when moving contiguous blocks', () => {
     [
       {
         input: [0, null, null, 1, 1, 1, null, null, null, null, 2, 2, 2, 2, 2],
@@ -375,7 +375,7 @@ describe("Day 9", () => {
     });
   });
 
-  describe("when calculating checksum", () => {
+  describe('when calculating checksum', () => {
     [
       { input: [0, 2, 2, 1, 1, 1, 2, 2, 2], expected: 60 },
       {

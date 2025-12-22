@@ -1,4 +1,4 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day11 implements Day {
   partOneTestAnswer = 55312;
@@ -13,8 +13,8 @@ export class Day11 implements Day {
   }
 
   private followRulesForStones(engraving: string) {
-    if (engraving === "0") {
-      return "1";
+    if (engraving === '0') {
+      return '1';
     }
     if (engraving.length % 2 === 0) {
       const leftSide = engraving.slice(0, engraving.length / 2);
@@ -26,12 +26,12 @@ export class Day11 implements Day {
 
   blinkSeveralTimes(input: string, blinks: number) {
     let stonesToEvaluateInCurrentLoop = new Map(
-      input.split(" ").map((x) => [x, 1]),
+      input.split(' ').map((x) => [x, 1]),
     );
     for (let iteration = 0; iteration < blinks; iteration++) {
       const stonesToEvaluateInNextLoop = new Map<string, number>();
       for (const [marking, count] of stonesToEvaluateInCurrentLoop) {
-        for (const newStone of this.followRulesForStones(marking).split(" ")) {
+        for (const newStone of this.followRulesForStones(marking).split(' ')) {
           stonesToEvaluateInNextLoop.set(
             newStone,
             (stonesToEvaluateInNextLoop.get(newStone) ?? 0) + count,

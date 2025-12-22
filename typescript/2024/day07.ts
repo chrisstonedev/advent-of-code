@@ -1,4 +1,4 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day07 implements Day {
   partOneTestAnswer = 3749;
@@ -9,7 +9,7 @@ export class Day07 implements Day {
       .filter((calibrationEquation) =>
         this.canBeValid(calibrationEquation, false),
       )
-      .map((calibrationEquation) => Number(calibrationEquation.split(":")[0]))
+      .map((calibrationEquation) => Number(calibrationEquation.split(':')[0]))
       .reduce((a, b) => a + b);
   }
 
@@ -18,14 +18,14 @@ export class Day07 implements Day {
       .filter((calibrationEquation) =>
         this.canBeValid(calibrationEquation, true),
       )
-      .map((calibrationEquation) => Number(calibrationEquation.split(":")[0]))
+      .map((calibrationEquation) => Number(calibrationEquation.split(':')[0]))
       .reduce((a, b) => a + b);
   }
 
   canBeValid(input: string, concatOperatorAllowed: boolean) {
     const numberOfOperators = concatOperatorAllowed ? 3 : 2;
-    const [expectedSum, allNumbers] = input.split(": ");
-    const numbers = allNumbers.split(" ").map(Number);
+    const [expectedSum, allNumbers] = input.split(': ');
+    const numbers = allNumbers.split(' ').map(Number);
     const amountOfTries = Math.pow(numberOfOperators, numbers.length - 1);
     for (let i = 0; i < amountOfTries; i++) {
       let currentTotal = numbers[0];

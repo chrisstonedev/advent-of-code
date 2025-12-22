@@ -1,6 +1,6 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
-type State = "empty" | "visited" | "block";
+type State = 'empty' | 'visited' | 'block';
 
 const rowColShifts = [
   [-1, 0],
@@ -20,13 +20,13 @@ export class Day06 implements Day {
       input.length,
       input[0].length,
     );
-    return originalGameBoard.filter((x) => x.state === "visited").length;
+    return originalGameBoard.filter((x) => x.state === 'visited').length;
   }
 
   executePartTwo(input: string[]): number {
     const originalGameBoard = this.generateInitialGameBoard(input);
     const startingPosition: { row: number; col: number } =
-      originalGameBoard.find((x) => x.state === "visited")!;
+      originalGameBoard.find((x) => x.state === 'visited')!;
     this.findAllPositionsToExitOnOriginalBoard(
       originalGameBoard,
       input.length,
@@ -36,7 +36,7 @@ export class Day06 implements Day {
     const allPossibleObstructionSpots = originalGameBoard
       .filter(
         (x) =>
-          x.state === "visited" &&
+          x.state === 'visited' &&
           `${x.row}${x.col}` !==
             `${startingPosition.row}${startingPosition.col}`,
       )
@@ -49,7 +49,7 @@ export class Day06 implements Day {
       tempGameBoard.find(
         (x) =>
           x.row === potentialPosition.row && x.col === potentialPosition.col,
-      )!.state = "block";
+      )!.state = 'block';
       let currentShift = 0;
       let currentPosition = startingPosition;
       let loopDetected = false;
@@ -70,17 +70,17 @@ export class Day06 implements Day {
             x.row === potentialPosition.row && x.col === potentialPosition.col,
         )!;
         switch (currentStateOfProspectiveSpot.state) {
-          case "empty": {
+          case 'empty': {
             currentPosition = { ...potentialPosition };
             const newPiece = tempGameBoard.find(
               (x) =>
                 x.row === currentPosition.row && x.col === currentPosition.col,
             )!;
-            newPiece.state = "visited";
+            newPiece.state = 'visited';
             newPiece.direction = currentShift;
             break;
           }
-          case "visited":
+          case 'visited':
             if (currentStateOfProspectiveSpot.direction === currentShift) {
               loopDetected = true;
               break;
@@ -91,11 +91,11 @@ export class Day06 implements Day {
                   x.row === currentPosition.row &&
                   x.col === currentPosition.col,
               )!;
-              newPiece.state = "visited";
+              newPiece.state = 'visited';
               newPiece.direction = currentShift;
             }
             break;
-          case "block":
+          case 'block':
             currentShift++;
             currentShift %= 4;
             break;
@@ -114,7 +114,7 @@ export class Day06 implements Day {
     cols: number,
   ) {
     const startingPosition = originalGameBoard.find(
-      (x) => x.state === "visited",
+      (x) => x.state === 'visited',
     )!;
     let currentPosition = {
       row: startingPosition.row,
@@ -137,15 +137,15 @@ export class Day06 implements Day {
           x.row === potentialPosition.row && x.col === potentialPosition.col,
       )!.state;
       switch (currentStateOfProspectiveSpot) {
-        case "empty":
-        case "visited":
+        case 'empty':
+        case 'visited':
           currentPosition = { ...potentialPosition };
           originalGameBoard.find(
             (x) =>
               x.row === currentPosition.row && x.col === currentPosition.col,
-          )!.state = "visited";
+          )!.state = 'visited';
           break;
-        case "block":
+        case 'block':
           currentShift++;
           currentShift %= 4;
           break;
@@ -163,11 +163,11 @@ export class Day06 implements Day {
           row: row,
           col: col,
           state:
-            currentValue === "."
-              ? "empty"
-              : currentValue === "^"
-                ? "visited"
-                : "block",
+            currentValue === '.'
+              ? 'empty'
+              : currentValue === '^'
+                ? 'visited'
+                : 'block',
         });
       }
     }
@@ -188,12 +188,12 @@ export class Day06 implements Day {
           row: row,
           col: col,
           state:
-            currentValue === "."
-              ? "empty"
-              : currentValue === "^"
-                ? "visited"
-                : "block",
-          direction: currentValue === "visited" ? 0 : undefined,
+            currentValue === '.'
+              ? 'empty'
+              : currentValue === '^'
+                ? 'visited'
+                : 'block',
+          direction: currentValue === 'visited' ? 0 : undefined,
         });
       }
     }

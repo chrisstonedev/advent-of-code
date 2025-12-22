@@ -1,11 +1,11 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day10 implements Day {
   partOneTestAnswer = 26397;
   partTwoTestAnswer = 288957;
 
-  allOpenSymbols = ["(", "[", "{", "<"];
-  allCloseSymbols = [")", "]", "}", ">"];
+  allOpenSymbols = ['(', '[', '{', '<'];
+  allCloseSymbols = [')', ']', '}', '>'];
 
   executePartOne(input: string[]): number {
     let numberOfBadCloseParentheses = 0;
@@ -16,20 +16,20 @@ export class Day10 implements Day {
     for (const line of input) {
       const openSymbols = [];
 
-      for (const character of line.split("")) {
+      for (const character of line.split('')) {
         if (this.allOpenSymbols.includes(character)) {
           openSymbols.push(character);
         } else if (this.allCloseSymbols.includes(character)) {
-          if (character === ")" && openSymbols.pop() !== "(") {
+          if (character === ')' && openSymbols.pop() !== '(') {
             numberOfBadCloseParentheses++;
             break;
-          } else if (character === "]" && openSymbols.pop() !== "[") {
+          } else if (character === ']' && openSymbols.pop() !== '[') {
             numberOfBadCloseSquareBrackets++;
             break;
-          } else if (character === "}" && openSymbols.pop() !== "{") {
+          } else if (character === '}' && openSymbols.pop() !== '{') {
             numberOfBadCloseBraces++;
             break;
-          } else if (character === ">" && openSymbols.pop() !== "<") {
+          } else if (character === '>' && openSymbols.pop() !== '<') {
             numberOfBadCloseAngleBrackets++;
             break;
           }
@@ -52,15 +52,15 @@ export class Day10 implements Day {
       const openSymbols = [];
       let corruptedLine = false;
 
-      for (const character of line.split("")) {
+      for (const character of line.split('')) {
         if (this.allOpenSymbols.includes(character)) {
           openSymbols.push(character);
         } else if (this.allCloseSymbols.includes(character)) {
           if (
-            (character === ")" && openSymbols.pop() !== "(") ||
-            (character === "]" && openSymbols.pop() !== "[") ||
-            (character === "}" && openSymbols.pop() !== "{") ||
-            (character === ">" && openSymbols.pop() !== "<")
+            (character === ')' && openSymbols.pop() !== '(') ||
+            (character === ']' && openSymbols.pop() !== '[') ||
+            (character === '}' && openSymbols.pop() !== '{') ||
+            (character === '>' && openSymbols.pop() !== '<')
           ) {
             corruptedLine = true;
             break;
@@ -79,13 +79,13 @@ export class Day10 implements Day {
         while (charactersToClose.length > 0) {
           const nextCharacterToClose = charactersToClose.pop()!;
           const characterValue =
-            nextCharacterToClose === "("
+            nextCharacterToClose === '('
               ? 1
-              : nextCharacterToClose === "["
+              : nextCharacterToClose === '['
                 ? 2
-                : nextCharacterToClose === "{"
+                : nextCharacterToClose === '{'
                   ? 3
-                  : nextCharacterToClose === "<"
+                  : nextCharacterToClose === '<'
                     ? 4
                     : 0;
           score = score * 5 + characterValue;

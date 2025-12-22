@@ -1,11 +1,11 @@
-import { Day11 } from "./day11";
-import * as assert from "node:assert";
-import { describe, it } from "node:test";
+import { Day11 } from './day11';
+import * as assert from 'node:assert';
+import { describe, it } from 'node:test';
 
-describe("Day 11", () => {
+describe('Day 11', () => {
   const day = new Day11();
 
-  it("should increase energy level by 1 each step", () => {
+  it('should increase energy level by 1 each step', () => {
     const initial = [[1]];
     const expected = [[2]];
     const actual = day.advanceSteps(initial, 1).energyLevelGrid;
@@ -13,7 +13,7 @@ describe("Day 11", () => {
     assert.deepStrictEqual(actual, expected);
   });
 
-  it("should set level to 0 after it flashes", () => {
+  it('should set level to 0 after it flashes', () => {
     const initial = [[9]];
     const expected = [[0]];
     const actual = day.advanceSteps(initial, 1).energyLevelGrid;
@@ -21,7 +21,7 @@ describe("Day 11", () => {
     assert.deepStrictEqual(actual, expected);
   });
 
-  it("should increase adjacent energy levels of a flashing octopus", () => {
+  it('should increase adjacent energy levels of a flashing octopus', () => {
     const initial = [
       [1, 1, 1],
       [1, 9, 1],
@@ -37,7 +37,7 @@ describe("Day 11", () => {
     assert.deepStrictEqual(actual, expected);
   });
 
-  it("should increase adjacent energy levels when flashing without touching others", () => {
+  it('should increase adjacent energy levels when flashing without touching others', () => {
     const initial = [
       [1, 1, 1, 1],
       [1, 9, 1, 1],
@@ -55,7 +55,7 @@ describe("Day 11", () => {
     assert.deepStrictEqual(actual, expected);
   });
 
-  it("should handle multiple flashing octopuses", () => {
+  it('should handle multiple flashing octopuses', () => {
     const initial = [
       [1, 1, 1, 1],
       [1, 9, 9, 1],
@@ -73,7 +73,7 @@ describe("Day 11", () => {
     assert.deepStrictEqual(actual, expected);
   });
 
-  it("should handle the first step of the complex example", () => {
+  it('should handle the first step of the complex example', () => {
     const initial = [
       [1, 1, 1, 1, 1],
       [1, 9, 9, 9, 1],
@@ -93,7 +93,7 @@ describe("Day 11", () => {
     assert.deepStrictEqual(actual, expected);
   });
 
-  describe("Using the test input file", () => {
+  describe('Using the test input file', () => {
     const initial = [
       [5, 4, 8, 3, 1, 4, 3, 2, 2, 3],
       [2, 7, 4, 5, 8, 5, 4, 7, 1, 1],
@@ -107,7 +107,7 @@ describe("Day 11", () => {
       [5, 2, 8, 3, 7, 5, 1, 5, 2, 6],
     ];
 
-    it("should give the right output for the test input after 2 steps", () => {
+    it('should give the right output for the test input after 2 steps', () => {
       const expectedGrid = [
         [8, 8, 0, 7, 4, 7, 6, 5, 5, 5],
         [5, 0, 8, 9, 0, 8, 7, 0, 5, 4],
@@ -126,7 +126,7 @@ describe("Day 11", () => {
       assert.strictEqual(actual.totalFlashes, 35);
     });
 
-    it("should give the right output for the test input after 3 steps", () => {
+    it('should give the right output for the test input after 3 steps', () => {
       const expectedGrid = [
         [0, 0, 5, 0, 9, 0, 0, 8, 6, 6],
         [8, 5, 0, 0, 8, 0, 0, 5, 7, 5],
@@ -145,7 +145,7 @@ describe("Day 11", () => {
       assert.strictEqual(actual.totalFlashes, 80);
     });
 
-    it("should give the right output for the test input after 10 steps", () => {
+    it('should give the right output for the test input after 10 steps', () => {
       const actual = day.advanceSteps(initial, 10);
       assert.strictEqual(actual.totalFlashes, 204);
     });

@@ -1,4 +1,4 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day09 implements Day {
   partOneTestAnswer = 15;
@@ -106,7 +106,7 @@ class HeightMap {
   private readonly values: number[][];
 
   constructor(fileContents: string[]) {
-    this.values = fileContents.map((x) => x.split("").map((y) => +y));
+    this.values = fileContents.map((x) => x.split('').map((y) => +y));
   }
 
   get rowCount(): number {

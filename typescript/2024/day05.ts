@@ -1,24 +1,24 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day05 implements Day {
   partOneTestAnswer = 143;
   partTwoTestAnswer = 123;
 
   executePartOne(input: string[]): number {
-    const pageOrderingRules = input.slice(0, input.indexOf(""));
-    const pagesToProduceInEachUpdate = input.slice(input.indexOf("") + 1);
+    const pageOrderingRules = input.slice(0, input.indexOf(''));
+    const pagesToProduceInEachUpdate = input.slice(input.indexOf('') + 1);
     return pagesToProduceInEachUpdate
-      .map((pages) => pages.split(","))
+      .map((pages) => pages.split(','))
       .filter((pages) => this.isInCorrectOrder(pageOrderingRules, pages))
       .map((pages) => Number(pages[Math.floor(pages.length / 2)]))
       .reduce((a, b) => a + b);
   }
 
   executePartTwo(input: string[]): number {
-    const pageOrderingRules = input.slice(0, input.indexOf(""));
-    const pagesToProduceInEachUpdate = input.slice(input.indexOf("") + 1);
+    const pageOrderingRules = input.slice(0, input.indexOf(''));
+    const pagesToProduceInEachUpdate = input.slice(input.indexOf('') + 1);
     return pagesToProduceInEachUpdate
-      .map((pages) => pages.split(","))
+      .map((pages) => pages.split(','))
       .filter((pages) => !this.isInCorrectOrder(pageOrderingRules, pages))
       .map((pages) => this.getCorrectOrder(pageOrderingRules, pages))
       .map((pages) => Number(pages[Math.floor(pages.length / 2)]))

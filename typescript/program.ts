@@ -1,5 +1,5 @@
-import { Utils } from "./utils";
-import { Day01 as Day2018_01 } from "./2018";
+import { Utils } from './utils';
+import { Day01 as Day2018_01 } from './2018';
 import {
   Day01 as Day2021_01,
   Day02 as Day2021_02,
@@ -7,7 +7,7 @@ import {
   Day09 as Day2021_09,
   Day10 as Day2021_10,
   Day11 as Day2021_11,
-} from "./2021";
+} from './2021';
 import {
   Day01 as Day2024_01,
   Day02 as Day2024_02,
@@ -20,8 +20,8 @@ import {
   Day09 as Day2024_09,
   Day10 as Day2024_10,
   Day11 as Day2024_11,
-} from "./2024";
-import { select } from "@inquirer/prompts";
+} from './2024';
+import { select } from '@inquirer/prompts';
 
 const dayMap = new Map<number, Map<number, Day>>([
   [2018, new Map<number, Day>([[1, new Day2018_01()]])],
@@ -69,16 +69,16 @@ for (let i = minYear; i <= maxYear; i++) {
   const daysSolved = daysInYear.length - inProgress;
   let description =
     daysSolved > 0
-      ? `${daysSolved} ${daysSolved != 1 ? "days" : "day"} solved (${daysSolved * 4}%)`
+      ? `${daysSolved} ${daysSolved != 1 ? 'days' : 'day'} solved (${daysSolved * 4}%)`
       : undefined;
   if (inProgress > 0) {
-    description += `, ${inProgress} ${inProgress != 1 ? "days" : "day"} in progress`;
+    description += `, ${inProgress} ${inProgress != 1 ? 'days' : 'day'} in progress`;
   }
   yearChoices.push({
     name: `${i}`,
     value: i,
     description: description,
-    disabled: daysSolved > 0 ? undefined : "(none)",
+    disabled: daysSolved > 0 ? undefined : '(none)',
   });
 }
 
@@ -95,7 +95,7 @@ function getDayChoices(year: number) {
     dayChoices.push({
       name: `Day ${i}`,
       value: i,
-      disabled: solved ? undefined : "(not yet solved)",
+      disabled: solved ? undefined : '(not yet solved)',
     });
   }
   return { dayChoices, maxDay };
@@ -103,24 +103,24 @@ function getDayChoices(year: number) {
 
 async function runProgram() {
   const year = await select({
-    message: "Select a year:",
+    message: 'Select a year:',
     choices: yearChoices,
     default: maxYear,
   });
   const { dayChoices, maxDay } = getDayChoices(year);
   const dayNumber = await select({
-    message: "Select a day:",
+    message: 'Select a day:',
     choices: dayChoices,
     default: maxDay,
   });
 
   const day = dayMap.get(year)?.get(dayNumber);
   if (day === undefined) {
-    console.error("Could not find day with that day number.");
+    console.error('Could not find day with that day number.');
     return;
   }
 
-  const yearAndDayFileFormat = `${year}_${dayNumber.toString().padStart(2, "0")}`;
+  const yearAndDayFileFormat = `${year}_${dayNumber.toString().padStart(2, '0')}`;
   const testInput = Utils.readInput(`${yearAndDayFileFormat}_test`);
   const input = Utils.readInput(`${yearAndDayFileFormat}_input`);
   const startTest1 = new Date().getTime();

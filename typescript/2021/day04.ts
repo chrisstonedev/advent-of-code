@@ -1,4 +1,4 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day04 implements Day {
   partOneTestAnswer = 4512;
@@ -54,7 +54,7 @@ export class Day04 implements Day {
     const workingInput = Array.from(input);
     const numbersToDraw = workingInput
       .shift()!
-      .split(",")
+      .split(',')
       .map((x) => +x);
 
     const gameBoards = [];

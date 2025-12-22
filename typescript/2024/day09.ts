@@ -1,4 +1,4 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day09 implements Day {
   partOneTestAnswer = 1928;
@@ -22,7 +22,7 @@ export class Day09 implements Day {
     let currentId = 0;
     let display = true;
     const output: (number | null)[] = [];
-    for (const thing of input.split("").map(Number)) {
+    for (const thing of input.split('').map(Number)) {
       if (display) {
         for (let i = 0; i < thing; i++) {
           output.push(currentId);

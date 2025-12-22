@@ -1,11 +1,11 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day03 implements Day {
   partOneTestAnswer = 161;
   partTwoTestAnswer = 48;
 
   executePartOne(input: string[]): number {
-    const fullInput = input.join("");
+    const fullInput = input.join('');
     const instructions = this.getAllMulInstructions(fullInput);
     let sum = 0;
     instructions.forEach(
@@ -15,15 +15,15 @@ export class Day03 implements Day {
   }
 
   executePartTwo(input: string[]): number {
-    const fullInput = input.join("");
+    const fullInput = input.join('');
     const instructions = this.getAllValidInstructions(fullInput);
     let sum = 0;
     let instructionsEnabled = true;
     instructions.forEach((match) => {
-      if (instructionsEnabled && match.startsWith("mul")) {
+      if (instructionsEnabled && match.startsWith('mul')) {
         sum += this.executeMul(match);
       } else {
-        instructionsEnabled = match === "do()";
+        instructionsEnabled = match === 'do()';
       }
     });
     return sum;

@@ -1,4 +1,4 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day02 implements Day {
   partOneTestAnswer = 2;
@@ -7,7 +7,7 @@ export class Day02 implements Day {
   executePartOne(input: string[]): number {
     let counter = 0;
     for (const line of input) {
-      const numbers = line.split(" ").map(Number);
+      const numbers = line.split(' ').map(Number);
       if (this.checkIsSafe(numbers)) counter++;
     }
     return counter;
@@ -16,7 +16,7 @@ export class Day02 implements Day {
   executePartTwo(input: string[]): number {
     let counter = 0;
     for (const line of input) {
-      const numbers = line.split(" ").map(Number);
+      const numbers = line.split(' ').map(Number);
       if (this.checkIsSafe(numbers)) {
         counter++;
         continue;

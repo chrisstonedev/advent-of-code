@@ -1,4 +1,4 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day01 implements Day {
   partOneTestAnswer = 11;
@@ -8,7 +8,7 @@ export class Day01 implements Day {
     const leftSide: number[] = [];
     const rightSide: number[] = [];
     input.forEach((x) => {
-      const parts = x.split("   ");
+      const parts = x.split('   ');
       leftSide.push(Number(parts[0]));
       rightSide.push(Number(parts[1]));
     });
@@ -25,7 +25,7 @@ export class Day01 implements Day {
     const leftSide: number[] = [];
     const rightSide: number[] = [];
     input.forEach((x) => {
-      const parts = x.split("   ");
+      const parts = x.split('   ');
       leftSide.push(Number(parts[0]));
       rightSide.push(Number(parts[1]));
     });

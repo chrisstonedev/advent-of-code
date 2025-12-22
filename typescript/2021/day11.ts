@@ -1,17 +1,17 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 export class Day11 implements Day {
   partOneTestAnswer = 1656;
   partTwoTestAnswer = 195;
 
   executePartOne(input: string[]): number {
-    const energyLevelGrid = input.map((x) => x.split("").map((y) => +y));
+    const energyLevelGrid = input.map((x) => x.split('').map((y) => +y));
     const result = this.advanceSteps(energyLevelGrid, 100);
     return result.totalFlashes;
   }
 
   executePartTwo(input: string[]): number {
-    const energyLevelGrid = input.map((x) => x.split("").map((y) => +y));
+    const energyLevelGrid = input.map((x) => x.split('').map((y) => +y));
     return Day11.advanceStepsUntilSynchronization(energyLevelGrid);
   }
 

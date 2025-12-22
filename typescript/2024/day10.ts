@@ -1,4 +1,4 @@
-import { Day } from "../program";
+import { Day } from '../program';
 
 const directions = [
   [0, 1],
@@ -15,7 +15,7 @@ export class Day10 implements Day {
     let counter = 0;
     for (let row = 0; row < input.length; row++) {
       for (let col = 0; col < input[row].length; col++) {
-        if (input[row][col] === "0") {
+        if (input[row][col] === '0') {
           counter += this.keepLookingForHighestUniquePointsFromPath(
             input,
             row,
@@ -32,7 +32,7 @@ export class Day10 implements Day {
     let counter = 0;
     for (let row = 0; row < input.length; row++) {
       for (let col = 0; col < input[row].length; col++) {
-        if (input[row][col] === "0") {
+        if (input[row][col] === '0') {
           counter += this.keepLookingForUniquePathsToHighestPointFromPath(
             input,
             row,
