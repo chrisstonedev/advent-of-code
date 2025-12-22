@@ -13,6 +13,9 @@ func ReadFileIntoString(fileNameDate string, inputType string) string {
 func ReadFileIntoStringWithDepth(fileNameDate string, inputType string, depth int) string {
 	exitDirectory := strings.Repeat("../", depth+1)
 	fileName := fmt.Sprintf("%saoc-data/%s_%s.txt", exitDirectory, fileNameDate, inputType)
-	data, _ := os.ReadFile(fileName)
+	data, err := os.ReadFile(fileName)
+	if err != nil {
+		panic(err)
+	}
 	return string(data)
 }
