@@ -1,4 +1,5 @@
 import { Utils } from "./utils";
+import { Day01 as Day2018_01 } from "./2018";
 import {
   Day01 as Day2021_01,
   Day02 as Day2021_02,
@@ -23,6 +24,7 @@ import {
 import { select } from "@inquirer/prompts";
 
 const dayMap = new Map<number, Map<number, Day>>([
+  [2018, new Map<number, Day>([[1, new Day2018_01()]])],
   [
     2021,
     new Map<number, Day>([
